@@ -26,12 +26,13 @@ public class HomeActivity extends AppCompatActivity {
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
         switch (view.getId()) {
-            case R.id.radio_btn_distance:
+            case R.id.radio_btn_distance_ha:
                 if (checked)
                     // Sort ListView by distance
                     break;
             case R.id.radio_btn_availability_ha:
                 if (checked)
+
                     // Sort ListView by availability
                     break;
             case R.id.radio_btn_favorites_ha:

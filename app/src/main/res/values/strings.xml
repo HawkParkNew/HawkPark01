@@ -40,4 +40,5 @@
     <string name="radio_btn_availability_ha">Availability</string>
     <string name="radio_btn_favorites_ha">Favorites</string>
     <string name="header_home_screen">Available Parking</string>
+    <!--GOOGLE MAPS API KEY-->
 </resources>
