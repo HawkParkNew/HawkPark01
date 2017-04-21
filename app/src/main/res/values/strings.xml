@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">HawkPark02</string>
+    <string name="auth_failed">Registration failed. Please try again later!</string>
+    <string name="btn_exit">Button closes activity</string>
+    <string name="tag_line">Your Campus Parking Valet!</string>
+    <string name="logo_large">Logo Large</string>
+    <string name="btn_register">Register</string>
+    <string name="tv_forgot_password">Forgot Password</string>
+    <string name="btn_login">Login</string>
+    <string name="logo_login">Logo large</string>
+    <string name="btn_ride2park">Apply for ride2park</string>
+    <string name="btn_sign_up">Sign-up</string>
+    <string name="btn_logout">Logout</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+    <string name="tv_display_name">Name:</string>
+    <string name="tv_welcome_ma">Welcome to HawkPark. Sign in to view your campus parking options!</string>
+    <string name="signed_in_fmt">Login successful.</string>
+    <string name="loading">Working on it..</string>
+    <string name="signed_out">Logout successful</string>
+    <string name="toast_auth_failed_ma">Authentication failed.</string>
+
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_user_management">Firebase User Management</string>
+
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="google_title_text">Google Sign In</string>
+
+    <string name="id_fmt">User ID: %s</string>
+    <string name="email_fmt">Email: %s</string>
+    <string name="header_home">Parking Lot Status</string>
+    <string name="web_client_id">681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com</string>
+
+    <!-- GEOFENCING STRINGS -->
+    <string name="geofence_transition_invalid_type">invalid %1$d</string>
+    <string name="geofence_transition_entered">enter</string>
+    <string name="geofence_transition_exited">exit</string>
+    <string name="unknown_geofence_transition">unknown</string>
+    <!-- HOMEACTIVITY STRINGS -->
+    <string name="radio_btn_distance_ha">Distance</string>
+    <string name="radio_btn_availability_ha">Availability</string>
+    <string name="radio_btn_favorites_ha">Favorites</string>
+    <string name="header_home_screen">Available Parking</string>
+</resources>

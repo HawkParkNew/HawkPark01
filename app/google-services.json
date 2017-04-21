@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "681329975510",
+    "firebase_url": "https://hawkpark01-2017.firebaseio.com",
+    "project_id": "hawkpark01-2017",
+    "storage_bucket": "hawkpark01-2017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681329975510:android:2b2a956b0b7076ea",
+        "android_client_info": {
+          "package_name": "com.example.android.hawkpark01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "681329975510-khoilpecjf8otnuvjshlrkn70s4eqmgi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hawkpark01",
+            "certificate_hash": "b86eae3fad1b39133187797e6d847ca191d5a880"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-kDhPK0cZF-qb6-bVonH7h9pgsKfXzns"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
