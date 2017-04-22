@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HawkPark02</string>
+    <string name="app_name">HawkPark</string>
     <string name="auth_failed">Registration failed. Please try again later!</string>
     <string name="btn_exit">Button closes activity</string>
     <string name="tag_line">Your Campus Parking Valet!</string>
@@ -40,5 +40,17 @@
     <string name="radio_btn_availability_ha">Availability</string>
     <string name="radio_btn_favorites_ha">Favorites</string>
     <string name="header_home_screen">Available Parking</string>
+    <!-- R2P ACTIVITY STRINGS -->
+    <string name="header_r2p_registration">Register for Ride2Park</string>
+    <string name="tv_licence_num_r2p">Licence Number:</string>
+    <string name="et_hint_licence_no_r2p">Enter your 15 digit Licence Number.</string>
+    <string name="tv_car_make_r2p">Car Make:</string>
+    <string name="et_hint_car_make_r2p">Enter your car\'s make.</string>
+    <string name="tv_car_model_r2p">Car Model:</string>
+    <string name="et_hint_car_model_r2p">Enter your car model.</string>
+    <string name="tv_licence_plates_r2p">Car Licence Plates:</string>
+    <string name="et_hint_licence_plates_r2p">Enter your car\'s Licence Plate Number.</string>
+    <string name="btn_settings">Settings</string>
+    <string name="licence_err_r2p">Incorrect length, please try again.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>

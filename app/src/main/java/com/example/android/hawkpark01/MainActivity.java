@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    //
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(i);
                 }
@@ -212,7 +213,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             findViewById(R.id.btn_sign_in).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
-
     }
     @Override
 

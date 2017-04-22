@@ -4,7 +4,7 @@
     android:width="@dimen/home_list_item_padding"
     android:color="@color/backgroundGray" />
 
-<solid android:color="@color/backgroundRed" />
+<solid android:color="@color/lotRed" />
 
 <padding
     android:left="@dimen/home_list_item_padding"
