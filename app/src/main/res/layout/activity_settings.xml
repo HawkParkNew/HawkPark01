@@ -1,8 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/register_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.hawkpark01.SettingsActivity">
+    android:background="@color/backgroundGray">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/hawk_bar_default"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:background="@color/backgroundWhite">
+
+        <ImageView
+            android:id="@+id/logo_login"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:contentDescription="@string/logo_large"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.2"
+            android:background="@color/backgroundRed"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="bottom|center"
+            android:paddingTop="20dp"
+            android:text="@string/header_settings_activity"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/textBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/border_black"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/textBlack"
+        android:layout_below="@id/hawk_bar_default"/>
+    <TextView
+        android:id="@+id/header_home_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/header_home_screen"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/textWhite"
+        android:textSize="18sp"
+        android:layout_below="@+id/border_black"/>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_ha"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header_home_screen"
+        android:orientation="horizontal"
+        android:layout_above="@+id/btn_bar_home">
+
+    </LinearLayout>
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:id="@+id/btn_bar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:layout_above="@+id/border_red"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/round_corner_black"
+            android:padding="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginEnd="4dp"
+            android:text="@string/btn_home"
+            android:textColor="@color/textWhite" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/btn_logout_settings"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_black"
+            android:padding="4dp"
+            android:text="@string/btn_settings"
+            android:textColor="@color/textWhite"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/border_red"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/backgroundRed"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

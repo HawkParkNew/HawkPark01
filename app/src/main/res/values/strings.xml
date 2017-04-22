@@ -52,5 +52,7 @@
     <string name="et_hint_licence_plates_r2p">Enter your car\'s Licence Plate Number.</string>
     <string name="btn_settings">Settings</string>
     <string name="licence_err_r2p">Incorrect length, please try again.</string>
+    <string name="header_settings_activity">Personalize</string>
+    <string name="btn_home">To Home</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>
