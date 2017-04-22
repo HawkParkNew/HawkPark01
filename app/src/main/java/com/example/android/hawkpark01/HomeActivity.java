@@ -1,9 +1,11 @@
 package com.example.android.hawkpark01;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -21,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
+
+
 public class HomeActivity extends AppCompatActivity {
     //Parking availability in lots==================================================================
     private ListView lv_lot_list;
@@ -36,13 +41,25 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
 
-
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
+
         // Initialize lotSummary ListView and its adapter
-        List<HomeLotItem> homeLotItemsList = new ArrayList<>();
+        final List<HomeLotItem> homeLotItemsList = new ArrayList<>();
         mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
         lv_lot_list.setAdapter(mhomeLotAdapter);
+        // Set item click listener for the lot view
+        lv_lot_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Access the row position here to get the correct data item
+                HomeLotItem selectedLot = homeLotItemsList.get(i);
+                String name = selectedLot.getName();
+                Intent intent = new Intent(HomeActivity.this,LotActivity.class);
+                intent.putExtra(LOT_KEY,name);
+                startActivity(intent);
+            }
+        });
 
 
         mChildEventListener = new ChildEventListener() {
@@ -58,7 +75,6 @@ public class HomeActivity extends AppCompatActivity {
                 //get new status and change color, position etc
                 HomeLotItem homeLotItem = dataSnapshot.getValue(HomeLotItem.class);
                 mhomeLotAdapter.add(homeLotItem);
-
             }
 
             @Override
@@ -77,8 +93,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         };
         mlotSummaryDBRef.addChildEventListener(mChildEventListener);
-
-
     }
 
     //Radio buttons in home activity

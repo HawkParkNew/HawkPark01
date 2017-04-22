@@ -29,14 +29,14 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotItem> {
             convertView = ((Activity) getContext()).getLayoutInflater()
                     .inflate(R.layout.home_lot_item, parent, false);
         }
+        // Lookup views for data population
         TextView tv_lotName = (TextView) convertView.findViewById(R.id.tv_lot_item);
         HomeLotItem lotItem = getItem(position);
-
-        tv_lotName.setText(lotItem.getName());
         int lotStatus = Integer.parseInt(lotItem.getStatus());
+        //Set background color based on the lot status
         switch (lotStatus)
         {
-            case 1://lot is full
+            case 3://lot is full
                 convertView.setBackground(ContextCompat.getDrawable(getContext(),
                         R.drawable.round_corner_red));
                 break;
@@ -44,11 +44,18 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotItem> {
                 convertView.setBackground(ContextCompat.getDrawable(getContext(),
                         R.drawable.round_corner_yellow));
                 break;
-            case 3://lot is empty
+            case 1://lot is empty
                 convertView.setBackground(ContextCompat.getDrawable(getContext(),
                         R.drawable.round_corner_green));
                 break;
         }
+
+        //
+        tv_lotName.setText(lotItem.getName());
+        tv_lotName.setTag(position);
+
+
+
     return convertView;
     }
 }

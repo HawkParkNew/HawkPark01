@@ -40,20 +40,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseDatabase database;
 
-    private ProgressDialog mProgressDialog;
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+
     private Button btn_logout, btn_revoke;
     private SignInButton btn_login_submit;
     private TextView tv_welcome, mStatusTextView;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        database = FirebaseDatabase.getInstance();
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    //
+                    //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(i);
                 }
@@ -128,13 +129,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            //String xx = result.getSignInAccount().getEmail();
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
