@@ -43,7 +43,7 @@
     <!-- R2P ACTIVITY STRINGS -->
     <string name="header_r2p_registration">Register for Ride2Park</string>
     <string name="tv_licence_num_r2p">Licence Number:</string>
-    <string name="et_hint_licence_no_r2p">Enter your 15 digit Licence Number.</string>
+    <string name="et_hint_licence_no_r2p">Enter your Licence Number.</string>
     <string name="tv_car_make_r2p">Car Make:</string>
     <string name="et_hint_car_make_r2p">Enter your car\'s make.</string>
     <string name="tv_car_model_r2p">Car Model:</string>

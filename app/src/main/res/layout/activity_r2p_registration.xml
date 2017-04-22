@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_licence_no_r2p"
             android:textColorHint="@color/textGray"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +74,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_car_make_r2p"
             android:textColorHint="@color/textGray"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,7 +87,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_car_model_r2p"
             android:textColorHint="@color/textGray"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +100,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/et_hint_licence_plates_r2p"
             android:textColorHint="@color/textGray"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="15dp"
+            android:maxLength="10"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
