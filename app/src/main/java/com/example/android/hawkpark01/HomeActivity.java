@@ -1,6 +1,7 @@
 package com.example.android.hawkpark01;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,8 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 //get new status and change color, position etc
-                HomeLotItem homeLotItem = dataSnapshot.getValue(HomeLotItem.class);
-                mhomeLotAdapter.add(homeLotItem);
+
             }
 
             @Override
@@ -119,5 +119,21 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    public void onButtonClicked_ha(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.btn_r2p://directs user to ride2park screen
+                //change this
+                Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_settings://directs user to ride2park screen
+                //change this
+                Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
+                startActivity(i);
+                break;
 
+        }
+
+    }
 }

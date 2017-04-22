@@ -29,6 +29,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
+import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
+
 /**
  * code modified from-
  * https://firebase.google.com/docs/auth/android/google-signin
@@ -90,8 +93,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    // get email,Uid
+                    String firebaseID = user.getUid();
+                    String email = user.getEmail();
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    i.putExtra(ID_KEY,firebaseID);
+                    i.putExtra(EMAIL_KEY, email);
                     startActivity(i);
                 }
                 else {

@@ -8,5 +8,8 @@ public class Utils {
     //key for home Activity/ list view/ selected lot's name
 
     public static final String LOT_KEY = "lot_name";
+    public static final String ID_KEY = "firebase_id";
+    public static final String EMAIL_KEY = "email_id";
+
 
 }
