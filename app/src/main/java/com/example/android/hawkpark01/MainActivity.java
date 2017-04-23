@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
@@ -43,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase database;
+    private FirebaseDatabase mdatabase;
+    private DatabaseReference r2pDatabaseReference;
 
 
     private static final String TAG = "GoogleActivity";
@@ -57,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        database = FirebaseDatabase.getInstance();
+        mdatabase = FirebaseDatabase.getInstance();
+        r2pDatabaseReference = mdatabase.getReference("r2pRegister");
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -135,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             mAuth.removeAuthStateListener(mAuthListener);
         }
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,12 +176,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     }
                 });
     }
-
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
-
     private void signOut() {
         //firebase sign-out
         mAuth.signOut();
@@ -192,7 +192,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     }
                 });
     }
-
     private void revokeAccess() {
         // Firebase sign out
         mAuth.signOut();
@@ -228,5 +227,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+    public boolean isR2PRegistered(){
+
+        return true;
     }
 }

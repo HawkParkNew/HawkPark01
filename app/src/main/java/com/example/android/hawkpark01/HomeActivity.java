@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
 
 
@@ -120,11 +121,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void onButtonClicked_ha(View view) {
+        String email = getIntent().getStringExtra(EMAIL_KEY);
         int id = view.getId();
         switch (id){
             case R.id.btn_r2p://directs user to ride2park screen
                 //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
+                intent.putExtra(EMAIL_KEY, email);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to ride2park screen
