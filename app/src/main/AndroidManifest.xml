@@ -37,6 +37,7 @@
         <activity android:name=".R2PRegistrationActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".LotActivity"></activity>
+        <service android:name="utils.GeofenceTransitionsIntentService"/>
     </application>
 
 </manifest>
