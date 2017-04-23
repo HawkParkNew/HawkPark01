@@ -1,33 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.hawkpark01.LotActivity">
+    android:background="@color/backgroundGray"
+    >
 
-    <TextView
-        android:id="@+id/tv_temp"
-        android:layout_width="1dp"
-        android:layout_height="17dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="@+id/seek_bar"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp" />
-    <SeekBar
-        android:id="@+id/seek_bar"
-        android:layout_width="344dp"
+    <LinearLayout
+        android:id="@+id/hawk_bar_default"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:background="@color/backgroundWhite">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:contentDescription="@string/logo_large"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.2"
+            android:background="@color/backgroundRed"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="bottom|center"
+            android:paddingTop="20dp"
+            android:text="@string/tv_lot_header"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/textBlack"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="@string/tv_lot_header" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/border_black"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/textBlack"
+        android:layout_below="@id/hawk_bar_default"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="20"
-        android:layout_marginLeft="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_temp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:orientation="vertical"
+
+        android:id="@+id/linearLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
 
-</android.support.constraint.ConstraintLayout>
+
+
+        <TextView
+
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="@string/tv_lot_howfull"
+            android:textColor="@color/textWhite"
+            android:textSize="18sp" />
+
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="26dp"
+            android:layout_weight="1.04"
+            android:max="100"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/radio_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/backgroundRed"
+                android:paddingRight="10dp"
+                android:text="@string/radio_empty"
+                android:textColor="@color/textWhite"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/radio_some"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/backgroundRed"
+                android:paddingRight="10dp"
+                android:text="@string/radio_some"
+                android:textColor="@color/textWhite"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/radio_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/backgroundRed"
+                android:paddingRight="10dp"
+                android:text="@string/radio_full"
+                android:textColor="@color/textWhite"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+
+
+        <Button
+            android:id="@+id/btn_lot_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@color/btnBlack"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/btn_submit_lot"
+            android:textColor="@color/textWhite"
+            android:textStyle="bold"
+            android:onClick="submitFeedback"/>
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/border_black"
+        android:layout_above="@+id/linearLayout" />
+
+    <View
+        android:id="@+id/border_red"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/backgroundRed"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
