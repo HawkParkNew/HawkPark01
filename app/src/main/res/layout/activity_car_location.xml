@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundGray"
+    >
+
+    <LinearLayout
+        android:id="@+id/hawk_bar_default"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:background="@color/backgroundWhite">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:contentDescription="@string/logo_large"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.2"
+            android:background="@color/backgroundRed"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="bottom|center"
+            android:paddingTop="20dp"
+            android:text="@string/unknown"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/textBlack"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="@string/unknown" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/border_black"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/textBlack"
+        android:layout_below="@id/hawk_bar_default"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
+        android:layout_above="@id/border_red"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/distanceTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundBlack"/>
+
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/border_black"
+        android:layout_above="@+id/linearLayout" />
+
+    <View
+        android:id="@+id/border_red"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/backgroundRed"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>
