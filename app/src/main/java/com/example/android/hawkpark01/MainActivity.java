@@ -1,5 +1,6 @@
 package com.example.android.hawkpark01;
 
+import com.example.android.hawkpark01.models.UserDB;
 import com.google.android.gms.common.api.GoogleApiClient;
 import android.support.annotation.NonNull;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static android.R.attr.accountType;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 
@@ -45,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mdatabase;
+    private DatabaseReference userDatabaseReference;
     private DatabaseReference r2pDatabaseReference;
-
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
         mdatabase = FirebaseDatabase.getInstance();
         r2pDatabaseReference = mdatabase.getReference("r2pRegister");
+        userDatabaseReference = mdatabase.getReference("users");
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -96,13 +99,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    // get email,Uid
+                    // get email,Uid,name, photoUrl
                     String firebaseID = user.getUid();
                     String email = user.getEmail();
+                    String displayName = user.getDisplayName();
+                    String photoUrl = user.getPhotoUrl().toString();
+                    String R2P = "N";//CURRENT DEFAULT IS N,
+                    //TODO- CHECK IF R2P DETAILS ARE STORED AGAINST DB, IF YES THEN Y ELSE N
+                    //if(r2pDatabaseReference.child(firebaseID).getKey()
+                    writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl,R2P);
+                    //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     i.putExtra(ID_KEY,firebaseID);
-                    i.putExtra(EMAIL_KEY, email);
                     startActivity(i);
                 }
                 else {
@@ -128,8 +137,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-
-
     }
     @Override
     public void onStop() {
@@ -137,6 +144,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+        //TODO CREATE METHOD TO ATTACH AND DETACH DB READ LISTENERS AS REQUIRED
+        //detachDatabaseReadListener();
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -157,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -231,5 +251,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public boolean isR2PRegistered(){
 
         return true;
+    }
+    public static void writeNewUser(DatabaseReference databaseReference, String userId, String name, String email,String photoUrl, String r2p ) {
+        UserDB user = new UserDB(userId,name, email,r2p);
+        databaseReference.child("users").child(userId).setValue(user);
     }
 }

@@ -1,28 +1,28 @@
-package com.example.android.hawkpark01;
+package com.example.android.hawkpark01.models;
 
 /**
  * Created by priya on 4/22/2017.
  */
 
-public class R2PItem {
-    private String email, licence, lPlates, make, model;
+public class R2PDB {
+    private String uId, licence, lPlates, make, model;
 
-    public R2PItem(){
+    public R2PDB(){
     }
-    public R2PItem(String email, String licence, String lPlates, String make, String model){
-        this.email = email;
+    public R2PDB(String uId, String licence, String lPlates, String make, String model){
+        this.uId = uId;
         this.licence = licence;
         this.lPlates = lPlates;
         this.make = make;
         this.model = model;
     }
 
-    public String getEmail() {
-        return email;
+    public String getuId() {
+        return uId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setuId(String uId) {
+        this.uId = uId;
     }
 
     public String getLicence() {

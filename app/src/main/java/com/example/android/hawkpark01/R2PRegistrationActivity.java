@@ -7,19 +7,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.hawkpark01.models.R2PDB;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static android.R.attr.entries;
 import static android.text.TextUtils.isEmpty;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
+import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 
 public class R2PRegistrationActivity extends AppCompatActivity {
     private EditText et_licence,et_lic_plate,et_make,et_model;
     private String lPlates,licence,make, model;
     private FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
     private DatabaseReference r2pDatabaseReference;
-    private R2PItem r2pRegister;
+    private R2PDB r2pRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +50,9 @@ public class R2PRegistrationActivity extends AppCompatActivity {
         }
         //else upload to db
         else{
-            String email = getIntent().getStringExtra(EMAIL_KEY);
-            r2pRegister = new R2PItem(email, licence, lPlates, make, model);
-            r2pDatabaseReference.push().setValue(r2pRegister);
+            String userId = getIntent().getStringExtra(ID_KEY);
+            r2pRegister = new R2PDB(userId, licence, lPlates, make, model);
+            r2pDatabaseReference.push().child(userId).setValue(r2pRegister);
             Intent intent = new Intent(R2PRegistrationActivity.this,HomeActivity.class);
             startActivity(intent);
         }

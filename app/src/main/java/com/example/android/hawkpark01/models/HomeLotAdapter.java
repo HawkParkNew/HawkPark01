@@ -1,4 +1,4 @@
-package com.example.android.hawkpark01;
+package com.example.android.hawkpark01.models;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.example.android.hawkpark01.R;
+import com.example.android.hawkpark01.models.HomeLotDB;
+
 import java.util.List;
 
 
@@ -14,9 +18,9 @@ import java.util.List;
  * Created by priya on 4/21/2017.
  */
 
-public class HomeLotAdapter extends ArrayAdapter<HomeLotItem> {
+public class HomeLotAdapter extends ArrayAdapter<HomeLotDB> {
 
-    public HomeLotAdapter(Context context, int resource, List<HomeLotItem> objects) {
+    public HomeLotAdapter(Context context, int resource, List<HomeLotDB> objects) {
 
         super(context, resource, objects);
 
@@ -31,7 +35,7 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotItem> {
         }
         // Lookup views for data population
         TextView tv_lotName = (TextView) convertView.findViewById(R.id.tv_lot_item);
-        HomeLotItem lotItem = getItem(position);
+        HomeLotDB lotItem = getItem(position);
         int lotStatus = Integer.parseInt(lotItem.getStatus());
         //Set background color based on the lot status
         switch (lotStatus)

@@ -1,7 +1,6 @@
 package com.example.android.hawkpark01;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +10,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
+import com.example.android.hawkpark01.models.HomeLotAdapter;
+import com.example.android.hawkpark01.models.HomeLotDB;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
+import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
 
 
@@ -47,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
 
         // Initialize lotSummary ListView and its adapter
-        final List<HomeLotItem> homeLotItemsList = new ArrayList<>();
+        final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
         mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
         lv_lot_list.setAdapter(mhomeLotAdapter);
         // Set item click listener for the lot view
@@ -55,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Access the row position here to get the correct data item
-                HomeLotItem selectedLot = homeLotItemsList.get(i);
+                HomeLotDB selectedLot = homeLotItemsList.get(i);
                 String name = selectedLot.getName();
                 Intent intent = new Intent(HomeActivity.this,LotActivity.class);
                 intent.putExtra(LOT_KEY,name);
@@ -68,8 +66,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //add to lot list
-                HomeLotItem homeLotItem = dataSnapshot.getValue(HomeLotItem.class);
-                mhomeLotAdapter.add(homeLotItem);
+                HomeLotDB homeLotDB = dataSnapshot.getValue(HomeLotDB.class);
+                mhomeLotAdapter.add(homeLotDB);
             }
 
             @Override
@@ -121,13 +119,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void onButtonClicked_ha(View view) {
-        String email = getIntent().getStringExtra(EMAIL_KEY);
+        String userId = getIntent().getStringExtra(ID_KEY);
         int id = view.getId();
         switch (id){
             case R.id.btn_r2p://directs user to ride2park screen
                 //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
-                intent.putExtra(EMAIL_KEY, email);
+                intent.putExtra(ID_KEY, userId);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to ride2park screen
