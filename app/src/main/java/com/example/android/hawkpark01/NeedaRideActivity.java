@@ -81,7 +81,6 @@ public class NeedaRideActivity extends AppCompatActivity implements AdapterView.
 
                             break;
 
-
     }
 
 

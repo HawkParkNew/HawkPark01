@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundRed">
+
+    <LinearLayout
+        android:id="@+id/hawk_bar_default"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:background="@color/backgroundWhite">
+
+        <ImageView
+            android:id="@+id/logo_login"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:src="@drawable/hawkpark_logo_2" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.2"
+            android:background="@color/backgroundRed"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="bottom|center"
+            android:paddingTop="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/textBlack"
+            android:textSize="12pt"
+            tools:text="@string/need_parking" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:id="@+id/button3"
+            android:background="@drawable/sidemenu_buttonred"
+            android:onClick="sidemenu_click"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/border_black"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/textBlack"
+        android:layout_below="@id/hawk_bar_default"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/border_black"
+        android:orientation="vertical"
+        android:background="@color/backgroundWhite"
+        android:weightSum="1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="386dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Arriving"
+                android:textStyle="bold"
+                android:textSize="10pt"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="8dp"
+                android:background="@color/backgroundWhite"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/backgroundWhite">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arriving_now"
+                    android:text="Now"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/arriving_in"
+                    android:text="Driving - arriving in :"/>
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="10 mins..."
+                    android:id="@+id/arrivingin_txt"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Parking Lot"
+            android:layout_marginLeft="8dp"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Preference 1 :"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"/>
+
+            <Spinner
+                android:layout_width="191dp"
+                android:layout_height="match_parent"
+                android:id="@+id/pref1_spinner"
+                android:spinnerMode="dropdown"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:text="Preference 2 :"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="8dp" />
+
+            <Spinner
+                android:layout_width="191dp"
+                android:layout_height="match_parent"
+                android:id="@+id/pref2_spinner"
+                android:spinnerMode="dropdown"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:text="Preference 3 :"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="8dp"
+                />
+
+            <Spinner
+                android:layout_width="191dp"
+                android:layout_height="match_parent"
+                android:id="@+id/pref3_spinner"
+                android:spinnerMode="dropdown"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seats Available"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textSize="10pt"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5pt"
+            android:weightSum="1">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="One"
+                android:layout_marginLeft="5dp"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Two"
+                android:layout_marginLeft="8dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Three"
+                android:layout_marginLeft="8dp"/>
+            <Button
+                android:layout_width="125dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="30dp"
+                android:text="Submit"
+                android:textColor="@color/textWhite"
+                android:layout_weight="0.77"
+                android:onClick="needparking_submit"/>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CLICK BELOW TO CONNECT"
+            android:background="@color/backgroundRed"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundGray"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username1 is leaving Lot 60 now"
+                android:textColor="@color/textWhite"
+                android:padding="3dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username2 is currently waiting for CarParc "
+                android:textColor="@color/textWhite"
+                android:padding="3dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Username1 is leaving lot 23N now"
+                android:textColor="@color/textWhite"
+                android:padding="3dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:textColor="@color/textWhite"
+                android:padding="3dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="...."
+                android:textColor="@color/textWhite"
+                android:padding="3dp"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

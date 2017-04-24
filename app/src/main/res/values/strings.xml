@@ -54,5 +54,80 @@
     <string name="licence_err_r2p">Incorrect length, please try again.</string>
     <string name="header_settings_activity">Personalize</string>
     <string name="btn_home">To Home</string>
+    <string name="leaving">Leaving</string>
+    <string name="now">Now</string>
+    <string name="leaving_in">Leaving in</string>
+    <string name="parking_lot">Parking Lot</string>
+    <string name="parked_in">Parked In</string>
+    <string name="pick_up_location">Pick up Location</string>
+    <string name="number_of_passengers">Number of Passengers</string>
+    <string name="_1_passenger">1 passenger</string>
+    <string name="_2_passengers">2 passengers</string>
+    <string name="_3_passengers">3 passengers</string>
+    <string name="submit">Submit</string>
+    <string name="click_below_to_connect">CLICK BELOW TO CONNECT</string>
+    <string name="username2_is_currently_waiting_for_carparc">Username2 is currently waiting for CarParc</string>
+    <string name="username3_is_leaving_lot_22_in_10_minutes">Username3 is leaving Lot 22 in 10 minutes</string>
+    <string name="username1_is_leaving_lot_60_now">Username1 is leaving lot 60 now</string>
+    <string name="example_txt1">...</string>
+    <string name="example_txt2">....</string>
+    <string name="needa_ride">NEED A RIDE</string>
+    <string name="mintuteHint">10 mins..</string>
+    <string name="need_parking">NEED PARKING</string>
     <!--GOOGLE MAPS API KEY-->
+
+
+
+    <string-array name="parkingLot_array">
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+        <item>Lot 61</item>
+        <item>Lot 23N</item>
+        <item>CarPark Diem</item>
+        <item>Lot 22</item>
+        <item>Lot 21</item>
+    </string-array>
+
+
+    <string-array name="pickup_array">
+        <item>In front of Blanton Hall</item>
+        <item>In front of the Rec Center</item>
+        <item>In front of Lot 25</item>
+        <item>In front of Red Hawk Deck</item>
+    </string-array>
+
+    <string-array name="pref1_array">
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+        <item>Lot 61</item>
+        <item>Lot 23N</item>
+        <item>CarPark Diem</item>
+        <item>Lot 22</item>
+        <item>Lot 21</item>
+    </string-array>
+
+    <string-array name="pref2_array">
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+        <item>Lot 61</item>
+        <item>Lot 23N</item>
+        <item>CarPark Diem</item>
+        <item>Lot 22</item>
+        <item>Lot 21</item>
+    </string-array>
+
+    <string-array name="pref3_array">
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+        <item>Lot 61</item>
+        <item>Lot 23N</item>
+        <item>CarPark Diem</item>
+        <item>Lot 22</item>
+        <item>Lot 21</item>
+    </string-array>
+
+
+
+
+
 </resources>
