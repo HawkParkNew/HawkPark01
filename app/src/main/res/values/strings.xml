@@ -30,6 +30,28 @@
     <string name="header_home">Parking Lot Status</string>
     <string name="web_client_id">681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com</string>
 
+    //niko's activities
+    <string name="header_wmc">WHERES MY CAR?</string>
+    <string name="header_ride_connect">RIDE CONNECT</string>
+    <string name="btn_submit_lot">Submit</string>
+    <string name="tv_lot_header">Parking Lot</string>
+    <string name="tv_lot_howfull">"How full is this lot?"</string>
+    <string name="tv_wmc_distance">"Distance to car: "</string>
+    <string name="tv_r2c_connect"><u>You connected with: </u></string>
+    <string name="tv_r2c_location"><u>Meeting Location: </u></string>
+    <string name="tv_r2c_eta"><u>ETA: </u></string>
+    <string name="radio_empty">Empty</string>
+    <string name="radio_some">Some Spots</string>
+    <string name="radio_full">Full</string>
+
+    <!-- CARLOCATION STRINGS -->
+    <string name="unknown">Unknown Location</string>
+    <string name="carparc_diem">Parking Lot: CarParc Diem</string>
+    <string name="lot_24">Parking Lot: 24</string>
+    <string name="lot_60">Parking Lot: 60</string>
+    <string name="time">Walking time to car: </string>
+    <string name="distance">Walking distance to car: </string>
+
     <!-- GEOFENCING STRINGS -->
     <string name="geofence_transition_invalid_type">invalid %1$d</string>
     <string name="geofence_transition_entered">enter</string>

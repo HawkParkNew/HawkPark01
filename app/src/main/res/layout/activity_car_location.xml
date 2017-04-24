@@ -30,7 +30,6 @@
             android:fontFamily="sans-serif-condensed"
             android:gravity="bottom|center"
             android:paddingTop="20dp"
-            android:text="@string/unknown"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/textBlack"
@@ -45,34 +44,24 @@
         android:layout_height="10dp"
         android:background="@color/textBlack"
         android:layout_below="@id/hawk_bar_default"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/linearLayout"
-        android:layout_above="@id/border_red"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:id="@+id/distanceTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundBlack"/>
-
-    </LinearLayout>
-
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/border_black"
-        android:layout_above="@+id/linearLayout" />
-
+        android:layout_above="@+id/distanceTime" />
+    <TextView
+        android:id="@+id/distanceTime"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Placeholder"
+        android:textSize="18sp"
+        android:textColor="@color/textWhite"
+        android:layout_above="@+id/border_red"
+        android:background="@color/backgroundBlack"/>
     <View
         android:id="@+id/border_red"
         android:layout_width="match_parent"

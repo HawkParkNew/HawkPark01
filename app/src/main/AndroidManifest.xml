@@ -32,7 +32,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyD-kDhPK0cZF-qb6-bVonH7h9pgsKfXzns" />
 
         <activity android:name=".R2PRegistrationActivity" />
         <activity android:name=".SettingsActivity" />
@@ -40,7 +40,7 @@
 
         <service android:name="utils.GeofenceTransitionsIntentService" />
 
-        <activity android:name=".CarLocation"></activity>
+        <activity android:name=".CarLocation"/>
     </application>
 
 </manifest>
