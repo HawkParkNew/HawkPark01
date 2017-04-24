@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "342556280871",
-    "firebase_url": "https://hawkpark01-85874.firebaseio.com",
-    "project_id": "hawkpark01-85874",
-    "storage_bucket": "hawkpark01-85874.appspot.com"
+    "project_number": "681329975510",
+    "firebase_url": "https://hawkpark01-2017.firebaseio.com",
+    "project_id": "hawkpark01-2017",
+    "storage_bucket": "hawkpark01-2017.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:342556280871:android:2b2a956b0b7076ea",
+        "mobilesdk_app_id": "1:681329975510:android:2b2a956b0b7076ea",
         "android_client_info": {
           "package_name": "com.example.android.hawkpark01"
         }
       },
       "oauth_client": [
         {
-          "client_id": "342556280871-oqf6m3oj6lbmlo2297hqjq3quodh920m.apps.googleusercontent.com",
+          "client_id": "681329975510-292ft566p2r93sejdepdul8i7s43nus5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.android.hawkpark01",
@@ -23,13 +23,37 @@
           }
         },
         {
-          "client_id": "342556280871-doamgr75g9fc79qielsgvetl3mgrfk0r.apps.googleusercontent.com",
+          "client_id": "681329975510-fkf4qc74ncj351j1eigbnqob2vnen2d2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hawkpark01",
+            "certificate_hash": "1842410fab13bda87940108089a92c3cc4aae482"
+          }
+        },
+        {
+          "client_id": "681329975510-2pk4kdau2lsb2c7kuef4m2169rea2gpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hawkpark01",
+            "certificate_hash": "eff48a28b73b8fd33dbe60c74c2e29f0a077b27f"
+          }
+        },
+        {
+          "client_id": "681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "681329975510-khoilpecjf8otnuvjshlrkn70s4eqmgi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.hawkpark01",
+            "certificate_hash": "b86eae3fad1b39133187797e6d847ca191d5a880"
+          }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC9ln1FSA2sIvFu1YpY8oGq3ADC4AtTj18"
+          "current_key": "AIzaSyD-kDhPK0cZF-qb6-bVonH7h9pgsKfXzns"
         }
       ],
       "services": {
@@ -40,7 +64,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "342556280871-doamgr75g9fc79qielsgvetl3mgrfk0r.apps.googleusercontent.com",
+              "client_id": "681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
