@@ -42,13 +42,9 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
     RadioGroup rg;
     int fback;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         if(googleServicesAvailable()) {
             setContentView(R.layout.activity_lot);
@@ -61,9 +57,6 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         full = (RadioButton) findViewById(R.id.radio_full);
         submit = (Button) findViewById(R.id.btn_lot_submit);
         rg = (RadioGroup)findViewById(R.id.rg);
-
-
-
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -81,12 +74,6 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         });
-
-
-
-
-
-
     }
 
     public void submitFeedback (View view){
@@ -105,21 +92,15 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         }return false;
     }
 
-
-
     private void initMap() {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
     }
 
-
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mgoogleMap = googleMap;
         String currentLot = getIntent().getStringExtra(LOT_KEY);
-
 
         if(currentLot == "CarParc Diem" ) {
             goToLocationZoom(GeofenceConstants.carparcDiem, 18);
@@ -140,7 +121,6 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
                     .position(GeofenceConstants.lot60);
             mgoogleMap.addMarker(options);
         }
-
     }
 
     private void goToLocation(double lat, double lng) {
