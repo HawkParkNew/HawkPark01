@@ -46,12 +46,16 @@
     <string name="radio_full">Full</string>
 
     <!-- CARLOCATION STRINGS -->
+    <string name="set_car_location">Set Car Location</string>
+    <string name="car_location_saved">Car Location Saved</string>
     <string name="unknown">Unknown Location</string>
     <string name="carparc_diem">Parking Lot: CarParc Diem</string>
     <string name="lot_24">Parking Lot: 24</string>
     <string name="lot_60">Parking Lot: 60</string>
     <string name="time">Walking time to car: </string>
     <string name="distance">Walking distance to car: </string>
+    <string name="car_lat_position">Lat</string>
+    <string name="car_lng_position">Lng</string>
 
     <!-- GEOFENCING STRINGS -->
     <string name="geofence_transition_invalid_type">invalid %1$d</string>
@@ -77,5 +81,12 @@
     <string name="licence_err_r2p">Incorrect length, please try again.</string>
     <string name="header_settings_activity">Personalize</string>
     <string name="btn_home">To Home</string>
+    <string name="lot_name_24">Lot 24</string>
+    <string name="lot_name_carparc">CarParc Diem</string>
+    <string name="lot_name_60">Lot 60</string>
+    <string name="x_find_location_toast">Cannot find location</string>
+    <string name="x_connect_plat_services_toast">Error connecting to play services</string>
+    <string name="submission_received_toast">Submission Received:</string>
+    <string name="select_ffedback_option_toast">Please select a Feedback option.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>
