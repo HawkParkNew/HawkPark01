@@ -77,5 +77,12 @@
     <string name="licence_err_r2p">Incorrect length, please try again.</string>
     <string name="header_settings_activity">Personalize</string>
     <string name="btn_home">To Home</string>
+    <string name="lot_name_24">Lot 24</string>
+    <string name="lot_name_carparc">CarParc Diem</string>
+    <string name="lot_name_60">Lot 60</string>
+    <string name="x_find_location_toast">Cannot find location</string>
+    <string name="x_connect_plat_services_toast">Error connecting to play services</string>
+    <string name="submission_received_toast">Submission Received:</string>
+    <string name="select_ffedback_option_toast">Please select a Feedback option.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>

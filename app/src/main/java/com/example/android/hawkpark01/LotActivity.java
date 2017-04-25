@@ -105,7 +105,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         if(fback.equals("0")) {
         //    Intent intent = new Intent (LotActivity.this, LotActivity.class);
         //    startActivity(intent);
-            Toast.makeText(this, "Please select a Feedback option.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.select_ffedback_option_toast), Toast.LENGTH_LONG).show();
         }
         else {
 
@@ -119,7 +119,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
             startActivity(intent);
 
 
-            Toast.makeText(this, "Submission Received: " + fback, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.submission_received_toast) + fback, Toast.LENGTH_LONG).show();
 
         }
     }
@@ -132,51 +132,45 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
             Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
             dialog.show();
         }else {
-            Toast.makeText(this, "error connecting to play services", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.x_connect_plat_services_toast), Toast.LENGTH_LONG).show();
         }return false;
     }
-
-
 
     private void initMap() {
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(this);
     }
 
-
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mgoogleMap = googleMap;
         String currentLot = getIntent().getStringExtra(LOT_KEY);
         String cpd = "CarParc Diem";
-        String lot24 = "lot 24";
+        String lot24 = "Lot 24";
         String lot60 = "Lot 60";
 
 
         if(currentLot.equals(cpd) ) {
             goToLocationZoom(GeofenceConstants.carparcDiem, 18);
             MarkerOptions options = new MarkerOptions()
-                    .title("CarParc Diem")
+                    .title(getString(R.string.lot_name_carparc))
                     .position(GeofenceConstants.carparcDiem);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot24)){
             goToLocationZoom(GeofenceConstants.lot24, 18);
             MarkerOptions options = new MarkerOptions()
-                    .title("Lot 24")
+                    .title(getString(R.string.lot_name_24))
                     .position(GeofenceConstants.lot24);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot60)){
             goToLocationZoom(GeofenceConstants.lot60, 18);
             MarkerOptions options = new MarkerOptions()
-                    .title("Lot 60")
+                    .title(getString(R.string.lot_name_60))
                     .position(GeofenceConstants.lot60);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else {
-            Toast.makeText(this, "Cannot find location", Toast.LENGTH_LONG).show();;
+            Toast.makeText(this, getString(R.string.x_find_location_toast), Toast.LENGTH_LONG).show();;
         }
-
     }
 
     private void goToLocation(double lat, double lng) {
