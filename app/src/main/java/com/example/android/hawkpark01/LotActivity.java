@@ -151,7 +151,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         mgoogleMap = googleMap;
         String currentLot = getIntent().getStringExtra(LOT_KEY);
         String cpd = "CarParc Diem";
-        String lot24 = "lot 24";
+        String lot24 = "Lot 24";
         String lot60 = "Lot 60";
 
 
@@ -177,12 +177,6 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
             Toast.makeText(this, "Cannot find location", Toast.LENGTH_LONG).show();;
         }
 
-    }
-
-    private void goToLocation(double lat, double lng) {
-        LatLng ll = new LatLng(lat, lng);
-        CameraUpdate update = CameraUpdateFactory.newLatLng(ll);
-        mgoogleMap.moveCamera(update);
     }
 
     private void goToLocationZoom( LatLng latlng, int zoom) {
