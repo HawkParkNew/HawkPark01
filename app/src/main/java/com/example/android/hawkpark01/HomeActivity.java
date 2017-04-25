@@ -414,8 +414,6 @@ public class HomeActivity extends AppCompatActivity implements
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.car_lat_position), lat);
         editor.putString(getString(R.string.car_lng_position), lng);
-        editor.putString("last_lat",String.valueOf(mLastLocation.getLatitude()));
-        editor.putString("last_lng",String.valueOf(mLastLocation.getLongitude()));
         editor.commit();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
