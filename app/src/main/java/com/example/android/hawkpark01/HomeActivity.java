@@ -4,18 +4,23 @@ package com.example.android.hawkpark01;
 import android.*;
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -80,11 +85,14 @@ public class HomeActivity extends AppCompatActivity implements
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
     protected ArrayList<Geofence> mGeofenceList;
+    private String lat;
+    private String lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
         final String userId = getIntent().getStringExtra(ID_KEY);
 
@@ -200,18 +208,29 @@ public class HomeActivity extends AppCompatActivity implements
                 Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
                 startActivity(i);
                 break;
+            case R.id.btn_car_location:
+                SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("last_lat",lat);
+                editor.putString("last_lng",lng);
+                editor.commit();
+
+                Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                startActivity(intentCar);
+                break;
         }
 
     }
 
-    /*---------------------------------------------------------------------
+    /*---------------------------------------------------------------------*
         |   RUN TIME PERMISSION REQUEST / CHECK
         |   CHECK IF THE PHONE HAS GPS SERVICES ENABLE
         |       IF NOT, PROMPT USER TO ENABLE IT
         |   ADD LOCATION SERVICES
         |   ADD GEOFENCES
-        *-------------------------------------------------------------------*/
+        *------------------------------------------------------------------*/
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -309,8 +328,8 @@ public class HomeActivity extends AppCompatActivity implements
 
     @Override
     public void onLocationChanged(Location location) {
-        //  TRIGGERED WHEN LAST LOCATION != CURRENT LOCATION
-        //  DO SOMETHING
+        lat = (String.valueOf(location.getLatitude()));
+        lng = (String.valueOf(location.getLongitude()));
     }
 
     @Override
@@ -344,11 +363,11 @@ public class HomeActivity extends AppCompatActivity implements
 
     public void onResult(Status status) {
         if (status.isSuccess()) {
-            Toast.makeText(
+            /*Toast.makeText(
                     this,
                     "Geofences added",
                     Toast.LENGTH_SHORT
-            ).show();
+            ).show();*/
         } else {
             String errorMessage = GeofenceErrorMessages.getErrorString(this, status.getStatusCode());
             Log.e(LOG_TAG, errorMessage);
@@ -381,5 +400,21 @@ public class HomeActivity extends AppCompatActivity implements
         builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
         builder.addGeofences(mGeofenceList);
         return builder.build();
+    }
+
+    /*---------------------------------------------------------------------*
+        |   onClick TO SET CAR LOCATION
+        |   WRITE TO SHARED PREFERENCES
+     *---------------------------------------------------------------------*/
+
+    public void setCarLocation(View view) {
+
+        SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.car_lat_position), lat);
+        editor.putString(getString(R.string.car_lng_position), lng);
+        editor.commit();
+        Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
 }

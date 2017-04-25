@@ -144,6 +144,30 @@
             android:onClick="onButtonClicked_ha"
             android:textColor="@color/textWhite"/>
 
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/btn_set_car_location"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_black"
+            android:padding="4dp"
+            android:text="@string/set_car_location"
+            android:onClick="setCarLocation"
+            android:textColor="@color/textWhite"/>
+
+        <ImageButton
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/btn_car_location"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_black"
+            android:padding="4dp"
+            android:src="@mipmap/wheres_my_car"
+            android:onClick="onButtonClicked_ha"
+            android:textColor="@color/textWhite"/>
+
     </LinearLayout>
     <View
         android:id="@+id/border_red"
