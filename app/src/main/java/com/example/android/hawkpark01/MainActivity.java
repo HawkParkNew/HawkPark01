@@ -1,6 +1,8 @@
 package com.example.android.hawkpark01;
 
+import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.UserDB;
+import com.example.android.hawkpark01.utils.SpaceCalculator;
 import com.google.android.gms.common.api.GoogleApiClient;
 import android.support.annotation.NonNull;
 import android.content.Intent;
@@ -28,15 +30,19 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.R.attr.accountType;
+import static com.example.android.hawkpark01.utils.GeofenceConstants.lot60;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 
 /**
- * code modified from-
+ * google sign-in code modified from-
  * https://firebase.google.com/docs/auth/android/google-signin
  */
 
@@ -49,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseDatabase mdatabase;
     private DatabaseReference userDatabaseReference;
     private DatabaseReference r2pDatabaseReference;
+    private DatabaseReference mlotSummaryDBRef;
+    private ValueEventListener mLotEventListener;
+
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -64,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         mdatabase = FirebaseDatabase.getInstance();
         r2pDatabaseReference = mdatabase.getReference("r2pRegister");
         userDatabaseReference = mdatabase.getReference("users");
+        mlotSummaryDBRef = mdatabase.getReference("lot-summary");
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -109,6 +119,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     //if(r2pDatabaseReference.child(firebaseID).getKey()
                     writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl,R2P);
                     //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
+                    //check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
+
+                    mLotEventListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                           // HomeLotDB lotDB = ;
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+
+                    SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
+                    String currentStatus = lot60.getStatus();
+
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     i.putExtra(ID_KEY,firebaseID);

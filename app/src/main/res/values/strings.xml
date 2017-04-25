@@ -33,6 +33,7 @@
     //niko's activities
     <string name="header_wmc">WHERES MY CAR?</string>
     <string name="header_ride_connect">RIDE CONNECT</string>
+    <string name="header_lot">""</string>
     <string name="btn_submit_lot">Submit</string>
     <string name="tv_lot_header">Parking Lot</string>
     <string name="tv_lot_howfull">"How full is this lot?"</string>

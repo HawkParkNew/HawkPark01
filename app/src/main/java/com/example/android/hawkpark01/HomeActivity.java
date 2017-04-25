@@ -59,7 +59,6 @@ import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
 
-
 public class HomeActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -111,13 +110,11 @@ public class HomeActivity extends AppCompatActivity implements
                 HomeLotDB selectedLot = homeLotItemsList.get(i);
                 String name = selectedLot.getName();
                 Intent intent = new Intent(HomeActivity.this,LotActivity.class);
-                intent.putExtra(LOT_KEY,name);
                 intent.putExtra(ID_KEY,userId);
+                intent.putExtra(LOT_KEY,name);
                 startActivity(intent);
             }
         });
-
-
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -157,21 +154,16 @@ public class HomeActivity extends AppCompatActivity implements
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-
             } else {
-
                 // No explanation needed, we can request the permission.
-
                 ActivityCompat.requestPermissions(this,
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
             }
         }
-
         mGeofenceList = new ArrayList<Geofence>();
         populateGeofenceList();
         buildGoogleApiClient();
@@ -191,7 +183,6 @@ public class HomeActivity extends AppCompatActivity implements
                     break;
             case R.id.radio_btn_availability_ha:
                 if (checked)
-
                     // Sort ListView by availability
                     break;
             case R.id.radio_btn_favorites_ha:
@@ -200,7 +191,6 @@ public class HomeActivity extends AppCompatActivity implements
                     break;
         }
     }
-
 
     public void onButtonClicked_ha(View view) {
         String userId = getIntent().getStringExtra(ID_KEY);
@@ -212,7 +202,7 @@ public class HomeActivity extends AppCompatActivity implements
                 intent.putExtra(ID_KEY, userId);
                 startActivity(intent);
                 break;
-            case R.id.btn_settings://directs user to ride2park screen
+            case R.id.btn_settings://directs user to settings screen
                 //change this
                 Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
                 startActivity(i);
