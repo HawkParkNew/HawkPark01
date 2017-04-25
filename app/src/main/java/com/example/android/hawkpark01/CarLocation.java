@@ -189,13 +189,15 @@ public class CarLocation extends AppCompatActivity implements
     }
 
     private void addMarkers(LatLng car, LatLng person){
-        Marker carMarker = mGoogleMap.addMarker(new MarkerOptions()
+        MarkerOptions carMarker = new MarkerOptions()
                 .position(car)
-                .title("Car Location"));
+                .title("Car Location");
+        mGoogleMap.addMarker(carMarker).showInfoWindow();
 
-        Marker lastKnown = mGoogleMap.addMarker(new MarkerOptions()
+        MarkerOptions lastKnown = new MarkerOptions()
                 .position(person)
-                .title("Your Location"));
+                .title("You Are Here");
+        mGoogleMap.addMarker(lastKnown);
     }
 
     @Override
