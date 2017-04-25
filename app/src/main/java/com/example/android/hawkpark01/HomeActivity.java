@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.preference.Preference;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -208,6 +209,13 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(i);
                 break;
             case R.id.btn_car_location:
+                SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("last_lat",lat);
+                editor.putString("last_lng",lng);
+                editor.commit();
+
                 Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
                 startActivity(intentCar);
                 break;
@@ -406,8 +414,6 @@ public class HomeActivity extends AppCompatActivity implements
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.car_lat_position), lat);
         editor.putString(getString(R.string.car_lng_position), lng);
-        editor.putString("last_lat",String.valueOf(mLastLocation.getLatitude()));
-        editor.putString("last_lng",String.valueOf(mLastLocation.getLongitude()));
         editor.commit();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
