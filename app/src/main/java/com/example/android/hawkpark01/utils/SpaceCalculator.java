@@ -15,13 +15,14 @@ import java.util.TimeZone;
 
 public class SpaceCalculator {
 
+    //Lot status - based on assumptions- used in the absence of user feedback- customized by lot
     private String[] cpWeekday={"1","2","3","2","1","1"};
     private String[] cpHoliday={"1","1","1","2","2","2"};
     private String[] lot24Weekday={"1","2","3","1","1","1"};
     private String[] lot24Holiday={"1","1","1","2","1","1"};
     private String[] lot60Weekday={"1","2","2","1","1","1"};
     private String[] lot60Holiday={"1","1","1","1","1","1"};
-
+    //Time intervals for each status
     private String[] time ={"00:00:00","07:30:00","08:30:00","13:00:00","17:00:00", "23:59:59" };
     private String[] currentCalendar;
     private String currentTimeString;
@@ -31,14 +32,14 @@ public class SpaceCalculator {
         currentCalendar = getCalendar(lotname);
         currentTimeString = getCurrentTime();
         status = getLotStatus(currentCalendar,currentTimeString);
-
-
     }
 
     public SpaceCalculator(String lotname, String currentStatus, String feedback){
         currentCalendar = getCalendar(lotname);
         currentTimeString = getCurrentTime();
         status = getLotStatus(currentCalendar,currentTimeString);
+
+        //TODO-- use current status and feedback to compute a new value for the lot status
 
     }
 

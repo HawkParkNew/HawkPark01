@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     mLotEventListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            //HomeLotDB lotDB = dataSnapshot.getChildren();
+                           // HomeLotDB lotDB = ;
                         }
 
                         @Override
