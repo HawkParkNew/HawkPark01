@@ -45,25 +45,22 @@
     <string name="radio_full">Full</string>
 
     <!-- CARLOCATION STRINGS -->
+    <string name="set_car_location">Set Car Location</string>
+    <string name="car_location_saved">Car Location Saved</string>
     <string name="unknown">Unknown Location</string>
     <string name="carparc_diem">Parking Lot: CarParc Diem</string>
     <string name="lot_24">Parking Lot: 24</string>
     <string name="lot_60">Parking Lot: 60</string>
     <string name="time">Walking time to car: </string>
     <string name="distance">Walking distance to car: </string>
+    <string name="car_lat_position">Lat</string>
+    <string name="car_lng_position">Lng</string>
 
     <!-- GEOFENCING STRINGS -->
     <string name="geofence_transition_invalid_type">invalid %1$d</string>
     <string name="geofence_transition_entered">enter</string>
     <string name="geofence_transition_exited">exit</string>
     <string name="unknown_geofence_transition">unknown</string>
-    <!-- CAR LOCATION STRINGS -->
-    <string name="unknown">Unknown Location</string>
-    <string name="carparc_diem">Parking Lot: CarParc Diem</string>
-    <string name="lot_24">Parking Lot: 24</string>
-    <string name="lot_60">Parking Lot: 60</string>
-    <string name="time">Walking time to car: </string>
-    <string name="distance">Walking distance to car: </string>
     <!-- HOMEACTIVITY STRINGS -->
     <string name="radio_btn_distance_ha">Distance</string>
     <string name="radio_btn_availability_ha">Availability</string>
