@@ -182,12 +182,6 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void goToLocation(double lat, double lng) {
-        LatLng ll = new LatLng(lat, lng);
-        CameraUpdate update = CameraUpdateFactory.newLatLng(ll);
-        mgoogleMap.moveCamera(update);
-    }
-
     private void goToLocationZoom( LatLng latlng, int zoom) {
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latlng, zoom);
         mgoogleMap.moveCamera(update);
