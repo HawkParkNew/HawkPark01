@@ -87,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
+        final String userId = getIntent().getStringExtra(ID_KEY);
 
         final String userId = getIntent().getStringExtra(ID_KEY);
 
@@ -107,6 +108,7 @@ public class HomeActivity extends AppCompatActivity implements
                 Intent intent = new Intent(HomeActivity.this,LotActivity.class);
                 intent.putExtra(ID_KEY,userId);
                 intent.putExtra(LOT_KEY,name);
+                intent.putExtra(ID_KEY,userId);
                 startActivity(intent);
             }
         });
