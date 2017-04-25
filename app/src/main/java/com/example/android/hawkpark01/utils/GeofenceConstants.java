@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 public class GeofenceConstants {
     public void GeofenceConstants(){}
 
-    public static final LatLng carparcDiem = new LatLng(40.865314, - 74.197107);
+    public static final LatLng carparcDiem = new LatLng(40.865314, -74.197107);
     public static final LatLng lot24 = new LatLng(40.866385, -74.196641);
     public static final LatLng lot60 = new LatLng(40.872985, -74.198942);
 
