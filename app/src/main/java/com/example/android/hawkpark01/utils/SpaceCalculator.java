@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static android.content.Context.UI_MODE_SERVICE;
+import static com.example.android.hawkpark01.LotActivity.getCurrentTime;
+
 /**
  * Created by priya on 4/24/2017.
  */
@@ -30,7 +33,7 @@ public class SpaceCalculator {
 
     public SpaceCalculator(String lotname) {
         currentCalendar = getCalendar(lotname);
-        currentTimeString = getCurrentTime();
+        currentTimeString = Utils.getCurrentTime();
         status = getLotStatus(currentCalendar,currentTimeString);
     }
 
@@ -92,12 +95,7 @@ public class SpaceCalculator {
         }
         return currCal;
     }
-    //Gets current time in HH(hours 0-23):mm:ss format
-    private String getCurrentTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        return sdf.format(Calendar.getInstance().getTime());
 
-    }
     //Gets the status of the lot specified based on the current time from the
     //assumptions calendar
     private String getLotStatus(String[] currentCalendar, String currentTime){

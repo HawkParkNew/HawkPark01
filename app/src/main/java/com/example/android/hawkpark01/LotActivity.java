@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.hawkpark01.models.FeedBackDB;
+import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.R2PDB;
 import com.example.android.hawkpark01.utils.GeofenceConstants;
 import com.google.android.gms.common.ConnectionResult;
@@ -37,6 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
@@ -53,9 +55,11 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
     RadioGroup rg;
     String fback = "0" ;
     private String lotname, feedback , time;
-    private FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
+    private FirebaseDatabase mdatabase;
     private DatabaseReference feedbackDatabaseReference;
+    private DatabaseReference mlotSummaryDBRef;
     private FeedBackDB feedBack;
+    private HomeLotDB mhomeLotDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mdatabase = FirebaseDatabase.getInstance();
         feedbackDatabaseReference = mdatabase.getReference("feedbackDB");
+        mlotSummaryDBRef = mdatabase.getReference("lot-summary");
+
 
         if(googleServicesAvailable()) {
             setContentView(R.layout.activity_lot);
@@ -115,9 +121,11 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
 
             feedBack = new FeedBackDB(userId, lotname, fback, time);
             feedbackDatabaseReference.push().child(userId).setValue(feedBack);
+            mhomeLotDB = new HomeLotDB(lotname,fback);
+            mlotSummaryDBRef.child(lotname).setValue(mhomeLotDB);
+
             Intent intent = new Intent(LotActivity.this, HomeActivity.class);
             startActivity(intent);
-
 
             Toast.makeText(this, getString(R.string.submission_received_toast) + fback, Toast.LENGTH_LONG).show();
 
@@ -151,6 +159,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         if(currentLot.equals(cpd) ) {
+
             goToLocationZoom(GeofenceConstants.carparcDiem, 18);
             MarkerOptions options = new MarkerOptions()
                     .title(getString(R.string.lot_name_carparc))
@@ -169,7 +178,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
                     .position(GeofenceConstants.lot60);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else {
-            Toast.makeText(this, getString(R.string.x_find_location_toast), Toast.LENGTH_LONG).show();;
+            Toast.makeText(this, getString(R.string.x_find_location_toast), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -185,9 +194,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
     }
     //Taken from Week11FireBaseChat Demo
     public static String getCurrentTime() {
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm:ss", Locale.US);
         return format.format(Calendar.getInstance().getTime());
     }
-
-
 }

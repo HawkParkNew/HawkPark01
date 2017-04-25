@@ -34,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.R.attr.accountType;
@@ -121,20 +122,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
                     //check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
 
-                    mLotEventListener = new ValueEventListener() {
+                 /**   SpaceCalculator lot24Calc = new SpaceCalculator("Lot 24");
+                    final Query lot24Query = mlotSummaryDBRef.orderByChild("Lot 24");
+                    lot24Query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                           // HomeLotDB lotDB = ;
+
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
-                    };
+                    });
 
                     SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
-                    String currentStatus = lot60.getStatus();
+                    String currentStatus = lot60.getStatus(); **/
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
