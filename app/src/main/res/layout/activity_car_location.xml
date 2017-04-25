@@ -44,6 +44,19 @@
         android:layout_height="10dp"
         android:background="@color/textBlack"
         android:layout_below="@id/hawk_bar_default"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/distanceTime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundBlack"/>
+
+    </LinearLayout>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.google.android.gms.maps.MapFragment"
@@ -68,6 +81,5 @@
         android:layout_height="10dp"
         android:background="@color/backgroundRed"
         android:layout_alignParentBottom="true"/>
-
-
+  
 </RelativeLayout>
