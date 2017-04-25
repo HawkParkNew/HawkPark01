@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.icu.text.DecimalFormat;
 import android.location.Location;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -58,7 +59,7 @@ public class CarLocation extends AppCompatActivity implements
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
     Location mLastLocation,carLocation;
-    LatLng mLatLng;
+    LatLng mCarLatLng, mLastLatLng;
     TextView distance;
 
     @Override
@@ -134,19 +135,24 @@ public class CarLocation extends AppCompatActivity implements
         mGoogleMap = googleMap;
         SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
-        String tempLat = sharedPref.getString(getString(R.string.car_lat_position), "");
-        String tempLng = sharedPref.getString(getString(R.string.car_lng_position),"");
+        String tempCarLat = sharedPref.getString(getString(R.string.car_lat_position), "");
+        String tempCarLng = sharedPref.getString(getString(R.string.car_lng_position),"");
+        String tempPersonLat = sharedPref.getString("last_lat","");
+        String tempPersonLng = sharedPref.getString("last_lng","");
 
-        double lat = Double.parseDouble(tempLat);
-        double lng = Double.parseDouble(tempLng);
+        double carLat = Double.parseDouble(tempCarLat);
+        double carLng = Double.parseDouble(tempCarLng);
+        double lastLat = Double.parseDouble(tempPersonLat);
+        double lastLng = Double.parseDouble(tempPersonLng);
 
-        mLatLng = new LatLng(lat,lng);
+        mCarLatLng = new LatLng(carLat,carLng);
+        mLastLatLng = new LatLng(lastLat,lastLng);
 
         carLocation = new Location("carLocation");
-        carLocation.setLatitude(lat);
-        carLocation.setLongitude(lng);
+        carLocation.setLatitude(carLat);
+        carLocation.setLongitude(carLng);
 
-        goToLocationZoom(mLatLng,18);
+        goToLocationZoom(mCarLatLng,mLastLatLng,18);
     }
 
     @Override
@@ -176,12 +182,20 @@ public class CarLocation extends AppCompatActivity implements
         }
     }
 
-    private void goToLocationZoom(LatLng latLng, int zoom) {
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng, zoom);
-        Marker carMarker = mGoogleMap.addMarker(new MarkerOptions()
-                                                    .position(latLng)
-                                                    .title("Car Location"));
+    private void goToLocationZoom(LatLng car, LatLng person, int zoom) {
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(car, zoom);
+        addMarkers(car, person);
         mGoogleMap.moveCamera(update);
+    }
+
+    private void addMarkers(LatLng car, LatLng person){
+        Marker carMarker = mGoogleMap.addMarker(new MarkerOptions()
+                .position(car)
+                .title("Car Location"));
+
+        Marker lastKnown = mGoogleMap.addMarker(new MarkerOptions()
+                .position(person)
+                .title("Your Location"));
     }
 
     @Override
@@ -190,8 +204,9 @@ public class CarLocation extends AppCompatActivity implements
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            String carDistance = String.valueOf(String.format("%.2f",mLastLocation.distanceTo(carLocation)/1609.344));
 
-            distance.setText(String.valueOf(mLastLocation.distanceTo(carLocation)));
+            distance.setText("Distance to car: "+carDistance+" miles");
         }
     }
 
