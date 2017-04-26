@@ -69,8 +69,7 @@
         android:textColor="@color/textWhite"
         android:layout_above="@+id/border_red"
         android:background="@color/backgroundBlack"
-        android:drawableLeft="@mipmap/walking"
-        android:gravity="center"/>
+        android:drawableLeft="@mipmap/walking" />
     <View
         android:id="@+id/border_red"
         android:layout_width="match_parent"
