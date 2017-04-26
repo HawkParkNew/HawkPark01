@@ -28,9 +28,9 @@ public class R2PRegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_r2p_registration);
+
+        //init session manager
         session = new SessionManager(getApplicationContext());
-
-
 
         //init db
         FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
@@ -61,22 +61,20 @@ public class R2PRegistrationActivity extends AppCompatActivity {
             // userId
             String userId = user.get(SessionManager.KEY_USERID);
             R2PDB r2pRegister = new R2PDB(userId, licence, lPlates, make, model);
-            r2pDatabaseReference.push().child(userId).setValue(r2pRegister);
+            r2pDatabaseReference.child(userId).setValue(r2pRegister);
+
             //clear values from all edit text fields
             et_lic_plate.setText("");
             et_licence.setText("");
             et_make.setText("");
             et_model.setText("");
 
-            Toast.makeText(R2PRegistrationActivity.this,"Registration was successful",Toast.LENGTH_SHORT).show();
+            Toast.makeText(R2PRegistrationActivity.this, R.string.success_registration_toast_r2p,Toast.LENGTH_SHORT).show();
 
             //direct user to home activity
             Intent intent = new Intent(R2PRegistrationActivity.this,HomeActivity.class);
             startActivity(intent);
         }
     }
-
-
-
 }
 

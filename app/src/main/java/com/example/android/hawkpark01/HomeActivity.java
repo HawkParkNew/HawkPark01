@@ -50,6 +50,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements
     private Button btn_r2p,btn_settings;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mlotSummaryDBRef;
+    private DatabaseReference mr2pDBRef;
     private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
     SessionManager session;
@@ -89,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements
     protected ArrayList<Geofence> mGeofenceList;
     private String lat;
     private String lng;
+    String r2pReg = "N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +99,36 @@ public class HomeActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_home);
         session = new SessionManager(getApplicationContext());
 
+
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
-        // display name
-        String name = user.get(SessionManager.KEY_NAME);
-        // userId
-        String userId = user.get(SessionManager.KEY_USERID);
+
+        String name = user.get(SessionManager.KEY_NAME);// display name
+        String userId = user.get(SessionManager.KEY_USERID);// userId
 
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
+        mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
+        mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    r2pReg = "Y";
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        Button btn_r2p = (Button)findViewById(R.id.btn_r2p);
+        if(r2pReg.equals("Y")){
+            btn_r2p.setVisibility(View.GONE);
+        }
 
         // Initialize lotSummary ListView and its adapter
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
@@ -130,12 +152,13 @@ public class HomeActivity extends AppCompatActivity implements
                 //add to lot list
                 HomeLotDB homeLotDB = dataSnapshot.getValue(HomeLotDB.class);
                 mhomeLotAdapter.add(homeLotDB);
+                mhomeLotAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 //get new status and change color, position etc
-
+                mhomeLotAdapter.notifyDataSetChanged();
             }
 
             @Override

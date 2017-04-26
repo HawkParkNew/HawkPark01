@@ -24,6 +24,9 @@ public class SessionManager {
             "com.example.android.hawkpark02.LOT_SP";
     private static final String IS_LOGIN = "isLoggedIn";
     public static final String KEY_NAME = "userName";
+    public static final String KEY_R2P = "hasR2P";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PHOTO = "email";
     static final String KEY_USERID = "userId";
     private static final String KEY_SETTINGS = "setting_name";
     private static final String KEY_CAR_LOCATION = "location_name";
@@ -44,12 +47,16 @@ public class SessionManager {
     /**
      * Create userSharedPref session
      */
-    void createUserSPSession(String firebaseID, String displayName){
+    void createUserSPSession(String firebaseID, String displayName,String photoUrl, String email){
 
         editorUser.putBoolean(IS_LOGIN, true);
 
         editorUser.putString(KEY_USERID,firebaseID);
         editorUser.putString(KEY_NAME,displayName);
+        //editorUser.putString(KEY_R2P,R2P);
+        editorUser.putString(KEY_PHOTO,photoUrl);
+        editorUser.putString(KEY_EMAIL,email);
+
         editorUser.apply();
     }
     /**
@@ -61,6 +68,12 @@ public class SessionManager {
         user.put(KEY_NAME, userSharedPref.getString(KEY_NAME, null));
         // user id
         user.put(KEY_USERID, userSharedPref.getString(KEY_USERID, null));
+        // r2p
+        user.put(KEY_R2P, userSharedPref.getString(KEY_R2P, null));
+        // email
+        user.put(KEY_EMAIL, userSharedPref.getString(KEY_EMAIL, null));
+        // photoUrl
+        user.put(KEY_PHOTO, userSharedPref.getString(KEY_PHOTO, null));
         // return user
         return user;
     }
