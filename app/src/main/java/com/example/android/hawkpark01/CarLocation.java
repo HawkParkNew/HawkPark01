@@ -41,6 +41,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -59,7 +60,7 @@ public class CarLocation extends AppCompatActivity implements
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
     Location mLastLocation,carLocation;
-    LatLng mCarLatLng, mLastLatLng;
+    LatLng mCarLatLng, mLastLatLng, midpoint;
     TextView distance;
 
     @Override
@@ -136,8 +137,8 @@ public class CarLocation extends AppCompatActivity implements
 
         String tempCarLat = sharedPref.getString(getString(R.string.car_lat_position), "");
         String tempCarLng = sharedPref.getString(getString(R.string.car_lng_position),"");
-        String tempPersonLat = sharedPref.getString("last_lat","");
-        String tempPersonLng = sharedPref.getString("last_lng","");
+        String tempPersonLat = sharedPref.getString(getString(R.string.last_known_lat),"");
+        String tempPersonLng = sharedPref.getString(getString(R.string.last_known_lng),"");
 
         double carLat = Double.parseDouble(tempCarLat);
         double carLng = Double.parseDouble(tempCarLng);
@@ -147,11 +148,15 @@ public class CarLocation extends AppCompatActivity implements
         mCarLatLng = new LatLng(carLat,carLng);
         mLastLatLng = new LatLng(lastLat,lastLng);
 
+        double midLat = (carLat+lastLat)/2;
+        double midLng = (carLng+lastLng)/2;
+        midpoint = new LatLng(midLat, midLng);
+
         carLocation = new Location("carLocation");
         carLocation.setLatitude(carLat);
         carLocation.setLongitude(carLng);
 
-        goToLocationZoom(mCarLatLng,mLastLatLng,18);
+        goToLocationZoom(mCarLatLng,mLastLatLng,midpoint,16);
     }
 
     @Override
@@ -181,22 +186,28 @@ public class CarLocation extends AppCompatActivity implements
         }
     }
 
-    private void goToLocationZoom(LatLng car, LatLng person, int zoom) {
-        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(car, zoom);
-        addMarkers(car, person);
+    private void goToLocationZoom(LatLng car, LatLng person, LatLng mid, int zoom) {
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(mid, zoom);
+        addMarkers(car, person, mid);
         mGoogleMap.moveCamera(update);
     }
 
-    private void addMarkers(LatLng car, LatLng person){
+    private void addMarkers(LatLng car, LatLng person, LatLng midpoint){
         MarkerOptions carMarker = new MarkerOptions()
                 .position(car)
-                .title(getString(R.string.car_location_marker));
+                .title(getString(R.string.car_location_marker))
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.carlocation));
         mGoogleMap.addMarker(carMarker).showInfoWindow();
 
         MarkerOptions lastKnown = new MarkerOptions()
                 .position(person)
                 .title(getString(R.string.you_are_here_marker));
         mGoogleMap.addMarker(lastKnown);
+
+        MarkerOptions mid = new MarkerOptions()
+                .position(midpoint)
+                .visible(false);
+        mGoogleMap.addMarker(mid);
     }
 
     @Override
