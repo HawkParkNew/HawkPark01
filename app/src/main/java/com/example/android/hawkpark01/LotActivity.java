@@ -155,19 +155,19 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
 
         if(currentLot.equals(cpd) ) {
 
-            goToLocationZoom(GeofenceConstants.carparcDiem, 18);
+            goToLocationZoom(GeofenceConstants.carparcDiem, 16);
             MarkerOptions options = new MarkerOptions()
                     .title(getString(R.string.lot_name_carparc))
                     .position(GeofenceConstants.carparcDiem);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot24)){
-            goToLocationZoom(GeofenceConstants.lot24, 18);
+            goToLocationZoom(GeofenceConstants.lot24, 17);
             MarkerOptions options = new MarkerOptions()
                     .title(getString(R.string.lot_name_24))
                     .position(GeofenceConstants.lot24);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot60)){
-            goToLocationZoom(GeofenceConstants.lot60, 18);
+            goToLocationZoom(GeofenceConstants.lot60, 17);
             MarkerOptions options = new MarkerOptions()
                     .title(getString(R.string.lot_name_60))
                     .position(GeofenceConstants.lot60);
