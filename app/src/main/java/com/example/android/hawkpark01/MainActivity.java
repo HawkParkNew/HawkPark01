@@ -290,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getText(R.string.x_connect_play_services_toast), Toast.LENGTH_SHORT).show();
     }
     public boolean isR2PRegistered(){
 

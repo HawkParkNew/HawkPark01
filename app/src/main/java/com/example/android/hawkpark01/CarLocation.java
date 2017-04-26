@@ -124,7 +124,7 @@ public class CarLocation extends AppCompatActivity implements
             Dialog dialog = api.getErrorDialog(this, isAvailable, 0);
             dialog.show();
         } else {
-            Toast.makeText(this, "error connecting to play services", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getText(R.string.x_connect_play_services_toast), Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -190,12 +190,12 @@ public class CarLocation extends AppCompatActivity implements
     private void addMarkers(LatLng car, LatLng person){
         MarkerOptions carMarker = new MarkerOptions()
                 .position(car)
-                .title("Car Location");
+                .title(getString(R.string.car_location_marker));
         mGoogleMap.addMarker(carMarker).showInfoWindow();
 
         MarkerOptions lastKnown = new MarkerOptions()
                 .position(person)
-                .title("You Are Here");
+                .title(getString(R.string.you_are_here_marker));
         mGoogleMap.addMarker(lastKnown);
     }
 
@@ -207,7 +207,7 @@ public class CarLocation extends AppCompatActivity implements
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             String carDistance = String.valueOf(String.format("%.2f",mLastLocation.distanceTo(carLocation)/1609.344));
 
-            distance.setText("Distance to car: "+carDistance+" miles");
+            distance.setText(getString(R.string.distance_to_car_cla)+carDistance+getString(R.string.miles_cla));
         }
     }
 

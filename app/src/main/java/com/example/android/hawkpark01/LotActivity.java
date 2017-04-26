@@ -119,12 +119,11 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
             feedbackDatabaseReference.push().child(userId).setValue(feedBack);
             mhomeLotDB = new HomeLotDB(lotname,fback);
             mlotSummaryDBRef.child(lotname).setValue(mhomeLotDB);
+            Toast.makeText(this, getString(R.string.feedback_successfully_submitted_toast),
+                    Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(LotActivity.this, HomeActivity.class);
             startActivity(intent);
-
-            Toast.makeText(this, getString(R.string.submission_received_toast) + fback, Toast.LENGTH_SHORT).show();
-
         }
     }
     public boolean googleServicesAvailable(){

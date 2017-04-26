@@ -88,5 +88,11 @@
     <string name="x_connect_play_services_toast">Error connecting to play services</string>
     <string name="submission_received_toast">Submission Received:</string>
     <string name="select_feedback_option_toast">Please select a Feedback option.</string>
+    <string name="car_location_marker">Your Car\'s Location</string>
+    <string name="you_are_here_marker">You Are Here</string>
+    <string name="distance_to_car_cla">Distance to car:</string>
+    <string name="miles_cla">miles</string>
+    <string name="feedback_successfully_submitted_toast">Feedback successfullt submitted. Thanks!</string>
+    <string name="missing_info_toast_r2p">Missing information.Please try again.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>

@@ -46,7 +46,7 @@ public class R2PRegistrationActivity extends AppCompatActivity {
         //if entries empty make error toast
         if((isEmpty(licence))||isEmpty(lPlates)||isEmpty(make)||isEmpty(model))
         {
-            Toast.makeText(this,"Missing information.Please try again.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.missing_info_toast_r2p,Toast.LENGTH_SHORT).show();
         }
         //else upload to db
         else{
