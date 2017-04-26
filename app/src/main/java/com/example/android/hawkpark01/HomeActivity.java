@@ -103,8 +103,6 @@ public class HomeActivity extends AppCompatActivity implements
         // userId
         String userId = user.get(SessionManager.KEY_USERID);
 
-        //final String userId = getIntent().getStringExtra(ID_KEY);
-
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -210,7 +208,6 @@ public class HomeActivity extends AppCompatActivity implements
             case R.id.btn_r2p://directs user to ride2park screen
                 //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
-                intent.putExtra(ID_KEY, userId);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to settings screen

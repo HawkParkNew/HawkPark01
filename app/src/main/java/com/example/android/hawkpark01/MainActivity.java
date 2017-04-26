@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseDatabase mdatabase;
     private DatabaseReference userDatabaseReference;
     private DatabaseReference r2pDatabaseReference;
-    private DatabaseReference mlotSummaryDBRef;
-    private ValueEventListener mLotEventListener;
 
 
     private static final String TAG = "GoogleActivity";
@@ -75,10 +73,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //initialize db and get references to required child nodes
         mdatabase = FirebaseDatabase.getInstance();
         r2pDatabaseReference = mdatabase.getReference("r2pRegister");
         userDatabaseReference = mdatabase.getReference("users");
-        mlotSummaryDBRef = mdatabase.getReference("lot-summary");
+
+        //initialize session manager for shared prefs
         session = new SessionManager(getApplicationContext());
 
         //initialize buttons and text views
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
-        //
+
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -106,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     // get email,Uid,name, photoUrl
@@ -127,29 +128,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
                     //check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
 
-                 /**   SpaceCalculator lot24Calc = new SpaceCalculator("Lot 24");
-                    final Query lot24Query = mlotSummaryDBRef.orderByChild("Lot 24");
-                    lot24Query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
-                    String currentStatus = lot60.getStatus(); **/
-
                     //Store userid as shared pref
                     session.createUserSPSession(firebaseID,displayName);
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                    i.putExtra(ID_KEY,firebaseID);
                     startActivity(i);
                 }
                 else {
@@ -273,13 +256,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if (user != null) {
             mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-            //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
             findViewById(R.id.btn_sign_in).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            //mDetailTextView.setText(null);
-
             findViewById(R.id.btn_sign_in).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
