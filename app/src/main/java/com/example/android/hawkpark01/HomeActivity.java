@@ -57,7 +57,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+    /*------------------------------------------------
+    | NAVIGATION DRAWER
+     -----------------------------------------------*/
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
+import static com.example.android.hawkpark01.utils.Utils.FB_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
@@ -70,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements
 
     //Parking availability in lots==================================================================
     private ListView lv_lot_list;
-    private Button btn_r2p,btn_settings;
+    private ImageButton btn_r2p,btn_settings;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mlotSummaryDBRef;
     private DatabaseReference mr2pDBRef;
@@ -94,6 +104,9 @@ public class HomeActivity extends AppCompatActivity implements
     String r2pReg ="N";
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +121,7 @@ public class HomeActivity extends AppCompatActivity implements
         String userId = user.get(SessionManager.KEY_USERID);// userId
 
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
+
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
@@ -128,7 +142,7 @@ public class HomeActivity extends AppCompatActivity implements
         });
 
 
-        Button btn_r2p = (Button)findViewById(R.id.btn_r2p);
+        ImageButton btn_r2p = (ImageButton)findViewById(R.id.btn_r2p);
         if(r2pReg.equals("Y")){
             btn_r2p.setVisibility(View.GONE);
         }
@@ -458,4 +472,5 @@ public class HomeActivity extends AppCompatActivity implements
         editor.apply();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
+
 }
