@@ -23,7 +23,6 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotDB> {
     public HomeLotAdapter(Context context, int resource, List<HomeLotDB> objects) {
 
         super(context, resource, objects);
-
     }
 
     @Override
@@ -35,6 +34,7 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotDB> {
         }
         // Lookup views for data population
         TextView tv_lotName = (TextView) convertView.findViewById(R.id.tv_lot_item);
+        TextView tv_update_time = (TextView) convertView.findViewById(R.id.tv_update_time);
         HomeLotDB lotItem = getItem(position);
         int lotStatus = Integer.parseInt(lotItem.getStatus());
         //Set background color based on the lot status
@@ -53,12 +53,10 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotDB> {
                         R.drawable.round_corner_green));
                 break;
         }
-
         //
         tv_lotName.setText(lotItem.getName());
+        tv_update_time.setText(lotItem.getTime());
         tv_lotName.setTag(position);
-
-
 
     return convertView;
     }

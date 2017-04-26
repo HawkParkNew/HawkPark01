@@ -5,6 +5,7 @@ package com.example.android.hawkpark01.models;
  */
 
 public class FeedBackDB {
+
     private String uId, lotname, feedback, time;
 
     public FeedBackDB(){
