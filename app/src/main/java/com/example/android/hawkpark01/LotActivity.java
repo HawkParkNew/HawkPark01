@@ -105,7 +105,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         if(fback.equals("0")) {
         //    Intent intent = new Intent (LotActivity.this, LotActivity.class);
         //    startActivity(intent);
-            Toast.makeText(this, "Please select a Feedback option.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please select a Feedback option.", Toast.LENGTH_SHORT).show();
         }
         else {
 
@@ -119,7 +119,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
             startActivity(intent);
 
 
-            Toast.makeText(this, "Submission Received: " + fback, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Submission Received: " + fback, Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -156,25 +156,25 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
 
 
         if(currentLot.equals(cpd) ) {
-            goToLocationZoom(GeofenceConstants.carparcDiem, 18);
+            goToLocationZoom(GeofenceConstants.carparcDiem, 16);
             MarkerOptions options = new MarkerOptions()
                     .title("CarParc Diem")
                     .position(GeofenceConstants.carparcDiem);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot24)){
-            goToLocationZoom(GeofenceConstants.lot24, 18);
+            goToLocationZoom(GeofenceConstants.lot24, 17);
             MarkerOptions options = new MarkerOptions()
                     .title("Lot 24")
                     .position(GeofenceConstants.lot24);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else if (currentLot.equals(lot60)){
-            goToLocationZoom(GeofenceConstants.lot60, 18);
+            goToLocationZoom(GeofenceConstants.lot60, 17);
             MarkerOptions options = new MarkerOptions()
                     .title("Lot 60")
                     .position(GeofenceConstants.lot60);
             mgoogleMap.addMarker(options).showInfoWindow();
         }else {
-            Toast.makeText(this, "Cannot find location", Toast.LENGTH_LONG).show();;
+            Toast.makeText(this, "Cannot find location", Toast.LENGTH_SHORT).show();;
         }
 
     }
