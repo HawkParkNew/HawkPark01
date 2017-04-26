@@ -209,9 +209,9 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(i);
                 break;
             case R.id.btn_car_location:
-                SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+                SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
-                SharedPreferences.Editor editor = sharedPref.edit();
+                SharedPreferences.Editor editor = locationSharedPref.edit();
                 editor.putString("last_lat",lat);
                 editor.putString("last_lng",lng);
                 editor.commit();
@@ -220,7 +220,6 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(intentCar);
                 break;
         }
-
     }
 
     /*---------------------------------------------------------------------*
