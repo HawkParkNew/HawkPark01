@@ -4,6 +4,9 @@ import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.UserDB;
 import com.example.android.hawkpark01.utils.SpaceCalculator;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.content.Intent;
 import android.app.ProgressDialog;
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Button btn_logout, btn_revoke;
     private SignInButton btn_login_submit;
     private TextView tv_welcome, mStatusTextView;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         r2pDatabaseReference = mdatabase.getReference("r2pRegister");
         userDatabaseReference = mdatabase.getReference("users");
         mlotSummaryDBRef = mdatabase.getReference("lot-summary");
+        session = new SessionManager(getApplicationContext());
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -138,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
                     String currentStatus = lot60.getStatus(); **/
+
+                    //Store userid as shared pref
+                    session.createUserSPSession(firebaseID,displayName);
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
@@ -241,10 +249,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         updateUI(null);
                     }
                 });
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
     }
     private void revokeAccess() {
         // Firebase sign out
         mAuth.signOut();
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
 
         // Google revoke access
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(

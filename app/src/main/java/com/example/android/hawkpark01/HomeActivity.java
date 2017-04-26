@@ -52,6 +52,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements
     private DatabaseReference mlotSummaryDBRef;
     private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
+    SessionManager session;
 
     /*---------------------------------------------
         |   LOCATION / GEOFENCE VARIABLES
@@ -92,9 +94,18 @@ public class HomeActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        session = new SessionManager(getApplicationContext());
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        // display name
+        String name = user.get(SessionManager.KEY_NAME);
+        // userId
+        String userId = user.get(SessionManager.KEY_USERID);
+
+        //final String userId = getIntent().getStringExtra(ID_KEY);
 
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
-        final String userId = getIntent().getStringExtra(ID_KEY);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
@@ -111,7 +122,6 @@ public class HomeActivity extends AppCompatActivity implements
                 HomeLotDB selectedLot = homeLotItemsList.get(i);
                 String name = selectedLot.getName();
                 Intent intent = new Intent(HomeActivity.this,LotActivity.class);
-                intent.putExtra(ID_KEY,userId);
                 intent.putExtra(LOT_KEY,name);
                 startActivity(intent);
             }
@@ -214,7 +224,7 @@ public class HomeActivity extends AppCompatActivity implements
                 SharedPreferences.Editor editor = locationSharedPref.edit();
                 editor.putString("last_lat",lat);
                 editor.putString("last_lng",lng);
-                editor.commit();
+                editor.apply();
 
                 Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
                 startActivity(intentCar);
@@ -413,7 +423,7 @@ public class HomeActivity extends AppCompatActivity implements
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.car_lat_position), lat);
         editor.putString(getString(R.string.car_lng_position), lng);
-        editor.commit();
+        editor.apply();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
 }

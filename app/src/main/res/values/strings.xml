@@ -31,7 +31,7 @@
     <string name="web_client_id">681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com</string>
 
     //niko's activities
-    <string name="header_wmc">WHERES MY CAR?</string>
+    <string name="header_wmc">WHERE\'S MY CAR?</string>
     <string name="header_ride_connect">RIDE CONNECT</string>
     <string name="header_lot">""</string>
     <string name="btn_submit_lot">Submit</string>
@@ -85,8 +85,8 @@
     <string name="lot_name_carparc">CarParc Diem</string>
     <string name="lot_name_60">Lot 60</string>
     <string name="x_find_location_toast">Cannot find location</string>
-    <string name="x_connect_plat_services_toast">Error connecting to play services</string>
+    <string name="x_connect_play_services_toast">Error connecting to play services</string>
     <string name="submission_received_toast">Submission Received:</string>
-    <string name="select_ffedback_option_toast">Please select a Feedback option.</string>
+    <string name="select_feedback_option_toast">Please select a Feedback option.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>
