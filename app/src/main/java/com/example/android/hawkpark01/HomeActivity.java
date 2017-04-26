@@ -222,13 +222,17 @@ public class HomeActivity extends AppCompatActivity implements
                 SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
                 SharedPreferences.Editor editor = locationSharedPref.edit();
-                editor.putString("last_lat",lat);
-                editor.putString("last_lng",lng);
+                editor.putString(getString(R.string.last_known_lat),lat);
+                editor.putString(getString(R.string.last_known_lng),lng);
                 editor.apply();
 
-                Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
-                startActivity(intentCar);
-                break;
+                if (locationSharedPref.contains(getString(R.string.car_lat_position))) {
+                    Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                    startActivity(intentCar);
+                    break;
+                }else{
+                    Toast.makeText(this, getString(R.string.car_not_set), Toast.LENGTH_SHORT).show();
+                }
         }
     }
 

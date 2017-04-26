@@ -137,8 +137,8 @@ public class CarLocation extends AppCompatActivity implements
 
         String tempCarLat = sharedPref.getString(getString(R.string.car_lat_position), "");
         String tempCarLng = sharedPref.getString(getString(R.string.car_lng_position),"");
-        String tempPersonLat = sharedPref.getString("last_lat","");
-        String tempPersonLng = sharedPref.getString("last_lng","");
+        String tempPersonLat = sharedPref.getString(getString(R.string.last_known_lat),"");
+        String tempPersonLng = sharedPref.getString(getString(R.string.last_known_lng),"");
 
         double carLat = Double.parseDouble(tempCarLat);
         double carLng = Double.parseDouble(tempCarLng);
