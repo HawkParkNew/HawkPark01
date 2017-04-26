@@ -53,6 +53,10 @@ public class R2PRegistrationActivity extends AppCompatActivity {
             String userId = getIntent().getStringExtra(ID_KEY);
             r2pRegister = new R2PDB(userId, licence, lPlates, make, model);
             r2pDatabaseReference.push().child(userId).setValue(r2pRegister);
+            et_lic_plate.setText("");
+            et_licence.setText("");
+            et_make.setText("");
+            et_model.setText("");
             Intent intent = new Intent(R2PRegistrationActivity.this,HomeActivity.class);
             startActivity(intent);
         }
