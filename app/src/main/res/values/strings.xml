@@ -31,7 +31,7 @@
     <string name="web_client_id">681329975510-4v7i7c69rdbckjldkcdgs8j1soh0vqra.apps.googleusercontent.com</string>
 
     //niko's activities
-    <string name="header_wmc">WHERES MY CAR?</string>
+    <string name="header_wmc">WHERE\'S MY CAR?</string>
     <string name="header_ride_connect">RIDE CONNECT</string>
     <string name="header_lot">""</string>
     <string name="btn_submit_lot">Submit</string>
@@ -81,5 +81,18 @@
     <string name="licence_err_r2p">Incorrect length, please try again.</string>
     <string name="header_settings_activity">Personalize</string>
     <string name="btn_home">To Home</string>
+    <string name="lot_name_24">Lot 24</string>
+    <string name="lot_name_carparc">CarParc Diem</string>
+    <string name="lot_name_60">Lot 60</string>
+    <string name="x_find_location_toast">Cannot find location</string>
+    <string name="x_connect_play_services_toast">Error connecting to play services</string>
+    <string name="submission_received_toast">Submission Received:</string>
+    <string name="select_feedback_option_toast">Please select a Feedback option.</string>
+    <string name="car_location_marker">Your Car\'s Location</string>
+    <string name="you_are_here_marker">You Are Here</string>
+    <string name="distance_to_car_cla">Distance to car:</string>
+    <string name="miles_cla">miles</string>
+    <string name="feedback_successfully_submitted_toast">Feedback successfullt submitted. Thanks!</string>
+    <string name="missing_info_toast_r2p">Missing information.Please try again.</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>

@@ -1,5 +1,7 @@
 package com.example.android.hawkpark01.models;
 
+import com.example.android.hawkpark01.utils.Utils;
+
 /**
  * Created by priya on 4/21/2017.
  */
@@ -17,7 +19,7 @@ public class HomeLotDB {
     public HomeLotDB(String name, String status){
         this.name = name;
         this.status = status;
-
+        time = Utils.getCurrentTime();
 
     }
 
@@ -36,4 +38,8 @@ public class HomeLotDB {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getTime(){return time;}
+
+    public void setTime(String time){this.time = time;}
 }

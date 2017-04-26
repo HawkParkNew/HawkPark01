@@ -4,6 +4,9 @@ import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.UserDB;
 import com.example.android.hawkpark01.utils.SpaceCalculator;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.content.Intent;
 import android.app.ProgressDialog;
@@ -34,6 +37,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.R.attr.accountType;
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Button btn_logout, btn_revoke;
     private SignInButton btn_login_submit;
     private TextView tv_welcome, mStatusTextView;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         r2pDatabaseReference = mdatabase.getReference("r2pRegister");
         userDatabaseReference = mdatabase.getReference("users");
         mlotSummaryDBRef = mdatabase.getReference("lot-summary");
+        session = new SessionManager(getApplicationContext());
 
         //initialize buttons and text views
         btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
@@ -121,20 +127,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
                     //check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
 
-                    mLotEventListener = new ValueEventListener() {
+                 /**   SpaceCalculator lot24Calc = new SpaceCalculator("Lot 24");
+                    final Query lot24Query = mlotSummaryDBRef.orderByChild("Lot 24");
+                    lot24Query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                           // HomeLotDB lotDB = ;
+
                         }
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
-                    };
+                    });
 
                     SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
-                    String currentStatus = lot60.getStatus();
+                    String currentStatus = lot60.getStatus(); **/
+
+                    //Store userid as shared pref
+                    session.createUserSPSession(firebaseID,displayName);
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
@@ -238,10 +249,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         updateUI(null);
                     }
                 });
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
     }
     private void revokeAccess() {
         // Firebase sign out
         mAuth.signOut();
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
 
         // Google revoke access
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
@@ -273,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getText(R.string.x_connect_play_services_toast), Toast.LENGTH_SHORT).show();
     }
     public boolean isR2PRegistered(){
 

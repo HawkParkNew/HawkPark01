@@ -46,13 +46,17 @@ public class R2PRegistrationActivity extends AppCompatActivity {
         //if entries empty make error toast
         if((isEmpty(licence))||isEmpty(lPlates)||isEmpty(make)||isEmpty(model))
         {
-            Toast.makeText(this,"Missing information.Please try again.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.missing_info_toast_r2p,Toast.LENGTH_SHORT).show();
         }
         //else upload to db
         else{
             String userId = getIntent().getStringExtra(ID_KEY);
             r2pRegister = new R2PDB(userId, licence, lPlates, make, model);
             r2pDatabaseReference.push().child(userId).setValue(r2pRegister);
+            et_lic_plate.setText("");
+            et_licence.setText("");
+            et_make.setText("");
+            et_model.setText("");
             Intent intent = new Intent(R2PRegistrationActivity.this,HomeActivity.class);
             startActivity(intent);
         }
