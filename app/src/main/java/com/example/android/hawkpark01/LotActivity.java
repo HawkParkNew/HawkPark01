@@ -65,13 +65,14 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         feedbackDatabaseReference = mdatabase.getReference("feedbackDB");
         mlotSummaryDBRef = mdatabase.getReference("lot-summary");
 
-
+            //checks to make sure googleServices is available
         if(googleServicesAvailable()) {
             setContentView(R.layout.activity_lot);
             initMap();
         }else {
             //no Google Maps Layout
         }
+        //initializes resource files
         empty = (RadioButton) findViewById(R.id.radio_empty);
         some = (RadioButton) findViewById(R.id.radio_some);
         full = (RadioButton) findViewById(R.id.radio_full);
@@ -80,7 +81,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         header = (TextView)findViewById(R.id.tv_lot_header);
 
         header.setText(currentLot);
-
+        //case switch for feedback radio group
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -100,18 +101,15 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     public void submitFeedback (View view){
-
+        //checks to make sure a feedback option is selected
         if(fback.equals("0")) {
-        //    Intent intent = new Intent (LotActivity.this, LotActivity.class);
-        //    startActivity(intent);
             Toast.makeText(this, getString(R.string.select_feedback_option_toast), Toast.LENGTH_SHORT).show();
         }
         else {
-
             String lotname = getIntent().getStringExtra(LOT_KEY);
-           // String userId = getIntent().getStringExtra(ID_KEY);
+
             time = getCurrentTime();
-            //get userid from Shared pref
+
             HashMap<String, String> user = sessionManager.getUserDetails();
             String userId = user.get(SessionManager.KEY_USERID);
 

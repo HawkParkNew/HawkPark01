@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_weight=".8"
             android:contentDescription="@string/logo_large"
-            android:src="@drawable/logo" />
+            android:src="@mipmap/newlogo" />
 
         <TextView
             android:layout_width="0dp"
