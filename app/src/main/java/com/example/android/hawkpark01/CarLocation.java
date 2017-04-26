@@ -156,7 +156,7 @@ public class CarLocation extends AppCompatActivity implements
         carLocation.setLatitude(carLat);
         carLocation.setLongitude(carLng);
 
-        goToLocationZoom(mCarLatLng,mLastLatLng,midpoint,15);
+        goToLocationZoom(mCarLatLng,mLastLatLng,midpoint,16);
     }
 
     @Override
