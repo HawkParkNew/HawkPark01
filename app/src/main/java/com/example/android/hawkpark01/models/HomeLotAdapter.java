@@ -23,7 +23,6 @@ public class HomeLotAdapter extends ArrayAdapter<HomeLotDB> {
     public HomeLotAdapter(Context context, int resource, List<HomeLotDB> objects) {
 
         super(context, resource, objects);
-
     }
 
     @Override

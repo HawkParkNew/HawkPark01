@@ -4,6 +4,9 @@ import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.UserDB;
 import com.example.android.hawkpark01.utils.SpaceCalculator;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.content.Intent;
 import android.app.ProgressDialog;
@@ -47,39 +50,39 @@ import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
  * https://firebase.google.com/docs/auth/android/google-signin
  */
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class
+MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseDatabase mdatabase;
     private DatabaseReference userDatabaseReference;
-    private DatabaseReference r2pDatabaseReference;
-    private DatabaseReference mlotSummaryDBRef;
-    private ValueEventListener mLotEventListener;
-
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
 
-    private Button btn_logout, btn_revoke;
-    private SignInButton btn_login_submit;
     private TextView tv_welcome, mStatusTextView;
+    SessionManager session;
+    String R2P = "N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        R2P="N";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mdatabase = FirebaseDatabase.getInstance();
-        r2pDatabaseReference = mdatabase.getReference("r2pRegister");
+
+        //initialize db and get references to required child nodes
+        FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
         userDatabaseReference = mdatabase.getReference("users");
-        mlotSummaryDBRef = mdatabase.getReference("lot-summary");
+
+        //initialize session manager for shared prefs
+        session = new SessionManager(getApplicationContext());
 
         //initialize buttons and text views
-        btn_login_submit = (SignInButton)findViewById(R.id.btn_sign_in);
-        btn_logout = (Button)findViewById(R.id.btn_logout_lf);
-        btn_revoke = (Button)findViewById(R.id.btn_revoke_access);
+        SignInButton btn_login_submit = (SignInButton) findViewById(R.id.btn_sign_in);
+        Button btn_logout = (Button) findViewById(R.id.btn_logout_lf);
+        Button btn_revoke = (Button) findViewById(R.id.btn_revoke_access);
         mStatusTextView = (TextView)findViewById(R.id.tv_status_lf);
 
         //set listeners on buttons
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .requestIdToken(getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
-        //
+
         // Build a GoogleApiClient with access to the Google Sign-In API and the
         // options specified by gso.
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -101,47 +104,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        //Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     // get email,Uid,name, photoUrl
-                    String firebaseID = user.getUid();
+                    final String firebaseID = user.getUid();
                     String email = user.getEmail();
                     String displayName = user.getDisplayName();
                     String photoUrl = user.getPhotoUrl().toString();
-                    String R2P = "N";//CURRENT DEFAULT IS N,
-                    //TODO- CHECK IF R2P DETAILS ARE STORED AGAINST DB, IF YES THEN Y ELSE N
-                    //if(r2pDatabaseReference.child(firebaseID).getKey()
-                    writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl,R2P);
+
+                    writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl);
                     //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
-                    //check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
+                    //TODO-check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
 
-                 /**   SpaceCalculator lot24Calc = new SpaceCalculator("Lot 24");
-                    final Query lot24Query = mlotSummaryDBRef.orderByChild("Lot 24");
-                    lot24Query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    SpaceCalculator lot60 = new SpaceCalculator("Lot 60");
-                    String currentStatus = lot60.getStatus(); **/
+                    //todo--if photoUrl is null substitute with our own generic
+                    //Store userid as shared pref
+                    session.createUserSPSession(firebaseID,displayName,photoUrl,email);
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                    i.putExtra(ID_KEY,firebaseID);
                     startActivity(i);
                 }
                 else {
@@ -241,10 +228,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         updateUI(null);
                     }
                 });
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
     }
     private void revokeAccess() {
         // Firebase sign out
         mAuth.signOut();
+        //SharedPref logout
+        if(session.isLoggedIn())
+            session.logoutUser();
 
         // Google revoke access
         Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
@@ -259,13 +252,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if (user != null) {
             mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-            //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
             findViewById(R.id.btn_sign_in).setVisibility(View.GONE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            //mDetailTextView.setText(null);
-
             findViewById(R.id.btn_sign_in).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
         }
@@ -276,14 +266,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getText(R.string.x_connect_play_services_toast), Toast.LENGTH_SHORT).show();
     }
-    public boolean isR2PRegistered(){
 
-        return true;
-    }
-    public static void writeNewUser(DatabaseReference databaseReference, String userId, String name, String email,String photoUrl, String r2p ) {
-        UserDB user = new UserDB(userId,name, email,r2p);
-        databaseReference.child("users").child(userId).setValue(user);
+    public static void writeNewUser(DatabaseReference databaseReference, String userId, String name,
+                                    String email,String photoUrl) {
+        UserDB user = new UserDB(userId,name, email);
+        databaseReference.child(userId).setValue(user);
     }
 }

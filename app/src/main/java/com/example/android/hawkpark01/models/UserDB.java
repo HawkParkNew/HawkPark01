@@ -5,21 +5,20 @@ package com.example.android.hawkpark01.models;
  */
 
 public class UserDB {
-    private String uID, name, email, r2p, photoURL;
+    private String uID, name, email, photoURL;
 
     public UserDB() {
     }
-    public UserDB(String uID, String name, String email, String r2p) {
+    public UserDB(String uID, String name, String email) {
         this.uID = uID;
         this.name = name;
         this.email = email;
-        this.r2p = r2p;
     }
-    public UserDB(String uID, String name, String email, String r2p, String photoURL) {
+
+    public UserDB(String uID, String name, String email, String photoURL) {
         this.uID = uID;
         this.name = name;
         this.email = email;
-        this.r2p = r2p;
         this.photoURL = photoURL;
     }
     public String getuID() {

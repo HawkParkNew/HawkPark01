@@ -50,8 +50,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,8 +73,10 @@ public class HomeActivity extends AppCompatActivity implements
     private Button btn_r2p,btn_settings;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mlotSummaryDBRef;
+    private DatabaseReference mr2pDBRef;
     private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
+    SessionManager session;
 
     /*---------------------------------------------
         |   LOCATION / GEOFENCE VARIABLES
@@ -87,17 +91,44 @@ public class HomeActivity extends AppCompatActivity implements
     protected ArrayList<Geofence> mGeofenceList;
     private String lat;
     private String lng;
+    String r2pReg = "N";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        session = new SessionManager(getApplicationContext());
+
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+
+        String name = user.get(SessionManager.KEY_NAME);// display name
+        String userId = user.get(SessionManager.KEY_USERID);// userId
 
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
-        final String userId = getIntent().getStringExtra(ID_KEY);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
+        mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
+        mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    r2pReg = "Y";
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        Button btn_r2p = (Button)findViewById(R.id.btn_r2p);
+        if(r2pReg.equals("Y")){
+            btn_r2p.setVisibility(View.GONE);
+        }
 
         // Initialize lotSummary ListView and its adapter
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
@@ -111,7 +142,6 @@ public class HomeActivity extends AppCompatActivity implements
                 HomeLotDB selectedLot = homeLotItemsList.get(i);
                 String name = selectedLot.getName();
                 Intent intent = new Intent(HomeActivity.this,LotActivity.class);
-                intent.putExtra(ID_KEY,userId);
                 intent.putExtra(LOT_KEY,name);
                 startActivity(intent);
             }
@@ -122,12 +152,13 @@ public class HomeActivity extends AppCompatActivity implements
                 //add to lot list
                 HomeLotDB homeLotDB = dataSnapshot.getValue(HomeLotDB.class);
                 mhomeLotAdapter.add(homeLotDB);
+                mhomeLotAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 //get new status and change color, position etc
-
+                mhomeLotAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -200,7 +231,6 @@ public class HomeActivity extends AppCompatActivity implements
             case R.id.btn_r2p://directs user to ride2park screen
                 //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
-                intent.putExtra(ID_KEY, userId);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to settings screen
@@ -209,18 +239,21 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(i);
                 break;
             case R.id.btn_car_location:
-                SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+                SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
-                SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("last_lat",lat);
-                editor.putString("last_lng",lng);
-                editor.commit();
+                SharedPreferences.Editor editor = locationSharedPref.edit();
+                editor.putString(getString(R.string.last_known_lat),lat);
+                editor.putString(getString(R.string.last_known_lng),lng);
+                editor.apply();
 
-                Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
-                startActivity(intentCar);
-                break;
+                if (locationSharedPref.contains(getString(R.string.car_lat_position))) {
+                    Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                    startActivity(intentCar);
+                    break;
+                }else{
+                    Toast.makeText(this, getString(R.string.car_not_set), Toast.LENGTH_SHORT).show();
+                }
         }
-
     }
 
     /*---------------------------------------------------------------------*
@@ -414,7 +447,7 @@ public class HomeActivity extends AppCompatActivity implements
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.car_lat_position), lat);
         editor.putString(getString(R.string.car_lng_position), lng);
-        editor.commit();
+        editor.apply();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
 }
