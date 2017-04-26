@@ -120,10 +120,9 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
                     String photoUrl = user.getPhotoUrl().toString();
 
                     writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl);
-                    //TODO-IF TIME PERMITS- IF R2P N, THEN PROMPT USER TO CREATE ACCOUNT- USE DIALOG - DIRECT USER TO REG IF YES ELSE TO HOME PAGE
-                    //TODO-check if lotsdb has been updated in the past 30 minutes else update from assumptions(Space Calculator)
 
                     //todo--if photoUrl is null substitute with our own generic
+
                     //Store userid as shared pref
                     session.createUserSPSession(firebaseID,displayName,photoUrl,email);
 

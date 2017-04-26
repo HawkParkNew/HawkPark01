@@ -24,7 +24,7 @@ public class Utils {
      * Gets current time in HH(hours 0-23):mm:ss format=============================================
      */
     public static String getCurrentTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, K:mm a", Locale.US);
         return sdf.format(Calendar.getInstance().getTime());
 
     }

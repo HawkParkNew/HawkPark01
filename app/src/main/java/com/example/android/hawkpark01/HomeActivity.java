@@ -91,7 +91,8 @@ public class HomeActivity extends AppCompatActivity implements
     protected ArrayList<Geofence> mGeofenceList;
     private String lat;
     private String lng;
-    String r2pReg = "N";
+    String r2pReg ="N";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +116,9 @@ public class HomeActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
-                    r2pReg = "Y";
+                    setR2P("Y");
+                else
+                    setR2P("N");
             }
 
             @Override
@@ -129,6 +132,7 @@ public class HomeActivity extends AppCompatActivity implements
         if(r2pReg.equals("Y")){
             btn_r2p.setVisibility(View.GONE);
         }
+
 
         // Initialize lotSummary ListView and its adapter
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
@@ -200,6 +204,10 @@ public class HomeActivity extends AppCompatActivity implements
         populateGeofenceList();
         buildGoogleApiClient();
         createLocationRequest();
+    }
+
+    private void setR2P(String y) {
+        r2pReg = y;
     }
 
     //Radio buttons in home activity
