@@ -56,6 +56,9 @@
     <string name="distance">Walking distance to car: </string>
     <string name="car_lat_position">Lat</string>
     <string name="car_lng_position">Lng</string>
+    <string name="car_not_set">Car location not set</string>
+    <string name="last_known_lat">last_lat</string>
+    <string name="last_known_lng">last_lng</string>
 
     <!-- GEOFENCING STRINGS -->
     <string name="geofence_transition_invalid_type">invalid %1$d</string>
