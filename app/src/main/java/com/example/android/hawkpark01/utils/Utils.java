@@ -26,7 +26,5 @@ public class Utils {
     public static String getCurrentTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, K:mm a", Locale.US);
         return sdf.format(Calendar.getInstance().getTime());
-
     }
-
 }
