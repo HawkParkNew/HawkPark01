@@ -27,4 +27,14 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, K:mm a", Locale.US);
         return sdf.format(Calendar.getInstance().getTime());
     }
+    /**
+     * Gets current date and time in the format dd:MM:yyyy HH:mm:ss=================================
+     * Hours(0-23), dd(day in the month), MM(months (1-12))
+     * Option: "d MMM yyyy HH:mm:ss SSS" time in millis
+     * Option: "d MMM yyyy K:mm a" time am/pm
+     */
+    public static String getCurrentDateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+        return sdf.format(Calendar.getInstance().getTime());
+    }
 }
