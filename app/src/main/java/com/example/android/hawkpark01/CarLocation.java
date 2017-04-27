@@ -4,6 +4,7 @@ import android.*;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,11 +14,17 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +70,13 @@ public class CarLocation extends AppCompatActivity implements
     LatLng mCarLatLng, mLastLatLng, midpoint;
     TextView distance;
 
+    /*---------------------------------------------
+        |   NAVIGATION DRAWER VARIABLES
+     *-------------------------------------------*/
+    DrawerLayout mDrawerLayout;
+    ImageView drawerButton;
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +109,32 @@ public class CarLocation extends AppCompatActivity implements
         }
 
         buildGoogleApiClient();
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerButton = (ImageView)findViewById(R.id.logo_login);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.wheresmycar_id);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home_id:
+                        Intent intentHome = new Intent(CarLocation.this, HomeActivity.class);
+                        startActivity(intentHome);
+                        break;
+                    case R.id.profile_id:
+                        Intent intentProfile = new Intent(CarLocation.this, SettingsActivity.class);
+                        startActivity(intentProfile);
+                        break;
+                    case R.id.wheresmycar_id:
+                        Intent intentCar = new Intent(CarLocation.this, CarLocation.class);
+                        startActivity(intentCar);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     private void initMap() {
@@ -230,5 +270,30 @@ public class CarLocation extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    /*---------------------------------------------------------------------*
+        |   NAVIGATION DRAWER
+     *---------------------------------------------------------------------*/
+
+    DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
+
+        @Override
+        public void onDrawerClosed(View drawerView) {}
+
+        @Override
+        public void onDrawerOpened(View drawerView) {}
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {}
+
+        @Override
+        public void onDrawerStateChanged(int newState) {}
+    };
+
+    public void openDrawer(View view){
+        navigationView.setCheckedItem(R.id.wheresmycar_id);
+        mDrawerLayout.openDrawer(Gravity.START);
+        mDrawerLayout.addDrawerListener(drawerListener);
     }
 }
