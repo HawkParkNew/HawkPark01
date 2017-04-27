@@ -11,16 +11,21 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -57,7 +62,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+    /*------------------------------------------------
+    | NAVIGATION DRAWER
+     -----------------------------------------------*/
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
+import static com.example.android.hawkpark01.utils.Utils.FB_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
 import static com.example.android.hawkpark01.utils.Utils.LOT_KEY;
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
@@ -70,13 +85,20 @@ public class HomeActivity extends AppCompatActivity implements
 
     //Parking availability in lots==================================================================
     private ListView lv_lot_list;
-    private Button btn_r2p,btn_settings;
+    private ImageButton btn_r2p,btn_settings;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mlotSummaryDBRef;
     private DatabaseReference mr2pDBRef;
     private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
     SessionManager session;
+
+    /*---------------------------------------------
+        |   NAVIGATION DRAWER VARIABLES
+     *-------------------------------------------*/
+    DrawerLayout mDrawerLayout;
+    ImageView drawerButton;
+    NavigationView navigationView;
 
     /*---------------------------------------------
         |   LOCATION / GEOFENCE VARIABLES
@@ -91,12 +113,50 @@ public class HomeActivity extends AppCompatActivity implements
     protected ArrayList<Geofence> mGeofenceList;
     private String lat;
     private String lng;
-    String r2pReg = "N";
+    String r2pReg ="N";
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerButton = (ImageView)findViewById(R.id.logo_login);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.home_id);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home_id:
+                        Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
+                        startActivity(intentHome);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.home_id);
+                        break;
+                    case R.id.profile_id:
+                        Intent intentProfile = new Intent(HomeActivity.this, SettingsActivity.class);
+                        startActivity(intentProfile);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.profile_id);
+                        break;
+                    case R.id.wheresmycar_id:
+                        Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                        startActivity(intentCar);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        break;
+                }
+                return true;
+            }
+        });
+
+
         session = new SessionManager(getApplicationContext());
 
 
@@ -108,6 +168,7 @@ public class HomeActivity extends AppCompatActivity implements
 
         lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
 
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
         mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
@@ -115,7 +176,9 @@ public class HomeActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
-                    r2pReg = "Y";
+                    setR2P("Y");
+                else
+                    setR2P("N");
             }
 
             @Override
@@ -125,10 +188,11 @@ public class HomeActivity extends AppCompatActivity implements
         });
 
 
-        Button btn_r2p = (Button)findViewById(R.id.btn_r2p);
+        ImageButton btn_r2p = (ImageButton)findViewById(R.id.btn_r2p);
         if(r2pReg.equals("Y")){
             btn_r2p.setVisibility(View.GONE);
         }
+
 
         // Initialize lotSummary ListView and its adapter
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
@@ -200,6 +264,10 @@ public class HomeActivity extends AppCompatActivity implements
         populateGeofenceList();
         buildGoogleApiClient();
         createLocationRequest();
+    }
+
+    private void setR2P(String y) {
+        r2pReg = y;
     }
 
     //Radio buttons in home activity
@@ -299,6 +367,12 @@ public class HomeActivity extends AppCompatActivity implements
         // CONNECT THE CLIENT
         super.onStart();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.setCheckedItem(R.id.home_id);
     }
 
     protected void createLocationRequest() {
@@ -450,4 +524,30 @@ public class HomeActivity extends AppCompatActivity implements
         editor.apply();
         Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
+
+    /*---------------------------------------------------------------------*
+        |   NAVIGATION DRAWER
+     *---------------------------------------------------------------------*/
+
+    DrawerLayout.DrawerListener drawerListener = new DrawerLayout.DrawerListener() {
+
+        @Override
+        public void onDrawerClosed(View drawerView) {}
+
+        @Override
+        public void onDrawerOpened(View drawerView) {}
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {}
+
+        @Override
+        public void onDrawerStateChanged(int newState) {}
+    };
+
+    public void openDrawer(View view){
+        navigationView.setCheckedItem(R.id.home_id);
+        mDrawerLayout.openDrawer(Gravity.START);
+        mDrawerLayout.addDrawerListener(drawerListener);
+    }
+
 }

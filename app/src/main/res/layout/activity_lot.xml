@@ -15,14 +15,6 @@
         android:orientation="horizontal"
         android:background="@color/backgroundWhite">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight=".8"
-            android:contentDescription="@string/logo_large"
-            android:src="@drawable/logo" />
-
         <TextView
             android:id="@+id/tv_lot_header"
             android:layout_width="0dp"
@@ -39,6 +31,14 @@
             android:textSize="18sp"
             android:textStyle="bold"
             tools:text="@string/tv_lot_header" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:contentDescription="@string/logo_large"
+            android:src="@drawable/logo" />
 
     </LinearLayout>
     <View

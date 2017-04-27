@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/round_corner_black"
-            android:padding="4dp"
+            android:padding="8dp"
             android:text="@string/btn_logout"
             android:textColor="@color/textWhite"/>
 
