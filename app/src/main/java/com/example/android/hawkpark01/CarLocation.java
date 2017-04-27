@@ -122,14 +122,20 @@ public class CarLocation extends AppCompatActivity implements
                     case R.id.home_id:
                         Intent intentHome = new Intent(CarLocation.this, HomeActivity.class);
                         startActivity(intentHome);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.home_id);
                         break;
                     case R.id.profile_id:
                         Intent intentProfile = new Intent(CarLocation.this, SettingsActivity.class);
                         startActivity(intentProfile);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.profile_id);
                         break;
                     case R.id.wheresmycar_id:
                         Intent intentCar = new Intent(CarLocation.this, CarLocation.class);
                         startActivity(intentCar);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.wheresmycar_id);
                         break;
                 }
                 return true;
@@ -154,6 +160,12 @@ public class CarLocation extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.setCheckedItem(R.id.wheresmycar_id);
     }
 
     public boolean googleServicesAvailable() {

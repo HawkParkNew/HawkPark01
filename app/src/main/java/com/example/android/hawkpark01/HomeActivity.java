@@ -136,14 +136,20 @@ public class HomeActivity extends AppCompatActivity implements
                     case R.id.home_id:
                         Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
                         startActivity(intentHome);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.home_id);
                         break;
                     case R.id.profile_id:
                         Intent intentProfile = new Intent(HomeActivity.this, SettingsActivity.class);
                         startActivity(intentProfile);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.profile_id);
                         break;
                     case R.id.wheresmycar_id:
                         Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
                         startActivity(intentCar);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.wheresmycar_id);
                         break;
                 }
                 return true;
@@ -363,6 +369,12 @@ public class HomeActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.setCheckedItem(R.id.home_id);
+    }
+
     protected void createLocationRequest() {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(1000); //UPDATE LOCATION EVERY SECOND (TIME IN MS)
@@ -533,6 +545,7 @@ public class HomeActivity extends AppCompatActivity implements
     };
 
     public void openDrawer(View view){
+        navigationView.setCheckedItem(R.id.home_id);
         mDrawerLayout.openDrawer(Gravity.START);
         mDrawerLayout.addDrawerListener(drawerListener);
     }
