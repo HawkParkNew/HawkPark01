@@ -27,10 +27,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void enableEdit (View view){
         radioGroup.setVisibility(View.VISIBLE);
-        name.setInputType(TYPE_CLASS_TEXT);
-        license.setInputType(TYPE_CLASS_TEXT);
-        car.setInputType(TYPE_CLASS_TEXT);
-        plates.setInputType(TYPE_CLASS_TEXT);
+        name.setFocusable(true);
+        license.setFocusable(true);
+        car.setFocusable(true);
+        plates.setFocusable(true);
 
     }
 }
