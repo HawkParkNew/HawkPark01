@@ -10,4 +10,8 @@
     <dimen name="home_list_btn_padding">10dp</dimen>
     <dimen name="ha_radio_btn_margin_bottom">30dp</dimen>
     <dimen name="home_list_item_stroke">5dp</dimen>
+    <dimen name="et_leaving_in_width_nr">100dp</dimen>
+    <dimen name="tv_margin_top_nr">15dp</dimen>
+    <dimen name="tv_margin_bottom_nr">10dp</dimen>
+    <dimen name="margin_side_nr">20dp</dimen>
 </resources>
