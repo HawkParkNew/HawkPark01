@@ -27,10 +27,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void enableEdit (View view){
         radioGroup.setVisibility(View.VISIBLE);
-        name.setFocusable(true);
-        license.setFocusable(true);
-        car.setFocusable(true);
-        plates.setFocusable(true);
+        name.setFocusableInTouchMode(true);
+        license.setFocusableInTouchMode(true);
+        car.setFocusableInTouchMode(true);
+        plates.setFocusableInTouchMode(true);
 
     }
 }
