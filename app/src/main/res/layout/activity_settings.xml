@@ -66,7 +66,7 @@
             android:text="@string/et_set_displayname"
             android:layout_marginBottom="15dp"
             android:maxLength="15"
-            android:inputType="none" />
+            android:focusable="false" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:text="@string/et_set_displaylicnum"
             android:layout_marginBottom="15dp"
             android:maxLength="15"
-            android:inputType="none"/>
+            android:focusable="false"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:text="@string/et_set_displaycarmod"
             android:layout_marginBottom="15dp"
             android:maxLength="15"
-            android:inputType="none"/>
+            android:focusable="false"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
             android:text="@string/et_set_displayplate"
             android:layout_marginBottom="15dp"
             android:maxLength="10"
-            android:inputType="none"/>
+            android:focusable="false"/>
 
         <TextView
             android:layout_width="match_parent"
