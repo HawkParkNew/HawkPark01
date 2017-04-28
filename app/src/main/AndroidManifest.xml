@@ -40,7 +40,8 @@
 
         <service android:name="utils.GeofenceTransitionsIntentService" />
 
-        <activity android:name=".CarLocation"/>
+        <activity android:name=".CarLocation" />
+        <activity android:name=".NeedRide"></activity>
     </application>
 
 </manifest>

@@ -98,5 +98,22 @@
     <string name="feedback_successfully_submitted_toast">Feedback successfully submitted. Thanks!</string>
     <string name="missing_info_toast_r2p">Missing information.Please try again.</string>
     <string name="success_registration_toast_r2p">Registration was successful</string>
+    <string name="header_need_ride">Need A Ride</string>
+    <string name="r_btn_leaving_now">Now</string>
+    <string name="r_btn_leaving_in">Leaving at</string>
+    <string name="tv_leaving_nr">Leaving:</string>
+    <string name="choose_time">et_leaving_in_nr_hint</string>
+    <string name="tv_parking_lot_nr">Parking Lot:</string>
+    <string name="tv_parked_in_nr">Parked in-</string>
+    <string name="et_choose_lot_nr">Choose Lot</string>
+    <string name="tv_pickup_location_nr">Pick-up location:</string>
+    <string name="tv_choose_location_nr">Choose location</string>
+    <string name="tv_pick_up_from_nr">Pick-up from</string>
+    <string name="tv_num_passengers_nr">Number of Passengers:</string>
+    <string name="r_btn_three_nr">Three</string>
+    <string name="r_btn_one_nr">One</string>
+    <string name="r_btn_two_nr">Two</string>
+    <string name="btn_submit_nr">Submit</string>
+    <string name="tv_click_to_connect_nr">Click to Connect</string>
     <!--GOOGLE MAPS API KEY-->
 </resources>

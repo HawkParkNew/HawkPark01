@@ -1,6 +1,7 @@
 package com.example.android.hawkpark01.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -19,6 +20,12 @@ public class Utils {
     public static final String EMAIL_KEY = "email_id";
     public static final String FB_KEY = "feedback_id";
 
+    //r2p functionality=============================================================================
+    private String[] lotNames = {"Car Parc Diem", "Lot 24", "Lot 60"};
+    private String[] pickupLocation = {"Rec. Center", "Opposite Carparc"};
+
+
+
 
     /**
      * Gets current time in HH(hours 0-23):mm:ss format=============================================
@@ -36,5 +43,12 @@ public class Utils {
     public static String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
         return sdf.format(Calendar.getInstance().getTime());
+    }
+
+    public String[] getPickupLocation(){
+        return pickupLocation;
+    }
+    public String[] getLotNames(){
+        return lotNames;
     }
 }
