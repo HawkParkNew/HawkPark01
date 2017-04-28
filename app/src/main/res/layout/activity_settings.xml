@@ -3,7 +3,7 @@
     android:id="@+id/register_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGray">
+    android:background="@color/backgroundWhite">
 
     <LinearLayout
         android:id="@+id/hawk_bar_default"
@@ -44,25 +44,96 @@
         android:layout_height="10dp"
         android:background="@color/textBlack"
         android:layout_below="@id/hawk_bar_default"/>
-    <TextView
-        android:id="@+id/header_home_screen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/header_home_screen"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/textWhite"
-        android:textSize="18sp"
-        android:layout_below="@+id/border_black"/>
 
     <LinearLayout
-        android:id="@+id/linear_layout_ha"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header_home_screen"
-        android:orientation="horizontal"
-        android:layout_above="@+id/btn_bar_home">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity=""
+        android:padding="15dp"
+        android:layout_below="@+id/border_black"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_set_name"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/et_displayname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et_set_displayname"
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"
+            android:inputType="none" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_licence_num_r2p"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/et_licence_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et_set_displaylicnum"
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"
+            android:inputType="none"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_car_model_r2p"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/et_car_model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et_set_displaycarmod"
+            android:layout_marginBottom="15dp"
+            android:maxLength="15"
+            android:inputType="none"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_licence_plates_r2p"
+            android:layout_marginBottom="10dp"/>
+        <EditText
+            android:id="@+id/et_licence_plates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/et_set_displayplate"
+            android:layout_marginBottom="15dp"
+            android:maxLength="10"
+            android:inputType="none"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_set_lotpref"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/rg_lotpref"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <RadioButton
+                android:id="@+id/radio_availability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_a" />
+
+            <RadioButton
+                android:id="@+id/radio_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_d" />
+
+        </RadioGroup>
+
 
     </LinearLayout>
     <LinearLayout
@@ -75,10 +146,20 @@
         android:layout_above="@+id/border_red"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_home"
+            android:id="@+id/btn_edit_settings"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_black"
+            android:padding="4dp"
+            android:text="@string/btn_edit_settings"
+            android:textColor="@color/textWhite"
+            android:onClick="enableEdit"/>
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/btn_submit_settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -86,19 +167,11 @@
             android:padding="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginEnd="4dp"
-            android:text="@string/btn_home"
-            android:textColor="@color/textWhite" />
+            android:text="@string/btn_submit_settings"
+            android:textColor="@color/textWhite"
+            android:onClick="Submit"/>
 
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_logout_settings"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:text="@string/btn_settings"
-            android:textColor="@color/textWhite"/>
+
 
     </LinearLayout>
     <View
