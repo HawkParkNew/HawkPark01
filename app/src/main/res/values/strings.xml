@@ -45,6 +45,18 @@
     <string name="radio_some">Some Spots</string>
     <string name="radio_full">Full</string>
 
+    <!-- Settings Strings -->
+    <string name="tv_set_name">Name: </string>
+    <string name="tv_set_lotpref">Lot Preference: </string>
+    <string name="et_set_displayname"> </string>
+    <string name="et_set_displaylicnum"> </string>
+    <string name="et_set_displaycarmod"> </string>
+    <string name="et_set_displayplate"> </string>
+    <string name="btn_edit_settings">Edit Settings</string>
+    <string name="btn_submit_settings">Submit Changes</string>
+    <string name="radio_a">Availability</string>
+    <string name="radio_d">Distance</string>
+
     <!-- CARLOCATION STRINGS -->
     <string name="set_car_location">Set Car Location</string>
     <string name="car_location_saved">Car Location Saved</string>
