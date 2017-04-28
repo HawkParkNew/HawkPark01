@@ -8,7 +8,7 @@ import com.example.android.hawkpark01.utils.Utils;
 
 public class NeedParkingDB {
 
-    String userId, arriveTime, lotPref1,lotPref2, lotPref3, numSeats, requestTime;
+    private String userId, arriveTime, lotPref1,lotPref2, lotPref3, numSeats, requestTime;
 
     public NeedParkingDB() {
 

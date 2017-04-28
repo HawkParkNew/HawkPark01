@@ -8,12 +8,11 @@ import com.example.android.hawkpark01.utils.Utils;
 
 public class NeedRideDB {
 
-    String userId,leaveTime,parkedLot,numRiders,pickUp, requestTime;
+    private String userId,leaveTime,parkedLot,numRiders,pickUp, requestTime;
 
     public NeedRideDB(){
 
     }
-    //time in the format mmddyyyy hhmmss
     public NeedRideDB(String userId, String leaveTime,String parkedLot, String numRiders, String pickUp){
         this.userId = userId;
         this.leaveTime = leaveTime;
