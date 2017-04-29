@@ -83,13 +83,7 @@ public class HomeActivity extends AppCompatActivity implements
         LocationListener,
         ResultCallback<Status> {
 
-    //Parking availability in lots==================================================================
-    private ListView lv_lot_list;
     private ImageButton btn_r2p,btn_settings;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mlotSummaryDBRef;
-    private DatabaseReference mr2pDBRef;
-    private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
     SessionManager session;
 
@@ -166,12 +160,12 @@ public class HomeActivity extends AppCompatActivity implements
         String name = user.get(SessionManager.KEY_NAME);// display name
         String userId = user.get(SessionManager.KEY_USERID);// userId
 
-        lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
+        ListView lv_lot_list = (ListView) findViewById(R.id.lv_lot_btn_ha);
 
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
-        mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
+        DatabaseReference mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
         mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -193,7 +187,6 @@ public class HomeActivity extends AppCompatActivity implements
             btn_r2p.setVisibility(View.GONE);
         }
 
-
         // Initialize lotSummary ListView and its adapter
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
         mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
@@ -210,7 +203,7 @@ public class HomeActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
-        mChildEventListener = new ChildEventListener() {
+        ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //add to lot list
@@ -293,18 +286,23 @@ public class HomeActivity extends AppCompatActivity implements
     }
 
     public void onButtonClicked_ha(View view) {
-        String userId = getIntent().getStringExtra(ID_KEY);
         int id = view.getId();
         switch (id){
             case R.id.btn_r2p://directs user to ride2park screen
-                //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to settings screen
-                //change this
                 Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
                 startActivity(i);
+                break;
+            case R.id.btn_np://directs user to NeedParking screen
+                Intent in = new Intent(HomeActivity.this,NeedParking.class);
+                startActivity(in);
+                break;
+            case R.id.btn_nr://directs user to NeedRide screen
+                Intent inte = new Intent(HomeActivity.this,NeedRide.class);
+                startActivity(inte);
                 break;
             case R.id.btn_car_location:
                 SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);

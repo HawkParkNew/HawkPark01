@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/tv_need_parking_item"
+        android:id="@+id/tv_need_ride_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/backgroundGray"

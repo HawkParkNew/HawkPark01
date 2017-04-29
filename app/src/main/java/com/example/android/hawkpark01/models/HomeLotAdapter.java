@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.android.hawkpark01.R;
+import com.example.android.hawkpark01.SessionManager;
 import com.example.android.hawkpark01.models.HomeLotDB;
 
 import java.util.List;

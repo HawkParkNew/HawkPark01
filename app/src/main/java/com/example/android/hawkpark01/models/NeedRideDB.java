@@ -8,18 +8,27 @@ import com.example.android.hawkpark01.utils.Utils;
 
 public class NeedRideDB {
 
-    private String userId,leaveTime,parkedLot,numRiders,pickUp, requestTime;
+    private String userId, name, leaveTime,parkedLot,numRiders,pickUp, requestTime;
 
     public NeedRideDB(){
 
     }
-    public NeedRideDB(String userId, String leaveTime,String parkedLot, String pickUp, String numRiders){
+    public NeedRideDB(String userId, String name, String leaveTime,String parkedLot, String pickUp, String numRiders){
         this.userId = userId;
+        this.name = name;
         this.leaveTime = leaveTime;
         this.parkedLot = parkedLot;
         this.numRiders = numRiders;
         this.pickUp = pickUp;
         requestTime = Utils.getCurrentDateTime();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserId() {
@@ -30,7 +39,7 @@ public class NeedRideDB {
         this.userId = userId;
     }
 
-    public String getLeaveTime() {
+    String getLeaveTime() {
         return leaveTime;
     }
 
@@ -38,7 +47,7 @@ public class NeedRideDB {
         this.leaveTime = leaveTime;
     }
 
-    public String getParkedLot() {
+    String getParkedLot() {
         return parkedLot;
     }
 

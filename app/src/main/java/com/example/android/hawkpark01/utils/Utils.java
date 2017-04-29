@@ -34,14 +34,23 @@ public class Utils {
         return sdf.format(Calendar.getInstance().getTime());
     }
     /**
-     * Gets current date and time in the format dd:MM:yyyy HH:mm:ss=================================
-     * Hours(0-23), dd(day in the month), MM(months (1-12))
+     * Gets current date and time in the format "d MMM yy HH:mm:ss"=================================
+     * Hours(0-23), dd(day in the month), MM(months (1-12)),MMM- month names apr,jun
      * Option: "d MMM yyyy HH:mm:ss SSS" time in millis
      * Option: "d MMM yyyy K:mm a" time am/pm
      */
     public static String getCurrentDateTime() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("d MMM yy HH:mm:ss", Locale.US);
         return sdf.format(Calendar.getInstance().getTime());
+    }
+    /**
+     * Sets time in "d MMM yy HH:mm:ss" format======================================================
+     */
+    public static String setReqTime(String HHmm){
+        String format = "d MMM yy "+HHmm + ":00";
+        SimpleDateFormat sdf = new SimpleDateFormat(format,Locale.US);
+        return sdf.format(Calendar.getInstance().getTime());
+
     }
 
 }

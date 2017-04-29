@@ -13,20 +13,30 @@ public class NeedParkingDB {
     private String lotPref1;
     private String lotPref2;
     private String numSeats;
+    private String name;
 
     public NeedParkingDB() {
     }
 
     //time in the format mmddyyyy hhmmss
-    public NeedParkingDB(String userId, String arriveTime,
+    public NeedParkingDB(String userId, String name, String arriveTime,
                          String lotPref1, String lotPref2,
                          String numSeats) {
         this.userId = userId;
+        this.name = name;
         this.arriveTime = arriveTime;
         this.lotPref1 = lotPref1;
         this.lotPref2 = lotPref2;
         this.numSeats = numSeats;
         String requestTime = Utils.getCurrentDateTime();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserId() {
@@ -37,7 +47,7 @@ public class NeedParkingDB {
         this.userId = userId;
     }
 
-    public String getArriveTime() {
+    String getArriveTime() {
         return arriveTime;
     }
 
@@ -45,7 +55,7 @@ public class NeedParkingDB {
         this.arriveTime = arriveTime;
     }
 
-    public String getLotPref1() {
+    String getLotPref1() {
         return lotPref1;
     }
 
