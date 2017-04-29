@@ -21,8 +21,7 @@ public class Utils {
     public static final String FB_KEY = "feedback_id";
 
     //r2p functionality=============================================================================
-    private String[] lotNames = {"Car Parc Diem", "Lot 24", "Lot 60"};
-    private String[] pickupLocation = {"Rec. Center", "Opposite Carparc"};
+
 
 
 
@@ -45,10 +44,4 @@ public class Utils {
         return sdf.format(Calendar.getInstance().getTime());
     }
 
-    public String[] getPickupLocation(){
-        return pickupLocation;
-    }
-    public String[] getLotNames(){
-        return lotNames;
-    }
 }

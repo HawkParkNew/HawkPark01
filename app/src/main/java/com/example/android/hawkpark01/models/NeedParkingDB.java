@@ -8,23 +8,25 @@ import com.example.android.hawkpark01.utils.Utils;
 
 public class NeedParkingDB {
 
-    private String userId, arriveTime, lotPref1,lotPref2, lotPref3, numSeats, requestTime;
+    private String userId;
+    private String arriveTime;
+    private String lotPref1;
+    private String lotPref2;
+    private String numSeats;
 
     public NeedParkingDB() {
-
     }
 
     //time in the format mmddyyyy hhmmss
     public NeedParkingDB(String userId, String arriveTime,
-                         String lotPref1, String lotPref2, String lotPref3,
+                         String lotPref1, String lotPref2,
                          String numSeats) {
         this.userId = userId;
         this.arriveTime = arriveTime;
         this.lotPref1 = lotPref1;
         this.lotPref2 = lotPref2;
-        this.lotPref3 = lotPref3;
         this.numSeats = numSeats;
-        requestTime = Utils.getCurrentDateTime();
+        String requestTime = Utils.getCurrentDateTime();
     }
 
     public String getUserId() {
@@ -57,14 +59,6 @@ public class NeedParkingDB {
 
     public void setLotPref2(String lotPref2) {
         this.lotPref2 = lotPref2;
-    }
-
-    public String getLotPref3() {
-        return lotPref3;
-    }
-
-    public void setLotPref3(String lotPref3) {
-        this.lotPref3 = lotPref3;
     }
 
     public String getNumSeats() {

@@ -41,7 +41,8 @@
         <service android:name="utils.GeofenceTransitionsIntentService" />
 
         <activity android:name=".CarLocation" />
-        <activity android:name=".NeedRide"></activity>
+        <activity android:name=".NeedRide" />
+        <activity android:name=".NeedParking"></activity>
     </application>
 
 </manifest>

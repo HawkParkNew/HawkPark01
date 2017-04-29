@@ -127,5 +127,26 @@
     <string name="r_btn_two_nr">Two</string>
     <string name="btn_submit_nr">Submit</string>
     <string name="tv_click_to_connect_nr">Click to Connect</string>
-    <!--GOOGLE MAPS API KEY-->
+    <string name="incomplete_info">Incomplete information. Please retry.</string>
+    <!--NEED A RIDE-->
+    <string name="lot_name_prompt">Select Parked Spot</string>
+    <string-array name="lot_names">
+        <item>CarParc Diem</item>
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+    </string-array>
+    <string name="pickup_prompt">Select Pickup Spot</string>
+    <string name="error_saving_toast">Error saving. Please try again.</string>
+    <string name="success_nr_toast">Request successfully submitted.</string>
+    <string name="header_need_parking">Need to Park</string>
+    <string name="tv_num_seats_np">No. of Seats:</string>
+    <string name="tv_arriving_np">Arriving at:</string>
+    <string name="tv_preference_np">Lot Preference:</string>
+    <string name="tv_pref01_np">Preference 1</string>
+    <string name="tv_pref02_np">Preference 2</string>
+    <string-array name="pickup_location">
+        <item>Rec. Center</item>
+        <item>Opposite CarParc</item>
+    </string-array>
+
 </resources>

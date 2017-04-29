@@ -13,7 +13,7 @@ public class NeedRideDB {
     public NeedRideDB(){
 
     }
-    public NeedRideDB(String userId, String leaveTime,String parkedLot, String numRiders, String pickUp){
+    public NeedRideDB(String userId, String leaveTime,String parkedLot, String pickUp, String numRiders){
         this.userId = userId;
         this.leaveTime = leaveTime;
         this.parkedLot = parkedLot;
