@@ -42,7 +42,8 @@
 
         <activity android:name=".CarLocation" />
         <activity android:name=".NeedRide" />
-        <activity android:name=".NeedParking"></activity>
+        <activity android:name=".NeedParking" />
+        <activity android:name=".Connect"></activity>
     </application>
 
 </manifest>

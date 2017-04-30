@@ -1,7 +1,9 @@
 package com.example.android.hawkpark01;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.android.hawkpark01.models.ConnectionsDB;
+import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.NeedParkingDB;
 import com.example.android.hawkpark01.models.NeedParkingAdapter;
 import com.example.android.hawkpark01.models.NeedRideDB;
@@ -31,6 +35,9 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import static com.example.android.hawkpark01.utils.Utils.CONNECT_KEY;
+
+
 public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     EditText et_leavingTime;
@@ -43,6 +50,7 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
     FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
     DatabaseReference mNeedRideDBRef = mdatabase.getReference("need-ride");
     DatabaseReference mNeedParkingDBRef = mdatabase.getReference("need-parking");
+    DatabaseReference mconnectionsDBRef = mdatabase.getReference("connections");
     SessionManager session;
     NeedParkingAdapter needParkingAdapter;
     String userId, name;
@@ -76,7 +84,22 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
                 mTimePicker = new TimePickerDialog(NeedRide.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        et_leavingTime.setText( selectedHour + ":" + selectedMinute);
+                        //ensure time is in the format HH:mm
+                        if(selectedHour<10){//hour is less than 10
+                            String hourFormatter = "0"+selectedHour;
+                            if(selectedMinute<10){// hour and minute < 10
+                                String minuteFormatter = "0"+ selectedMinute;
+                                et_leavingTime.setText( hourFormatter + ":" + minuteFormatter);
+                            }else
+                                et_leavingTime.setText( hourFormatter + ":" + selectedMinute);
+                        }
+                        else{
+                            if(selectedMinute<10){// only minute < 10
+                                String minuteFormatter = "0"+ selectedMinute;
+                                et_leavingTime.setText( selectedHour + ":" + minuteFormatter);
+                            }else
+                                et_leavingTime.setText( selectedHour + ":" + selectedMinute);
+                        }
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
@@ -92,10 +115,11 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
         //Creating the ArrayAdapter instance having the pick-up location list
         lotAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,lotNames);
         lotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         //Setting the ArrayAdapter data on the Spinner
         spinner_parkedLot.setAdapter(lotAdapter);
 
-        String[] pickupLocation = {"Select location", "Rec. Center", "Opposite Carparc"};
+        final String[] pickupLocation = {"Select location", "Rec. Center", "Opposite Carparc"};
         ArrayAdapter pickupAdapter;
         spinner_pickup_location = (Spinner)findViewById(R.id.spinner_pickup_from_nr);
         spinner_pickup_location.setOnItemSelectedListener(this);
@@ -116,11 +140,18 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Access the row position here to get the correct data item
                 NeedParkingDB selectedParking = needParkingDBList.get(i);
-                //todo create a dialog for user to review and confirm connection
+                // Get detail of connected user who needs parking
+                String parkerId = selectedParking.getUserId();
+                long arriveTime = selectedParking.getReqTimeMillis();
+                String name = selectedParking.getName();
+                String seats = selectedParking.getNumSeats();
+                String parkingLot = selectedParking.getLotPref1();
+                String pickupLoc = pickupLocation[1];//todo change this to get user input first
+                String msg = name + " arriving at " + arriveTime + " has space for " + seats + " riders.";
 
-                String userId = selectedParking.getUserId();
-                Intent intent = new Intent(NeedRide.this,LotActivity.class);
-                //startActivity(intent);
+                //creates a dialog for user to review and confirm connection
+                confirmDialog(msg, userId, parkerId, pickupLoc, parkingLot, arriveTime, seats);
+
             }
         });
         ChildEventListener mChildEventListener = new ChildEventListener() {
@@ -156,11 +187,11 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
                 //error message
             }
         };
-        mNeedParkingDBRef.addChildEventListener(mChildEventListener);
+        mNeedParkingDBRef.orderByChild("reqTimeMillis").addChildEventListener(mChildEventListener);
 
     }
 
-    //Performing action onItemSelected and onNothing selected
+    //if user selects an item of the list view
     @Override
     public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
     }
@@ -184,8 +215,12 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
         else{//all required info is available, send to db
             String parkedLot = spinner_parkedLot.getSelectedItem().toString();
             String pickupLoc = spinner_pickup_location.getSelectedItem().toString();
+
             String pickerTime = et_leavingTime.getText().toString();//in format HH:mm
-            final String leavingTime = Utils.setReqTime(pickerTime);//in format dd:MMM:yyyy HH:mm:ss
+            final String leavingTime = Utils.setReqTime(pickerTime);//in format d MMM, HH:mm
+            String reqDate = Utils.createReqDateString(pickerTime); //in format dd-MM-yyyy HH:mm:ss
+            long timeMillis = Utils.getTimeinMillis(reqDate);
+
             String numPassenger = "1";
             switch(passengerId){
                 case R.id.r_btn_one_nr:
@@ -198,7 +233,7 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
                     numPassenger = "3";
                     break;
             }
-            NeedRideDB needDBitem = new NeedRideDB(userId, name, leavingTime, parkedLot,
+            NeedRideDB needDBitem = new NeedRideDB(userId, name, leavingTime,timeMillis, parkedLot,
                                                                         pickupLoc, numPassenger);
             mNeedRideDBRef.push().setValue(needDBitem, new DatabaseReference.CompletionListener() {
                 public void onComplete(DatabaseError error, DatabaseReference ref) {
@@ -216,4 +251,53 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
             });
         }
     }
+    //Alert dialog activated when user clicks on listview item
+    //if confirm- connection is made and user is directed to connect screen
+    //if back dialog is closed
+    public void confirmDialog(String msg,
+                              final String riderId , final String parkerId,
+                              final String meetSpot, final String destination,
+                              final long meetTime, String seats){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.connected_with_dialog_np_nr);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
+        alertDialogBuilder.setMessage(msg);
+                alertDialogBuilder.setPositiveButton(R.string.btn_confirm_dialog_np_nr,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                //create new item in connection db
+                                ConnectionsDB mConnectionsDB = new ConnectionsDB(riderId,parkerId,meetSpot,destination,meetTime);
+                                mconnectionsDBRef.push().setValue(mConnectionsDB,new DatabaseReference.CompletionListener() {
+                                    //Set listener to wait for creation of connection in db
+                                    public void onComplete(DatabaseError error, DatabaseReference ref) {
+                                        if (error != null) {
+                                            Toast.makeText(NeedRide.this, R.string.error_saving_toast, Toast.LENGTH_SHORT).show();
+                                            System.out.println("Data could not be saved " + error.getMessage());
+                                        } else {
+                                            Toast.makeText(NeedRide.this, R.string.success_nr_toast, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                                //change status of item in "need-parking" db to connected('2')
+                                mNeedParkingDBRef.child(parkerId).child("status").setValue("2");
+                                //direct the user to the connections activity
+                                Intent intent = new Intent(NeedRide.this,Connect.class);
+                                intent.putExtra(CONNECT_KEY,parkerId);
+                                startActivity(intent);
+                            }
+                        });
+
+        alertDialogBuilder.setNegativeButton(R.string.btn_other_dialog_np_nr,
+                                                    new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }

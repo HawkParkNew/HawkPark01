@@ -144,6 +144,12 @@
     <string name="tv_preference_np">Lot Preference:</string>
     <string name="tv_pref01_np">Preference 1</string>
     <string name="tv_pref02_np">Preference 2</string>
+    <string name="tv_connect_header">HawkPark Connect</string>
+    <string name="tv_connect_detail_header">You have connected with:</string>
+    <string name="btn_cancel_connect">Cancel Connect</string>
+    <string name="connected_with_dialog_np_nr">You connected with:</string>
+    <string name="btn_confirm_dialog_np_nr">Confirm Connect</string>
+    <string name="btn_other_dialog_np_nr">Choose Other</string>
     <string-array name="pickup_location">
         <item>Rec. Center</item>
         <item>Opposite CarParc</item>

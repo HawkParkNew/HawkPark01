@@ -65,7 +65,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         feedbackDatabaseReference = mdatabase.getReference("feedbackDB");
         mlotSummaryDBRef = mdatabase.getReference("lot-summary");
 
-            //checks to make sure googleServices is available
+        //checks to make sure googleServices is available
         if(googleServicesAvailable()) {
             setContentView(R.layout.activity_lot);
             initMap();

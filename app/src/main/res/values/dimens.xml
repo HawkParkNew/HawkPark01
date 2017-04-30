@@ -14,4 +14,6 @@
     <dimen name="tv_margin_top_nr">15dp</dimen>
     <dimen name="tv_margin_bottom_nr">10dp</dimen>
     <dimen name="margin_side_nr">20dp</dimen>
+    <dimen name="margin_side_connect">15dp</dimen>
+    <dimen name="margin_bottom_connect">10dp</dimen>
 </resources>

@@ -81,7 +81,22 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
                 mTimePicker = new TimePickerDialog(NeedParking.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        et_arrivalTime.setText( selectedHour + ":" + selectedMinute);
+                        //ensure time is in the format HH:mm
+                        if(selectedHour<10){//hour is less than 10
+                            String hourFormatter = "0"+selectedHour;
+                            if(selectedMinute<10){// hour and minute < 10
+                                String minuteFormatter = "0"+ selectedMinute;
+                                et_arrivalTime.setText( hourFormatter + ":" + minuteFormatter);
+                            }else
+                                et_arrivalTime.setText( hourFormatter + ":" + selectedMinute);
+                        }
+                        else{
+                            if(selectedMinute<10){// only minute < 10
+                                String minuteFormatter = "0"+ selectedMinute;
+                                et_arrivalTime.setText( selectedHour + ":" + minuteFormatter);
+                            }else
+                                et_arrivalTime.setText( selectedHour + ":" + selectedMinute);
+                        }
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
@@ -157,7 +172,7 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
                 //error message
             }
         };
-        mNeedRideDBRef.addChildEventListener(mChildEventListener);
+        mNeedRideDBRef.orderByChild("reqTimeMillis").addChildEventListener(mChildEventListener);
     }
 
     @Override
@@ -189,7 +204,9 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
                 pref_2 = "None";
             }
             String pickerTime = et_arrivalTime.getText().toString();//in format HH:mm
-            final String arrivalTime = Utils.setReqTime(pickerTime);//in format dd:MM:yyyy HH:mm:ss
+            final String arrivalTime = Utils.setReqTime(pickerTime);//in format d MMM, HH:mm
+            String reqDate = Utils.createReqDateString(pickerTime); //in format dd-MM-yyyy HH:mm:ss
+            long timeMillis = Utils.getTimeinMillis(reqDate);
 
             String numSeats = "3";
             switch(seatsId){
@@ -203,7 +220,7 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
                     numSeats = "3";
                     break;
             }
-            NeedParkingDB needDBitem = new NeedParkingDB(userId,name,arrivalTime,
+            NeedParkingDB needDBitem = new NeedParkingDB(userId,name,arrivalTime,timeMillis,
                                                                 pref_1, pref_2, numSeats);
             mNeedParkingDBRef.push().setValue(needDBitem, new DatabaseReference.CompletionListener() {
                 public void onComplete(DatabaseError error, DatabaseReference ref) {

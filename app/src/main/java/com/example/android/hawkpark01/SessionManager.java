@@ -33,6 +33,8 @@ public class SessionManager {
     private static final String KEY_LOT = "lot_name";
 
 
+
+
     SessionManager(Context context){
         this._context = context;
         userSharedPref = _context.getSharedPreferences(PREF_USER, MODE_PRIVATE);
@@ -44,6 +46,7 @@ public class SessionManager {
         editorLocation = locationPref.edit();
         editorLot = lotPref.edit();
     }
+
     /**
      * Create userSharedPref session
      */

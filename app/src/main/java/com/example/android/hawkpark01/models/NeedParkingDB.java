@@ -10,25 +10,48 @@ public class NeedParkingDB {
 
     private String userId;
     private String arriveTime;
+    private long reqTimeMillis;
     private String lotPref1;
     private String lotPref2;
     private String numSeats;
     private String name;
+    private String status;
 
     public NeedParkingDB() {
     }
 
-    //time in the format mmddyyyy hhmmss
-    public NeedParkingDB(String userId, String name, String arriveTime,
+    //status = "1" for active
+    //status = "0" for timed out
+    //status = "2" for cancelled
+    //status = "3" for connected
+    public NeedParkingDB(String userId, String name, String arriveTime, long reqTimeMillis,
                          String lotPref1, String lotPref2,
                          String numSeats) {
         this.userId = userId;
         this.name = name;
         this.arriveTime = arriveTime;
+        this.reqTimeMillis = reqTimeMillis;
         this.lotPref1 = lotPref1;
         this.lotPref2 = lotPref2;
         this.numSeats = numSeats;
+        status = "1"; //Default is active
         String requestTime = Utils.getCurrentDateTime();
+    }
+
+    public long getReqTimeMillis() {
+        return reqTimeMillis;
+    }
+
+    public void setReqTimeMillis(long reqTimeMillis) {
+        this.reqTimeMillis = reqTimeMillis;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getName() {
@@ -55,7 +78,7 @@ public class NeedParkingDB {
         this.arriveTime = arriveTime;
     }
 
-    String getLotPref1() {
+    public String getLotPref1() {
         return lotPref1;
     }
 
