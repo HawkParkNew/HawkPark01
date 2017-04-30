@@ -24,7 +24,8 @@ public class NeedParkingDB {
     //status = "0" for timed out
     //status = "2" for cancelled
     //status = "3" for connected
-    public NeedParkingDB(String userId, String name, String arriveTime, long reqTimeMillis,
+    public NeedParkingDB(String userId, String name,
+                         String arriveTime, long reqTimeMillis,
                          String lotPref1, String lotPref2,
                          String numSeats) {
         this.userId = userId;
@@ -70,7 +71,7 @@ public class NeedParkingDB {
         this.userId = userId;
     }
 
-    String getArriveTime() {
+    public String getArriveTime() {
         return arriveTime;
     }
 

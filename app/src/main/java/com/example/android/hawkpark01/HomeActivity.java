@@ -1,7 +1,5 @@
 package com.example.android.hawkpark01;
 
-
-import android.*;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,7 +8,6 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -18,12 +15,10 @@ import android.support.v4.content.PermissionChecker;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.preference.Preference;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +30,7 @@ import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.utils.GeofenceConstants;
 import com.example.android.hawkpark01.utils.GeofenceErrorMessages;
 import com.example.android.hawkpark01.utils.GeofenceTransitionsIntentService;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -56,6 +52,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,54 +117,23 @@ public class HomeActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawerButton = (ImageView)findViewById(R.id.logo_login);
-        navigationView = (NavigationView)findViewById(R.id.navigation_view);
-        navigationView.setCheckedItem(R.id.home_id);
+        //Setup admob===============================================================================
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home_id:
-                        Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
-                        startActivity(intentHome);
-                        mDrawerLayout.closeDrawers();
-                        navigationView.setCheckedItem(R.id.home_id);
-                        break;
-                    case R.id.profile_id:
-                        Intent intentProfile = new Intent(HomeActivity.this, SettingsActivity.class);
-                        startActivity(intentProfile);
-                        mDrawerLayout.closeDrawers();
-                        navigationView.setCheckedItem(R.id.profile_id);
-                        break;
-                    case R.id.wheresmycar_id:
-                        Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
-                        startActivity(intentCar);
-                        mDrawerLayout.closeDrawers();
-                        navigationView.setCheckedItem(R.id.wheresmycar_id);
-                        break;
-                }
-                return true;
-            }
-        });
-
-
+        //init SessionManager for shared prefs
         session = new SessionManager(getApplicationContext());
-
-
         // get user data from session
         HashMap<String, String> user = session.getUserDetails();
-
         String name = user.get(SessionManager.KEY_NAME);// display name
         String userId = user.get(SessionManager.KEY_USERID);// userId
 
-        ListView lv_lot_list = (ListView) findViewById(R.id.lv_lot_btn_ha);
-
-
+        //init DB, DB references and set up listeners
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
-        DatabaseReference mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
+       /** DatabaseReference mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
         mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -179,15 +147,11 @@ public class HomeActivity extends AppCompatActivity implements
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
-
-
-        ImageButton btn_r2p = (ImageButton)findViewById(R.id.btn_r2p);
-        if(r2pReg.equals("Y")){
-            btn_r2p.setVisibility(View.GONE);
-        }
+        });**/
 
         // Initialize lotSummary ListView and its adapter
+        //init listview that holds the list of lots and their status
+        ListView lv_lot_list = (ListView) findViewById(R.id.lv_lot_btn_ha);
         final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
         mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
         lv_lot_list.setAdapter(mhomeLotAdapter);
@@ -236,6 +200,44 @@ public class HomeActivity extends AppCompatActivity implements
         mlotSummaryDBRef.addChildEventListener(mChildEventListener);
 
         /*---------------------------------------------------------
+            | NAVIGATION DRAWER
+         *-------------------------------------------------------*/
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        drawerButton = (ImageView)findViewById(R.id.logo_login);
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setCheckedItem(R.id.home_id);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.home_id:
+                        Intent intentHome = new Intent(HomeActivity.this, HomeActivity.class);
+                        startActivity(intentHome);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.home_id);
+                        break;
+                    case R.id.profile_id:
+                        Intent intentProfile = new Intent(HomeActivity.this, SettingsActivity.class);
+                        startActivity(intentProfile);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.profile_id);
+                        break;
+                    case R.id.wheresmycar_id:
+                        Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                        startActivity(intentCar);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        break;
+                }
+                return true;
+            }
+        });
+
+
+
+
+        /*---------------------------------------------------------
             |   PERMISSION CHECKER
          *-------------------------------------------------------*/
         if (PermissionChecker.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -259,11 +261,7 @@ public class HomeActivity extends AppCompatActivity implements
         createLocationRequest();
     }
 
-    private void setR2P(String y) {
-        r2pReg = y;
-    }
-
-    //Radio buttons in home activity
+    //Radio buttons in home activity================================================================
     //Sort lots based on user preference
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -278,13 +276,9 @@ public class HomeActivity extends AppCompatActivity implements
                 if (checked)
                     // Sort ListView by availability
                     break;
-            case R.id.radio_btn_favorites_ha:
-                if (checked)
-                    // Sort ListView by favorites
-                    break;
         }
     }
-
+    //oNCLICK LISTENER FOR ALL THE BUTTONS IN THE ACTIVITY==========================================
     public void onButtonClicked_ha(View view) {
         int id = view.getId();
         switch (id){

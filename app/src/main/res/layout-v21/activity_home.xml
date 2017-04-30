@@ -1,211 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/register_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundGray">
-
-    <LinearLayout
-        android:id="@+id/hawk_bar_default"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal"
-        android:background="@color/backgroundWhite">
-
-        <ImageView
-            android:id="@+id/logo_login"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight=".8"
-            android:contentDescription="@string/logo_large"
-            android:src="@drawable/logo"
-            android:onClick="openDrawer"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2.2"
-            android:background="@color/backgroundRed"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="bottom|center"
-            android:paddingTop="20dp"
-            android:text="@string/header_home"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/textBlack"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-    <View
-        android:id="@+id/border_black"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/textBlack"
-        android:layout_below="@id/hawk_bar_default"/>
-    <TextView
-        android:id="@+id/header_home_screen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/header_home_screen"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/textWhite"
-        android:textSize="18sp"
-        android:layout_below="@+id/border_black"/>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_ha"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/header_home_screen"
-        android:orientation="horizontal"
-        android:layout_above="@+id/btn_bar_home">
-        <ListView
-            android:id="@+id/lv_lot_btn_ha"
-            android:layout_width="0dp"
+        android:background="@color/backgroundGray">
+
+        <LinearLayout
+            android:id="@+id/hawk_bar_default"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:background="@color/backgroundWhite">
+
+            <ImageView
+                android:id="@+id/logo_login"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight=".8"
+                android:contentDescription="@string/logo_large"
+                android:src="@drawable/logo"
+                android:onClick="openDrawer"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.2"
+                android:background="@color/backgroundRed"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="bottom|center"
+                android:paddingTop="20dp"
+                android:text="@string/header_home"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/textBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <View
+            android:id="@+id/border_black"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/textBlack"
+            android:layout_below="@id/hawk_bar_default"/>
+        <TextView
+            android:id="@+id/header_home_screen"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.8"
-            android:transcriptMode="alwaysScroll"
-            android:padding="@dimen/ha_padding"
-            android:layout_gravity="center_vertical">
-        </ListView>
-        <RadioGroup
-            android:id="@+id/radio_pref_ha"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="@dimen/ha_padding">
-            <RadioButton android:id="@+id/radio_btn_distance_ha"
-                android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/header_home_screen"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/textWhite"
+            android:textSize="18sp"
+            android:layout_below="@+id/border_black"/>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_ha"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/header_home_screen"
+            android:orientation="horizontal"
+            android:layout_above="@+id/adView">
+            <ListView
+                android:id="@+id/lv_lot_btn_ha"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/radio_btn_distance_ha"
-                android:buttonTint="@color/backgroundRed"
-                android:textColor="@color/textWhite"
-                android:layout_marginBottom="@dimen/ha_radio_btn_margin_bottom"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_btn_availability_ha"
-                android:layout_width="wrap_content"
+                android:layout_weight="1.8"
+                android:transcriptMode="alwaysScroll"
+                android:padding="@dimen/ha_padding"
+                android:layout_gravity="center_vertical">
+            </ListView>
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/radio_btn_availability_ha"
-                android:buttonTint="@color/backgroundRed"
-                android:textColor="@color/textWhite"
-                android:layout_marginBottom="@dimen/ha_radio_btn_margin_bottom"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_btn_favorites_ha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/radio_btn_favorites_ha"
-                android:buttonTint="@color/backgroundRed"
-                android:textColor="@color/textWhite"
-                android:layout_marginBottom="@dimen/ha_radio_btn_margin_bottom"
-                android:onClick="onRadioButtonClicked"/>
+                android:layout_weight="1.2"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+                <RadioGroup
+                    android:id="@+id/radio_pref_ha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="@dimen/ha_padding">
+                    <RadioButton android:id="@+id/radio_btn_distance_ha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/radio_btn_distance_ha"
+                        android:buttonTint="@color/backgroundRed"
+                        android:textColor="@color/textWhite"
+                        android:layout_marginBottom="@dimen/ha_radio_btn_margin_bottom"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/radio_btn_availability_ha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/radio_btn_availability_ha"
+                        android:buttonTint="@color/backgroundRed"
+                        android:textColor="@color/textWhite"
+                        android:layout_marginBottom="@dimen/ha_radio_btn_margin_bottom"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:id="@+id/btn_bar_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <ImageButton
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_r2p"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="2dp"
+                        android:src="@mipmap/applyr2pbtn"
+                        android:onClick="onButtonClicked_ha"
+                        android:textColor="@color/textWhite"/>
+                    <ImageButton
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_settings"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="2dp"
+                        android:src="@mipmap/profilebuttonv3"
+                        android:onClick="onButtonClicked_ha"
+                        android:textColor="@color/textWhite"/>
+                    <ImageButton
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_set_car_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="2dp"
+                        android:src="@mipmap/wheredidiparkbutton"
+                        android:onClick="setCarLocation"
+                        android:textColor="@color/textWhite"/>
+                    <ImageButton
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_car_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="4dp"
+                        android:src="@mipmap/whereismycarbutton"
+                        android:onClick="onButtonClicked_ha"
+                        android:textColor="@color/textWhite"/>
+                    <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_np"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="4dp"
+                        android:text="NP"
+                        android:onClick="onButtonClicked_ha"
+                        android:textColor="@color/textWhite"/>
+                    <Button
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:id="@+id/btn_nr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_corner_black"
+                        android:padding="4dp"
+                        android:text="NR"
+                        android:onClick="onButtonClicked_ha"
+                        android:textColor="@color/textWhite"/>
 
-        </RadioGroup>
-    </LinearLayout>
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:id="@+id/btn_bar_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="4dp"
-        android:layout_above="@+id/border_red"
-        android:layout_alignParentStart="true">
+                </LinearLayout>
 
+            </LinearLayout>
 
-
-        <ImageButton
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_r2p"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        </LinearLayout>
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:src="@mipmap/applyr2pbtn"
-            android:onClick="onButtonClicked_ha"
-            android:textColor="@color/textWhite"/>
+            android:layout_above="@id/border_red"
+            ads:adSize= "BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-        <ImageButton
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_settings"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:src="@mipmap/profilebuttonv3"
-            android:onClick="onButtonClicked_ha"
-            android:textColor="@color/textWhite"/>
-
-
-        <ImageButton
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_set_car_location"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:src="@mipmap/wheredidiparkbutton"
-            android:onClick="setCarLocation"
-            android:textColor="@color/textWhite"/>
-
-        <ImageButton
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_car_location"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:src="@mipmap/whereismycarbutton"
-            android:onClick="onButtonClicked_ha"
-            android:textColor="@color/textWhite"/>
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_np"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:text="NP"
-            android:onClick="onButtonClicked_ha"
-            android:textColor="@color/textWhite"/>
-        <Button
-            style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/btn_nr"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_corner_black"
-            android:padding="4dp"
-            android:text="NR"
-            android:onClick="onButtonClicked_ha"
-            android:textColor="@color/textWhite"/>
-
-    </LinearLayout>
-    <View
-        android:id="@+id/border_red"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/backgroundRed"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        <View
+            android:id="@+id/border_red"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/backgroundRed"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -213,9 +212,9 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/main_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/main_container">
+            android:layout_height="match_parent">
 
         </FrameLayout>
 

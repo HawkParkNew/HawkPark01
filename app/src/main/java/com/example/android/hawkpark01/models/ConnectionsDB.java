@@ -10,13 +10,15 @@ public class ConnectionsDB {
     String riderId, parkerId, meetSpot, destination, status;
     long meetTime;
 
-    public ConnectionsDB(){}
+    public ConnectionsDB() {
+    }
+
     //status = "1" for active
     //status = "0" for timed out
     //status = "2" for cancelled
     public ConnectionsDB(String riderId, String parkerId,
                          String meetSpot, String destination,
-                         long meetTime){
+                         long meetTime) {
         this.riderId = riderId;
         this.parkerId = parkerId;
         this.meetSpot = meetSpot;
@@ -41,20 +43,20 @@ public class ConnectionsDB {
         this.parkerId = parkerId;
     }
 
-    public String getPickupLocation() {
+    public String getMeetSpot() {
         return meetSpot;
     }
 
-    public void setPickupLocation(String pickupLocation) {
-        this.meetSpot = pickupLocation;
+    public void setMeetSpot(String meetSpot) {
+        this.meetSpot = meetSpot;
     }
 
-    public String getParkingLot() {
+    public String getDestination() {
         return destination;
     }
 
-    public void setParkingLot(String parkingLot) {
-        this.destination = parkingLot;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public String getStatus() {
@@ -65,11 +67,11 @@ public class ConnectionsDB {
         this.status = status;
     }
 
-    public long getMeetingTime() {
+    public long getMeetTime() {
         return meetTime;
     }
 
-    public void setMeetingTime(long meetingTime) {
-        this.meetTime = meetingTime;
+    public void setMeetTime(long meetTime) {
+        this.meetTime = meetTime;
     }
 }

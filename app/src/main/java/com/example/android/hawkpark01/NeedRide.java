@@ -3,6 +3,8 @@ package com.example.android.hawkpark01;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,7 +20,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.android.hawkpark01.models.ConnectionsDB;
-import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.NeedParkingDB;
 import com.example.android.hawkpark01.models.NeedParkingAdapter;
 import com.example.android.hawkpark01.models.NeedRideDB;
@@ -34,9 +35,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-
 import static com.example.android.hawkpark01.utils.Utils.CONNECT_KEY;
-
 
 public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -71,7 +70,6 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
         btn_submit = (Button) findViewById(R.id.btn_submit_nr);
         et_leavingTime = (EditText) findViewById(R.id.et_leaving_in_nr);
         lv_needParking = (ListView) findViewById(R.id.lv_need_park_nr) ;
-
         //================================================SET UP TIME-PICKER DIALOG FOR LEAVING TIME
         et_leavingTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,22 +130,25 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
         //==========================================================SET UP LIST VIEW FOR NEED A RIDE
         // Initialize NEED parking ListView and its adapter
         final List<NeedParkingDB> needParkingDBList = new ArrayList<>();
-        needParkingAdapter = new NeedParkingAdapter(NeedRide.this, R.layout.need_parking_item, needParkingDBList);
+        needParkingAdapter = new NeedParkingAdapter(NeedRide.this, R.layout.need_parking_item,
+                                                        needParkingDBList);
         lv_needParking.setAdapter(needParkingAdapter);
         // Set item click listener for the lot view
         lv_needParking.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Access the row position here to get the correct data item
                 NeedParkingDB selectedParking = needParkingDBList.get(i);
-                // Get detail of connected user who needs parking
+                // Get details of connected user who needs parking
                 String parkerId = selectedParking.getUserId();
                 long arriveTime = selectedParking.getReqTimeMillis();
+                String displayTime = selectedParking.getArriveTime();
                 String name = selectedParking.getName();
                 String seats = selectedParking.getNumSeats();
                 String parkingLot = selectedParking.getLotPref1();
                 String pickupLoc = pickupLocation[1];//todo change this to get user input first
-                String msg = name + " arriving at " + arriveTime + " has space for " + seats + " riders.";
+                String msg = name + " arriving at " + displayTime + " has space for " + seats + " riders.";
 
                 //creates a dialog for user to review and confirm connection
                 confirmDialog(msg, userId, parkerId, pickupLoc, parkingLot, arriveTime, seats);
@@ -238,15 +239,16 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
             mNeedRideDBRef.push().setValue(needDBitem, new DatabaseReference.CompletionListener() {
                 public void onComplete(DatabaseError error, DatabaseReference ref) {
                     if (error != null) {
-                        Toast.makeText(NeedRide.this, R.string.error_saving_toast,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NeedRide.this, R.string.error_saving_toast,
+                                Toast.LENGTH_SHORT).show();
                         System.out.println("Data could not be saved " + error.getMessage());
                     }
                     else{
-                        Toast.makeText(NeedRide.this, R.string.success_nr_toast,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NeedRide.this, R.string.success_nr_toast,
+                                Toast.LENGTH_SHORT).show();
                         et_leavingTime.setText("");
                         spinner_parkedLot.setSelection(-1);
                         spinner_pickup_location.setSelection(-1);                    }
-
                 }
             });
         }
@@ -254,6 +256,7 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
     //Alert dialog activated when user clicks on listview item
     //if confirm- connection is made and user is directed to connect screen
     //if back dialog is closed
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void confirmDialog(String msg,
                               final String riderId , final String parkerId,
                               final String meetSpot, final String destination,
@@ -299,5 +302,4 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
 }
