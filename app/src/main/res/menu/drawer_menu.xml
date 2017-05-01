@@ -5,17 +5,37 @@
         <item
             android:id="@+id/home_id"
             android:title="Home"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/home_btn">
         </item>
         <item
             android:id="@+id/profile_id"
             android:title="Profile"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/profilebuttonv3">
         </item>
         <item
             android:id="@+id/wheresmycar_id"
             android:title="Where's My Car"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/whereismycarbutton">
+        </item>
+        <item
+            android:id="@+id/setcar_id"
+            android:title="Set Car Location"
+            android:icon="@mipmap/wheredidiparkbutton">
+        </item>
+        <item
+            android:id="@+id/needpark_id"
+            android:title="Need To Park"
+            android:icon="@mipmap/parkingbtn">
+        </item>
+        <item
+            android:id="@+id/needride_id"
+            android:title="Need A Ride"
+            android:icon="@mipmap/ride2parkbtn">
+        </item>
+        <item
+            android:id="@+id/register_id"
+            android:title="Ride2Park Registration"
+            android:icon="@mipmap/applyr2pbtn">
         </item>
     </group>
 

@@ -59,16 +59,20 @@ import org.w3c.dom.Text;
 public class CarLocation extends AppCompatActivity implements
         OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     protected GoogleApiClient mGoogleApiClient;
     GoogleMap mGoogleMap;
     private int permissionCheck;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
+    LocationRequest mLocationRequest;
     Location mLastLocation,carLocation;
     LatLng mCarLatLng, mLastLatLng, midpoint;
     TextView distance;
+    private String lat;
+    private String lng;
 
     /*---------------------------------------------
         |   NAVIGATION DRAWER VARIABLES
@@ -109,6 +113,7 @@ public class CarLocation extends AppCompatActivity implements
         }
 
         buildGoogleApiClient();
+        createLocationRequest();
 
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerButton = (ImageView)findViewById(R.id.logo_login);
@@ -132,10 +137,49 @@ public class CarLocation extends AppCompatActivity implements
                         navigationView.setCheckedItem(R.id.profile_id);
                         break;
                     case R.id.wheresmycar_id:
-                        Intent intentCar = new Intent(CarLocation.this, CarLocation.class);
-                        startActivity(intentCar);
+                        SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = locationSharedPref.edit();
+                        editor.putString(getString(R.string.last_known_lat),lat);
+                        editor.putString(getString(R.string.last_known_lng),lng);
+                        editor.commit();
+
+                        if (locationSharedPref.contains(getString(R.string.car_lat_position))) {
+                            Intent intentCar = new Intent(CarLocation.this, CarLocation.class);
+                            startActivity(intentCar);
+                            mDrawerLayout.closeDrawers();
+                            navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        }else{
+                            Toast.makeText(CarLocation.this, getString(R.string.car_not_set), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case R.id.setcar_id:
+                        SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor edit = sharedPref.edit();
+                        edit.putString(getString(R.string.car_lat_position), lat);
+                        edit.putString(getString(R.string.car_lng_position), lng);
+                        edit.commit();
+                        Toast.makeText(CarLocation.this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
                         mDrawerLayout.closeDrawers();
-                        navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        break;
+                    case R.id.needpark_id:
+                        Intent intentNeedPark = new Intent(CarLocation.this, NeedParking.class);
+                        startActivity(intentNeedPark);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.needpark_id);
+                        break;
+                    case R.id.needride_id:
+                        Intent intentNeedRide = new Intent(CarLocation.this, NeedRide.class);
+                        startActivity(intentNeedRide);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.needride_id);
+                        break;
+                    case R.id.register_id:
+                        Intent intentRegister = new Intent(CarLocation.this, R2PRegistrationActivity.class);
+                        startActivity(intentRegister);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.register_id);
                         break;
                 }
                 return true;
@@ -154,6 +198,12 @@ public class CarLocation extends AppCompatActivity implements
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setInterval(1000); //UPDATE LOCATION EVERY SECOND (TIME IN MS)
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
@@ -268,10 +318,17 @@ public class CarLocation extends AppCompatActivity implements
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             String carDistance = String.valueOf(String.format("%.2f",mLastLocation.distanceTo(carLocation)/1609.344));
 
             distance.setText(getString(R.string.distance_to_car_cla)+carDistance+getString(R.string.miles_cla));
         }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        lat = (String.valueOf(location.getLatitude()));
+        lng = (String.valueOf(location.getLongitude()));
     }
 
     @Override

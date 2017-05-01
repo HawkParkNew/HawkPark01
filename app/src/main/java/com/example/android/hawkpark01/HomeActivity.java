@@ -224,10 +224,49 @@ public class HomeActivity extends AppCompatActivity implements
                         navigationView.setCheckedItem(R.id.profile_id);
                         break;
                     case R.id.wheresmycar_id:
-                        Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
-                        startActivity(intentCar);
+                        SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = locationSharedPref.edit();
+                        editor.putString(getString(R.string.last_known_lat),lat);
+                        editor.putString(getString(R.string.last_known_lng),lng);
+                        editor.commit();
+
+                        if (locationSharedPref.contains(getString(R.string.car_lat_position))) {
+                            Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
+                            startActivity(intentCar);
+                            mDrawerLayout.closeDrawers();
+                            navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        }else{
+                            Toast.makeText(HomeActivity.this, getString(R.string.car_not_set), Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case R.id.setcar_id:
+                        SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor edit = sharedPref.edit();
+                        edit.putString(getString(R.string.car_lat_position), lat);
+                        edit.putString(getString(R.string.car_lng_position), lng);
+                        edit.commit();
+                        Toast.makeText(HomeActivity.this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
                         mDrawerLayout.closeDrawers();
-                        navigationView.setCheckedItem(R.id.wheresmycar_id);
+                        break;
+                    case R.id.needpark_id:
+                        Intent intentNeedPark = new Intent(HomeActivity.this, NeedParking.class);
+                        startActivity(intentNeedPark);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.needpark_id);
+                        break;
+                    case R.id.needride_id:
+                        Intent intentNeedRide = new Intent(HomeActivity.this, NeedRide.class);
+                        startActivity(intentNeedRide);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.needride_id);
+                        break;
+                    case R.id.register_id:
+                        Intent intentRegister = new Intent(HomeActivity.this, R2PRegistrationActivity.class);
+                        startActivity(intentRegister);
+                        mDrawerLayout.closeDrawers();
+                        navigationView.setCheckedItem(R.id.register_id);
                         break;
                 }
                 return true;
@@ -278,43 +317,7 @@ public class HomeActivity extends AppCompatActivity implements
                     break;
         }
     }
-    //oNCLICK LISTENER FOR ALL THE BUTTONS IN THE ACTIVITY==========================================
-    public void onButtonClicked_ha(View view) {
-        int id = view.getId();
-        switch (id){
-            case R.id.btn_r2p://directs user to ride2park screen
-                Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.btn_settings://directs user to settings screen
-                Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
-                startActivity(i);
-                break;
-            case R.id.btn_np://directs user to NeedParking screen
-                Intent in = new Intent(HomeActivity.this,NeedParking.class);
-                startActivity(in);
-                break;
-            case R.id.btn_nr://directs user to NeedRide screen
-                Intent inte = new Intent(HomeActivity.this,NeedRide.class);
-                startActivity(inte);
-                break;
-            case R.id.btn_car_location:
-                SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
 
-                SharedPreferences.Editor editor = locationSharedPref.edit();
-                editor.putString(getString(R.string.last_known_lat),lat);
-                editor.putString(getString(R.string.last_known_lng),lng);
-                editor.apply();
-
-                if (locationSharedPref.contains(getString(R.string.car_lat_position))) {
-                    Intent intentCar = new Intent(HomeActivity.this, CarLocation.class);
-                    startActivity(intentCar);
-                    break;
-                }else{
-                    Toast.makeText(this, getString(R.string.car_not_set), Toast.LENGTH_SHORT).show();
-                }
-        }
-    }
 
     /*---------------------------------------------------------------------*
         |   RUN TIME PERMISSION REQUEST / CHECK
@@ -417,11 +420,6 @@ public class HomeActivity extends AppCompatActivity implements
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             addGeofences();
-
-            /*if (mLastLocation != null) {
-                latOutput.setText(String.valueOf(mLastLocation.getLatitude()));
-                longOutput.setText(String.valueOf(mLastLocation.getLongitude()));
-            }*/
         }
     }
 
@@ -462,11 +460,6 @@ public class HomeActivity extends AppCompatActivity implements
 
     public void onResult(Status status) {
         if (status.isSuccess()) {
-            /*Toast.makeText(
-                    this,
-                    "Geofences added",
-                    Toast.LENGTH_SHORT
-            ).show();*/
         } else {
             String errorMessage = GeofenceErrorMessages.getErrorString(this, status.getStatusCode());
             Log.e(LOG_TAG, errorMessage);
@@ -499,22 +492,6 @@ public class HomeActivity extends AppCompatActivity implements
         builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
         builder.addGeofences(mGeofenceList);
         return builder.build();
-    }
-
-    /*---------------------------------------------------------------------*
-        |   onClick TO SET CAR LOCATION
-        |   WRITE TO SHARED PREFERENCES
-     *---------------------------------------------------------------------*/
-
-    public void setCarLocation(View view) {
-
-        SharedPreferences sharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.car_lat_position), lat);
-        editor.putString(getString(R.string.car_lng_position), lng);
-        editor.apply();
-        Toast.makeText(this, getString(R.string.car_location_saved), Toast.LENGTH_SHORT).show();
     }
 
     /*---------------------------------------------------------------------*

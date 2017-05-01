@@ -23,6 +23,12 @@
         android:background="@color/backgroundWhite">
 
         <ImageView
+            android:id="@+id/menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/menu_btn2" />
+
+        <ImageView
             android:id="@+id/logo_login"
             android:layout_width="0dp"
             android:layout_height="60dp"
