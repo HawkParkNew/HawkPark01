@@ -164,6 +164,7 @@
     <string name="tv_car_str_connect">Look for:</string>
     <string name="placeholder">Placeholder</string>
     <string name="where_my_car_header">Where\'s my car?</string>
+    <string name="r2p_register_prompt_toast">Register for r2p to take advantage of additional features</string>
 
 
 </resources>

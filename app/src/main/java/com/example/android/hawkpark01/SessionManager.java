@@ -25,7 +25,7 @@ public class SessionManager {
     private static final String IS_LOGIN = "isLoggedIn";
     private static final String IS_CONNECTED = "isConnected";
     public static final String KEY_NAME = "userName";
-    private static final String KEY_R2P = "hasR2P";
+    static final String KEY_R2P = "hasR2P";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PHOTO = "photo";
     static final String KEY_USERID = "userId";
@@ -53,13 +53,13 @@ public class SessionManager {
     /**
      * Create userSharedPref session
      */
-    void createUserSPSession(String firebaseID, String displayName,String photoUrl, String email){
+    void createUserSPSession(String firebaseID, String displayName,String photoUrl, String email, String R2P){
 
         editorUser.putBoolean(IS_LOGIN, true);
 
         editorUser.putString(KEY_USERID,firebaseID);
         editorUser.putString(KEY_NAME,displayName);
-        //editorUser.putString(KEY_R2P,R2P);
+        editorUser.putString(KEY_R2P,R2P);
         editorUser.putString(KEY_PHOTO,photoUrl);
         editorUser.putString(KEY_EMAIL,email);
 

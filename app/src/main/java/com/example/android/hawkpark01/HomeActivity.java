@@ -70,6 +70,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import static com.example.android.hawkpark01.R.id.btn_np;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.FB_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
@@ -129,6 +130,14 @@ public class HomeActivity extends AppCompatActivity implements
         HashMap<String, String> user = session.getUserDetails();
         String name = user.get(SessionManager.KEY_NAME);// display name
         String userId = user.get(SessionManager.KEY_USERID);// userId
+        String r2p = user.get(SessionManager.KEY_R2P);
+
+        if (r2p.equals("N")){
+            Toast.makeText(HomeActivity.this, R.string.r2p_register_prompt_toast,
+                    Toast.LENGTH_SHORT).show();
+            //todo make np/nr buttons invisible
+            //todo add connect button
+        }
 
         //init DB, DB references and set up listeners
         FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -290,7 +299,7 @@ public class HomeActivity extends AppCompatActivity implements
                 Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
                 startActivity(i);
                 break;
-            case R.id.btn_np://directs user to NeedParking screen
+            case btn_np://directs user to NeedParking screen
                 Intent in = new Intent(HomeActivity.this,NeedParking.class);
                 startActivity(in);
                 break;
