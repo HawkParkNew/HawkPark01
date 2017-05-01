@@ -163,6 +163,7 @@
     <string name="tv_meet_spot_connect">Pick up at:</string>
     <string name="tv_car_str_connect">Look for:</string>
     <string name="placeholder">Placeholder</string>
+    <string name="where_my_car_header">Where\'s my car?</string>
 
 
 </resources>
