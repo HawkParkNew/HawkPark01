@@ -70,7 +70,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-import static com.example.android.hawkpark01.R.id.btn_np;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.FB_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
