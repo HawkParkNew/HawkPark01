@@ -157,5 +157,6 @@
 
     <!--ADMOB STRING - TEST AD-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="lot_feedback">You must be in the lot to provide feedback</string>
 
 </resources>

@@ -26,7 +26,8 @@
             android:id="@+id/menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/menu_btn2" />
+            android:src="@mipmap/menu_btn2"
+            android:onClick="openDrawer"/>
 
         <ImageView
             android:id="@+id/logo_login"
@@ -51,7 +52,7 @@
             android:textColor="@color/textBlack"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="@string/unknown" />
+            tools:text="Where's My Car" />
 
     </LinearLayout>
     <View

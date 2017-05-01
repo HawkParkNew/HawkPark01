@@ -203,7 +203,7 @@ public class HomeActivity extends AppCompatActivity implements
             | NAVIGATION DRAWER
          *-------------------------------------------------------*/
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawerButton = (ImageView)findViewById(R.id.logo_login);
+        drawerButton = (ImageView)findViewById(R.id.menu_btn);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.home_id);
 

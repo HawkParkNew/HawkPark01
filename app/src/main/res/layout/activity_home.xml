@@ -25,7 +25,8 @@
             android:id="@+id/menu_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/menu_btn2" />
+            android:src="@mipmap/menu_btn2"
+            android:onClick="openDrawer"/>
 
         <ImageView
             android:id="@+id/logo_login"
@@ -34,8 +35,7 @@
             android:layout_gravity="center"
             android:layout_weight=".8"
             android:contentDescription="@string/logo_large"
-            android:src="@drawable/logo"
-            android:onClick="openDrawer"/>
+            android:src="@drawable/logo" />
 
         <TextView
             android:layout_width="0dp"
