@@ -146,7 +146,7 @@
     <string name="tv_pref02_np">Preference 2</string>
     <string name="tv_connect_header">HawkPark Connect</string>
     <string name="tv_connect_detail_header">You have connected with:</string>
-    <string name="btn_cancel_connect">Cancel Connect</string>
+    <string name="btn_cancel_connect">Cancel</string>
     <string name="connected_with_dialog_np_nr">You connected with:</string>
     <string name="btn_confirm_dialog_np_nr">Confirm Connect</string>
     <string name="btn_other_dialog_np_nr">Choose Other</string>
@@ -157,5 +157,12 @@
 
     <!--ADMOB STRING - TEST AD-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <!--CONNECT-->
+    <string name="tv_destination_str_connect">To Parking lot:</string>
+    <string name="tv_meet_time_str_connect">Meeting Time :</string>
+    <string name="tv_meet_spot_connect">Pick up at:</string>
+    <string name="tv_car_str_connect">Look for:</string>
+    <string name="placeholder">Placeholder</string>
+
 
 </resources>

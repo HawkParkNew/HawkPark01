@@ -45,8 +45,9 @@
         android:layout_height="10dp"
         android:background="@color/textBlack"
         android:layout_below="@id/hawk_bar_default"/>
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
@@ -58,16 +59,16 @@
         android:id="@+id/tv_connect_detail_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tv_connect_detail_header"
-        android:textColor="@color/textWhite"
-        android:textSize="18sp"
-        android:layout_marginStart="@dimen/margin_side_connect"
-        android:layout_marginLeft="@dimen/margin_side_connect"
-        android:layout_marginBottom="@dimen/margin_bottom_connect"
-        android:layout_marginTop="@dimen/tv_margin_bottom_nr"
+        android:layout_above="@+id/tv_name_connect"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/tv_name_connect" />
+        android:layout_marginBottom="@android:dimen/app_icon_size"
+        android:layout_marginLeft="@dimen/margin_side_connect"
+        android:layout_marginStart="@dimen/margin_side_connect"
+        android:layout_marginTop="@dimen/tv_margin_bottom_nr"
+        android:text="@string/tv_connect_detail_header"
+        android:textColor="@color/textWhite"
+        android:textSize="18sp" />
     <TextView
         android:id="@+id/tv_name_connect"
         android:layout_width="wrap_content"
@@ -77,9 +78,21 @@
         android:layout_marginBottom="@dimen/margin_bottom_connect"
         android:textColor="@color/textWhite"
         android:textSize="16sp"
-        android:layout_above="@+id/tv_meeting_connect" />
+        android:layout_above="@+id/tv_car_connect" />
+
     <TextView
-        android:id="@+id/tv_meeting_connect"
+        android:id="@+id/tv_car_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_meeting_spot_connect"
+        android:layout_marginBottom="@dimen/margin_bottom_connect"
+        android:layout_marginLeft="@dimen/margin_side_connect"
+        android:layout_marginStart="@dimen/margin_side_connect"
+        android:textColor="@color/textWhite"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_meeting_spot_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_side_connect"
@@ -87,9 +100,9 @@
         android:layout_marginBottom="@dimen/margin_bottom_connect"
         android:textColor="@color/textWhite"
         android:textSize="16sp"
-        android:layout_above="@+id/tv_car_connect" />
+        android:layout_above="@+id/tv_destination_connect" />
     <TextView
-        android:id="@+id/tv_car_connect"
+        android:id="@+id/tv_destination_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_side_connect"
@@ -98,44 +111,35 @@
         android:textColor="@color/textWhite"
         android:textSize="16sp"
         android:layout_above="@+id/tv_time_connect" />
+
     <TextView
         android:id="@+id/tv_time_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_connect"
+        android:textColor="@color/textWhite"
+        android:textSize="16sp"
+        android:layout_above="@+id/border_gray"
         android:layout_marginStart="@dimen/margin_side_connect"
-        android:layout_marginLeft="@dimen/margin_side_connect"
-        android:layout_marginBottom="@dimen/margin_bottom_connect"
-        android:textColor="@color/textWhite"
-        android:textSize="16sp"
-        android:layout_above="@+id/border_gray" />
-    <TextView
-        android:id="@+id/tv_time_box_connect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundGray"
-        android:layout_toRightOf="@+id/tv_time_connect"
-        android:layout_marginBottom="@dimen/margin_bottom_connect"
-        android:layout_toEndOf="@+id/tv_time_connect"
-        android:textColor="@color/textWhite"
-        android:textSize="16sp"
-        android:layout_above="@+id/border_gray" />
+        android:layout_marginLeft="@dimen/margin_side_connect" />
 
 
     <Button
         android:id="@+id/btn_lot_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_time_connect"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin_side_connect"
+        android:layout_marginEnd="@dimen/margin_side_connect"
         android:background="@drawable/round_corner_black"
         android:fontFamily="sans-serif-condensed"
         android:onClick="cancelConnect"
         android:text="@string/btn_cancel_connect"
         android:textColor="@color/textWhite"
-        android:textStyle="bold"
-        android:layout_margin="@dimen/margin_side_connect"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/mapView"
-        android:layout_above="@+id/border_gray" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
     <View
@@ -149,10 +153,15 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btn_lot_submit"
+        android:layout_alignLeft="@+id/btn_lot_submit"
+        android:layout_alignRight="@+id/btn_lot_submit"
+        android:layout_alignStart="@+id/btn_lot_submit"
+        android:contentDescription="@string/placeholder"
+        android:background="@color/backgroundGray"
         app:srcCompat="@mipmap/profilebtn"
-        android:layout_alignTop="@+id/tv_name_connect"
-        android:layout_alignRight="@+id/tv_connect_detail_header"
-        android:layout_alignEnd="@+id/tv_connect_detail_header" />
+        android:layout_alignBottom="@+id/tv_name_connect"
+        android:layout_below="@+id/tv_connect_detail_header" />
 
 
 </RelativeLayout>

@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import static com.example.android.hawkpark01.utils.Utils.CONNECT_KEY;
+import static com.example.android.hawkpark01.utils.Utils.CONNECT_NAME_KEY;
+import static com.example.android.hawkpark01.utils.Utils.DB_KEY;
 
 public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -151,7 +153,7 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
                 String msg = name + " arriving at " + displayTime + " has space for " + seats + " riders.";
 
                 //creates a dialog for user to review and confirm connection
-                confirmDialog(msg, userId, parkerId, pickupLoc, parkingLot, arriveTime, seats);
+                confirmDialog(msg, userId, parkerId, name, pickupLoc, parkingLot, arriveTime, displayTime, seats);
 
             }
         });
@@ -258,39 +260,44 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
     //if back dialog is closed
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void confirmDialog(String msg,
-                              final String riderId , final String parkerId,
+                              final String riderId , final String parkerId, final String parkerName,
                               final String meetSpot, final String destination,
-                              final long meetTime, String seats){
+                              final long meetTime, final String displayTime, final String seats){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(R.string.connected_with_dialog_np_nr);
         alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
         alertDialogBuilder.setMessage(msg);
-                alertDialogBuilder.setPositiveButton(R.string.btn_confirm_dialog_np_nr,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                //create new item in connection db
-                                ConnectionsDB mConnectionsDB = new ConnectionsDB(riderId,parkerId,meetSpot,destination,meetTime);
-                                mconnectionsDBRef.push().setValue(mConnectionsDB,new DatabaseReference.CompletionListener() {
-                                    //Set listener to wait for creation of connection in db
-                                    public void onComplete(DatabaseError error, DatabaseReference ref) {
-                                        if (error != null) {
-                                            Toast.makeText(NeedRide.this, R.string.error_saving_toast, Toast.LENGTH_SHORT).show();
-                                            System.out.println("Data could not be saved " + error.getMessage());
-                                        } else {
-                                            Toast.makeText(NeedRide.this, R.string.success_nr_toast, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
-                                //change status of item in "need-parking" db to connected('2')
-                                mNeedParkingDBRef.child(parkerId).child("status").setValue("2");
-                                //direct the user to the connections activity
-                                Intent intent = new Intent(NeedRide.this,Connect.class);
-                                intent.putExtra(CONNECT_KEY,parkerId);
-                                startActivity(intent);
+        alertDialogBuilder.setPositiveButton(R.string.btn_confirm_dialog_np_nr,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //create new item in connection db
+                        ConnectionsDB mConnectionsDB = new ConnectionsDB(riderId,parkerId,
+                                                         meetSpot,destination,
+                                                         meetTime,displayTime);
+                        mconnectionsDBRef.push().child(parkerId).setValue(mConnectionsDB,
+                                new DatabaseReference.CompletionListener() {
+                            //Set listener to wait for creation of connection in db
+                            public void onComplete(DatabaseError error, DatabaseReference ref) {
+                                if (error != null) {
+                                    Toast.makeText(NeedRide.this, R.string.error_saving_toast,
+                                            Toast.LENGTH_SHORT).show();
+                                    System.out.println("Data could not be saved " + error.getMessage());
+                                } else {
+                                    Toast.makeText(NeedRide.this, R.string.success_nr_toast,
+                                            Toast.LENGTH_SHORT).show();
+                                    //direct the user to the connections activity
+                                    session.createConnectedSPSession(riderId,parkerId,parkerName,
+                                            meetSpot,destination,displayTime);
+                                    Intent intent = new Intent(NeedRide.this,Connect.class);
+                                    startActivity(intent);
+                                }
                             }
                         });
-
+                        //change status of item in "need-parking" db to connected('2')
+                        //mNeedParkingDBRef.child(parkerId).child("status").setValue("2");
+                    }
+                });
         alertDialogBuilder.setNegativeButton(R.string.btn_other_dialog_np_nr,
                                                     new DialogInterface.OnClickListener() {
             @Override
