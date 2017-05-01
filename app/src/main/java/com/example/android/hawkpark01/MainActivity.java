@@ -1,6 +1,8 @@
 package com.example.android.hawkpark01;
 
+import com.example.android.hawkpark01.models.ConnectionsDB;
 import com.example.android.hawkpark01.models.HomeLotDB;
+import com.example.android.hawkpark01.models.R2PDB;
 import com.example.android.hawkpark01.models.UserDB;
 import com.example.android.hawkpark01.utils.SpaceCalculator;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -41,6 +43,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static android.R.attr.accountType;
+import static android.R.attr.x;
+import static android.text.TextUtils.isEmpty;
 import static com.example.android.hawkpark01.utils.GeofenceConstants.lot60;
 import static com.example.android.hawkpark01.utils.Utils.EMAIL_KEY;
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
@@ -57,7 +61,7 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference userDatabaseReference;
+    private DatabaseReference userDatabaseReference, r2pDatabaseReference;
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -68,12 +72,11 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        R2P="N";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //initialize db and get references to required child nodes
-        FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
+        final FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
         userDatabaseReference = mdatabase.getReference("users");
 
         //initialize session manager for shared prefs
@@ -109,7 +112,7 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
@@ -118,13 +121,42 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
                     String email = user.getEmail();
                     String displayName = user.getDisplayName();
                     String photoUrl = user.getPhotoUrl().toString();
+                    //if photoUrl is null substitute with our own generic
+                    if (isEmpty(photoUrl))
+                        photoUrl = "http://i64.tinypic.com/30axnoz.png";
 
                     writeNewUser(userDatabaseReference,firebaseID,displayName,email,photoUrl);
 
-                    //todo--if photoUrl is null substitute with our own generic
+                    //Store userid as shared pref===================================================
 
-                    //Store userid as shared pref
-                    session.createUserSPSession(firebaseID,displayName,photoUrl,email);
+                    //First check if r2p registration is complete
+                    //CONNECT TO R2P DB
+                    r2pDatabaseReference = mdatabase.getReference("r2pRegister").child(firebaseID);
+                    r2pDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        String isRegistered;
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                R2PDB R2P = dataSnapshot.getValue(R2PDB.class);
+                                if(firebaseID.equals(R2P.getuId()))
+                                {
+                                    isRegistered= "Y";
+                                }
+                            }
+                            else
+                                isRegistered = "N";
+                            //========================================CREATE USER SHARED PREFERENCES
+                            //async listener so wait until listener is triggered to populate views
+                            setR2P(isRegistered);
+
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    session.createUserSPSession(firebaseID,displayName,photoUrl,email,R2P);
 
                     //direct user to home activity
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
@@ -134,6 +166,10 @@ MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFa
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
                 }
+            }
+
+            private void setR2P(String isRegistered) {
+                R2P = isRegistered;
             }
         };
     }

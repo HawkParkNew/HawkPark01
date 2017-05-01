@@ -18,7 +18,8 @@ public class NeedRideDB {
     //status = "0" for timed out
     //status = "2" for cancelled
     //status = "3" for connected
-    public NeedRideDB(String userId, String name, String leaveTime,long reqTimeMillis,
+    public NeedRideDB(String userId, String name,
+                      String leaveTime,long reqTimeMillis,
                       String parkedLot, String pickUp, String numRiders){
         this.userId = userId;
         this.name = name;
@@ -54,7 +55,7 @@ public class NeedRideDB {
         this.userId = userId;
     }
 
-    String getLeaveTime() {
+    public String getLeaveTime() {
         return leaveTime;
     }
 
@@ -62,7 +63,7 @@ public class NeedRideDB {
         this.leaveTime = leaveTime;
     }
 
-    String getParkedLot() {
+    public String getParkedLot() {
         return parkedLot;
     }
 

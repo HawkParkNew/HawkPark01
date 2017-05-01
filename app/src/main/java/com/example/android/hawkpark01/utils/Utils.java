@@ -23,6 +23,8 @@ public class Utils {
     public static final String EMAIL_KEY = "email_id";
     public static final String FB_KEY = "feedback_id";
     public static final String CONNECT_KEY = "connect_firebase_id";
+    public static final String CONNECT_NAME_KEY = "connect_name";
+    public static final String DB_KEY = "db_name";
     //r2p functionality=============================================================================
 
 

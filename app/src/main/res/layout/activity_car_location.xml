@@ -8,7 +8,6 @@
     android:id="@+id/drawer_layout">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundGray"
@@ -29,16 +28,6 @@
             android:src="@mipmap/menu_btn2"
             android:onClick="openDrawer"/>
 
-        <ImageView
-            android:id="@+id/logo_login"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_weight=".8"
-            android:contentDescription="@string/logo_large"
-            android:src="@mipmap/newlogo"
-            android:onClick="openDrawer"/>
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -48,11 +37,21 @@
             android:gravity="bottom|center"
             android:paddingTop="20dp"
             android:textAlignment="center"
-            android:textAllCaps="false"
+            android:text="@string/where_my_car_header"
             android:textColor="@color/textBlack"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="Where's My Car" />
+            />
+
+        <ImageView
+            android:id="@+id/logo_login"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_weight=".8"
+            android:contentDescription="@string/logo_large"
+            android:src="@drawable/logo"
+            android:onClick="openDrawer"/>
 
     </LinearLayout>
     <View

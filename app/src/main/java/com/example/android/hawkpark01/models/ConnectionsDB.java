@@ -7,8 +7,8 @@ import com.example.android.hawkpark01.Connect;
  */
 
 public class ConnectionsDB {
-    String riderId, parkerId, meetSpot, destination, status;
-    long meetTime;
+    private String riderId, parkerId, meetSpot, destination, status, displayTime;
+    private long meetTime;
 
     public ConnectionsDB() {
     }
@@ -18,13 +18,22 @@ public class ConnectionsDB {
     //status = "2" for cancelled
     public ConnectionsDB(String riderId, String parkerId,
                          String meetSpot, String destination,
-                         long meetTime) {
+                         long timeMillis, String displayTime) {
         this.riderId = riderId;
         this.parkerId = parkerId;
         this.meetSpot = meetSpot;
         this.destination = destination;
-        this.meetTime = meetTime;
+        this.meetTime = timeMillis;
+        this.displayTime = displayTime;
         status = "1";//Default "1" for active- when item is created
+    }
+
+    public String getDisplayTime() {
+        return displayTime;
+    }
+
+    public void setDisplayTime(String displayTime) {
+        this.displayTime = displayTime;
     }
 
     public String getRiderId() {

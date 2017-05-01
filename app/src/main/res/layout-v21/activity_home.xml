@@ -28,15 +28,6 @@
                 android:src="@mipmap/menu_btn2"
                 android:onClick="openDrawer"/>
 
-            <ImageView
-                android:id="@+id/logo_login"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_weight=".8"
-                android:contentDescription="@string/logo_large"
-                android:src="@drawable/logo" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -51,6 +42,16 @@
                 android:textColor="@color/textBlack"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/logo_login"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_weight=".8"
+                android:contentDescription="@string/logo_large"
+                android:src="@drawable/logo"
+                android:onClick="openDrawer"/>
 
         </LinearLayout>
         <View
