@@ -12,8 +12,11 @@ public class GeofenceConstants {
     public void GeofenceConstants(){}
 
     public static final LatLng carparcDiem = new LatLng(40.865314, -74.197107);
+    public static final int carparcDiemRad = 60;
     public static final LatLng lot24 = new LatLng(40.866385, -74.196641);
+    public static final int lot24Rad = 60;
     public static final LatLng lot60 = new LatLng(40.872985, -74.198942);
+    public static final int lot60Rad = 150;
 
     public static final LinkedHashMap<String, LatLng> MSU_PARKING =
             new LinkedHashMap<String, LatLng>();
@@ -25,8 +28,8 @@ public class GeofenceConstants {
     public static final LinkedHashMap<String, Integer> LOT_RADIUS =
             new LinkedHashMap<String, Integer>();
     static {
-        LOT_RADIUS.put("CarParc Diem", 60);
-        LOT_RADIUS.put("Lot 24", 60);
-        LOT_RADIUS.put("Lot 60", 150);
+        LOT_RADIUS.put("CarParc Diem", carparcDiemRad);
+        LOT_RADIUS.put("Lot 24", lot24Rad);
+        LOT_RADIUS.put("Lot 60", lot60Rad);
     }
 }

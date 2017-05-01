@@ -21,6 +21,13 @@
         android:orientation="horizontal"
         android:background="@color/backgroundWhite">
 
+        <ImageView
+            android:id="@+id/menu_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/menu_btn2"
+            android:onClick="openDrawer"/>
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -71,7 +78,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/header_home_screen"
         android:orientation="horizontal"
-        android:layout_above="@+id/btn_bar_home">
+        android:layout_above="@+id/adView">
         <ListView
             android:id="@+id/lv_lot_btn_ha"
             android:layout_width="0dp"
@@ -113,88 +120,6 @@
             </RadioGroup>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_bar_home"
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal"
-        android:layout_above="@+id/adView">
-
-        <ImageButton
-            android:id="@+id/btn_r2p"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="onButtonClicked_ha"
-            android:padding="2dp"
-            android:src="@mipmap/applyr2pbtn"
-            android:textColor="@color/textWhite" />
-
-        <ImageButton
-            android:id="@+id/btn_settings"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="onButtonClicked_ha"
-            android:padding="2dp"
-            android:src="@mipmap/profilebuttonv3"
-            android:textColor="@color/textWhite" />
-
-        <ImageButton
-            android:id="@+id/btn_set_car_location"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="setCarLocation"
-            android:padding="2dp"
-            android:src="@mipmap/wheredidiparkbutton"
-            android:textColor="@color/textWhite" />
-
-        <ImageButton
-            android:id="@+id/btn_car_location"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="onButtonClicked_ha"
-            android:padding="4dp"
-            android:src="@mipmap/whereismycarbutton"
-            android:textColor="@color/textWhite" />
-
-        <Button
-            android:id="@+id/btn_np"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="onButtonClicked_ha"
-            android:padding="4dp"
-            android:text="NP"
-            android:textColor="@color/textWhite" />
-
-        <Button
-            android:id="@+id/btn_nr"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner_black"
-            android:onClick="onButtonClicked_ha"
-            android:padding="4dp"
-            android:text="NR"
-            android:textColor="@color/textWhite" />
 
     </LinearLayout>
 

@@ -157,6 +157,7 @@
 
     <!--ADMOB STRING - TEST AD-->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="lot_feedback">You must be in the lot to provide feedback</string>
     <!--CONNECT-->
     <string name="tv_destination_str_connect">To Parking lot:</string>
     <string name="tv_meet_time_str_connect">Meeting Time :</string>
@@ -165,6 +166,5 @@
     <string name="placeholder">Placeholder</string>
     <string name="where_my_car_header">Where\'s my car?</string>
     <string name="r2p_register_prompt_toast">Register for r2p to take advantage of additional features</string>
-
 
 </resources>
