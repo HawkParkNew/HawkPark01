@@ -1,7 +1,11 @@
 package com.example.android.hawkpark01;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.android.hawkpark01.models.ConnectionsDB;
 import com.example.android.hawkpark01.models.HomeLotAdapter;
 import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.models.NeedParkingDB;
@@ -45,6 +50,7 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
     Button btn_submit;
 
     FirebaseDatabase mdatabase = FirebaseDatabase.getInstance();
+    DatabaseReference mconnectionsDBRef = mdatabase.getReference("connections");
     DatabaseReference mNeedParkingDBRef = mdatabase.getReference("need-parking");
     DatabaseReference mNeedRideDBRef = mdatabase.getReference("need-ride");
 
@@ -130,14 +136,26 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
         lv_needRide.setAdapter(needRideAdapter);
         // Set item click listener for the lot view
         lv_needRide.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Access the row position here to get the correct data item
                 NeedRideDB selectedRide = needRideDBList.get(i);
-                //todo create a dialog for user to review and confirm connection
-                String userId = selectedRide.getUserId();
-                Intent intent = new Intent(NeedParking.this,LotActivity.class);
-                //startActivity(intent);
+                // Get details of connected user who needs parking
+                String riderId = selectedRide.getUserId();
+                long arriveTime = selectedRide.getReqTimeMillis();
+                String displayTime = selectedRide.getLeaveTime();
+                String name = selectedRide.getName();
+                String passengers = selectedRide.getNumRiders();
+                String parkingLot = selectedRide.getParkedLot();
+                String pickupLoc = selectedRide.getPickUp();
+                String msg = name + " leaving at " + displayTime + " is parked in "
+                        + parkingLot+ ". "+ passengers + " riders.";
+
+                //creates a dialog for user to review and confirm connection
+                confirmDialog(msg, riderId, userId, name,
+                                pickupLoc, parkingLot, arriveTime, displayTime, passengers);
+
             }
         });
         ChildEventListener mChildEventListener = new ChildEventListener() {
@@ -238,6 +256,60 @@ public class NeedParking extends AppCompatActivity implements AdapterView.OnItem
                 }
             });
         }
+    }
+    //Alert dialog activated when user clicks on listview item
+    //if confirm- connection is made and user is directed to connect screen
+    //if back dialog is closed
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void confirmDialog(String msg,
+                              final String riderId , final String parkerId, final String riderName,
+                              final String meetSpot, final String destination,
+                              final long meetTime, final String displayTime, final String seats){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.connected_with_dialog_np_nr);
+        alertDialogBuilder.setIcon(R.mipmap.ic_launcher_round);
+        alertDialogBuilder.setMessage(msg);
+        alertDialogBuilder.setPositiveButton(R.string.btn_confirm_dialog_np_nr,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //create new item in connection db
+                        ConnectionsDB mConnectionsDB = new ConnectionsDB(riderId,parkerId,
+                                meetSpot,destination,
+                                meetTime,displayTime);
+                        mconnectionsDBRef.push().child(parkerId).setValue(mConnectionsDB,
+                                new DatabaseReference.CompletionListener() {
+                                    //Set listener to wait for creation of connection in db
+                                    public void onComplete(DatabaseError error, DatabaseReference ref) {
+                                        if (error != null) {
+                                            Toast.makeText(NeedParking.this, R.string.error_saving_toast,
+                                                    Toast.LENGTH_SHORT).show();
+                                            System.out.println("Data could not be saved " + error.getMessage());
+                                        } else {
+                                            Toast.makeText(NeedParking.this, R.string.success_nr_toast,
+                                                    Toast.LENGTH_SHORT).show();
+                                            //direct the user to the connections activity
+                                            session.createConnectedSPSession(riderId,parkerId,riderName,
+                                                    meetSpot,destination,displayTime);
+                                            Intent intent = new Intent(NeedParking.this,Connect.class);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                        //change status of item in "need-parking" db to connected('2')
+                        //mNeedParkingDBRef.child(parkerId).child("status").setValue("2");
+                    }
+                });
+        alertDialogBuilder.setNegativeButton(R.string.btn_other_dialog_np_nr,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

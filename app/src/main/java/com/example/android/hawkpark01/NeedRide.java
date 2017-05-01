@@ -52,6 +52,7 @@ public class NeedRide extends AppCompatActivity implements AdapterView.OnItemSel
     DatabaseReference mNeedRideDBRef = mdatabase.getReference("need-ride");
     DatabaseReference mNeedParkingDBRef = mdatabase.getReference("need-parking");
     DatabaseReference mconnectionsDBRef = mdatabase.getReference("connections");
+
     SessionManager session;
     NeedParkingAdapter needParkingAdapter;
     String userId, name;
