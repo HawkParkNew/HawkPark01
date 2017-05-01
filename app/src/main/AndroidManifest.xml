@@ -3,6 +3,7 @@
     package="com.example.android.hawkpark01">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -26,21 +27,24 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
+        <activity android:name=".R2PRegistrationActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".LotActivity" />
+        <activity android:name=".CarLocation" />
+        <activity android:name=".NeedRide" />
+        <activity android:name=".NeedParking" />
+        <activity android:name=".Connect"/>
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
+        <service android:name="utils.GeofenceTransitionsIntentService" />
+     
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-kDhPK0cZF-qb6-bVonH7h9pgsKfXzns" />
-
-        <activity android:name=".R2PRegistrationActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".LotActivity" />
-
-        <service android:name="utils.GeofenceTransitionsIntentService" />
-
-        <activity android:name=".CarLocation"/>
     </application>
 
 </manifest>

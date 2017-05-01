@@ -1,7 +1,5 @@
 package com.example.android.hawkpark01;
 
-
-import android.*;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,7 +8,6 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -18,12 +15,10 @@ import android.support.v4.content.PermissionChecker;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.preference.Preference;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +30,7 @@ import com.example.android.hawkpark01.models.HomeLotDB;
 import com.example.android.hawkpark01.utils.GeofenceConstants;
 import com.example.android.hawkpark01.utils.GeofenceErrorMessages;
 import com.example.android.hawkpark01.utils.GeofenceTransitionsIntentService;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -56,6 +52,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,13 +82,7 @@ public class HomeActivity extends AppCompatActivity implements
         LocationListener,
         ResultCallback<Status> {
 
-    //Parking availability in lots==================================================================
-    private ListView lv_lot_list;
     private ImageButton btn_r2p,btn_settings;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mlotSummaryDBRef;
-    private DatabaseReference mr2pDBRef;
-    private ChildEventListener mChildEventListener;
     private HomeLotAdapter mhomeLotAdapter;
     SessionManager session;
 
@@ -124,6 +117,91 @@ public class HomeActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //Setup admob===============================================================================
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        //init SessionManager for shared prefs
+        session = new SessionManager(getApplicationContext());
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+        String name = user.get(SessionManager.KEY_NAME);// display name
+        String userId = user.get(SessionManager.KEY_USERID);// userId
+
+        //init DB, DB references and set up listeners
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
+       /** DatabaseReference mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
+        mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    setR2P("Y");
+                else
+                    setR2P("N");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });**/
+
+        // Initialize lotSummary ListView and its adapter
+        //init listview that holds the list of lots and their status
+        ListView lv_lot_list = (ListView) findViewById(R.id.lv_lot_btn_ha);
+        final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
+        mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
+        lv_lot_list.setAdapter(mhomeLotAdapter);
+        // Set item click listener for the lot view
+        lv_lot_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Access the row position here to get the correct data item
+                HomeLotDB selectedLot = homeLotItemsList.get(i);
+                String name = selectedLot.getName();
+                Intent intent = new Intent(HomeActivity.this,LotActivity.class);
+                intent.putExtra(LOT_KEY,name);
+                startActivity(intent);
+            }
+        });
+        ChildEventListener mChildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //add to lot list
+                HomeLotDB homeLotDB = dataSnapshot.getValue(HomeLotDB.class);
+                mhomeLotAdapter.add(homeLotDB);
+                mhomeLotAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                //get new status and change color, position etc
+                mhomeLotAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                //remove from listview
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                //do nothing
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //error message
+            }
+        };
+        mlotSummaryDBRef.addChildEventListener(mChildEventListener);
+
+        /*---------------------------------------------------------
+            | NAVIGATION DRAWER
+         *-------------------------------------------------------*/
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         drawerButton = (ImageView)findViewById(R.id.logo_login);
         navigationView = (NavigationView)findViewById(R.id.navigation_view);
@@ -157,90 +235,7 @@ public class HomeActivity extends AppCompatActivity implements
         });
 
 
-        session = new SessionManager(getApplicationContext());
 
-
-        // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
-
-        String name = user.get(SessionManager.KEY_NAME);// display name
-        String userId = user.get(SessionManager.KEY_USERID);// userId
-
-        lv_lot_list = (ListView)findViewById(R.id.lv_lot_btn_ha);
-
-
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mlotSummaryDBRef = mFirebaseDatabase.getReference("lot-summary");
-        mr2pDBRef = mFirebaseDatabase.getReference("r2pRegister").child(userId);
-        mr2pDBRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists())
-                    setR2P("Y");
-                else
-                    setR2P("N");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        ImageButton btn_r2p = (ImageButton)findViewById(R.id.btn_r2p);
-        if(r2pReg.equals("Y")){
-            btn_r2p.setVisibility(View.GONE);
-        }
-
-
-        // Initialize lotSummary ListView and its adapter
-        final List<HomeLotDB> homeLotItemsList = new ArrayList<>();
-        mhomeLotAdapter = new HomeLotAdapter(HomeActivity.this, R.layout.home_lot_item, homeLotItemsList);
-        lv_lot_list.setAdapter(mhomeLotAdapter);
-        // Set item click listener for the lot view
-        lv_lot_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                // Access the row position here to get the correct data item
-                HomeLotDB selectedLot = homeLotItemsList.get(i);
-                String name = selectedLot.getName();
-                Intent intent = new Intent(HomeActivity.this,LotActivity.class);
-                intent.putExtra(LOT_KEY,name);
-                startActivity(intent);
-            }
-        });
-        mChildEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                //add to lot list
-                HomeLotDB homeLotDB = dataSnapshot.getValue(HomeLotDB.class);
-                mhomeLotAdapter.add(homeLotDB);
-                mhomeLotAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                //get new status and change color, position etc
-                mhomeLotAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //remove from listview
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                //do nothing
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                //error message
-            }
-        };
-        mlotSummaryDBRef.addChildEventListener(mChildEventListener);
 
         /*---------------------------------------------------------
             |   PERMISSION CHECKER
@@ -266,11 +261,7 @@ public class HomeActivity extends AppCompatActivity implements
         createLocationRequest();
     }
 
-    private void setR2P(String y) {
-        r2pReg = y;
-    }
-
-    //Radio buttons in home activity
+    //Radio buttons in home activity================================================================
     //Sort lots based on user preference
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -285,26 +276,27 @@ public class HomeActivity extends AppCompatActivity implements
                 if (checked)
                     // Sort ListView by availability
                     break;
-            case R.id.radio_btn_favorites_ha:
-                if (checked)
-                    // Sort ListView by favorites
-                    break;
         }
     }
-
+    //oNCLICK LISTENER FOR ALL THE BUTTONS IN THE ACTIVITY==========================================
     public void onButtonClicked_ha(View view) {
-        String userId = getIntent().getStringExtra(ID_KEY);
         int id = view.getId();
         switch (id){
             case R.id.btn_r2p://directs user to ride2park screen
-                //change this
                 Intent intent = new Intent(HomeActivity.this,R2PRegistrationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_settings://directs user to settings screen
-                //change this
                 Intent i = new Intent(HomeActivity.this,SettingsActivity.class);
                 startActivity(i);
+                break;
+            case R.id.btn_np://directs user to NeedParking screen
+                Intent in = new Intent(HomeActivity.this,NeedParking.class);
+                startActivity(in);
+                break;
+            case R.id.btn_nr://directs user to NeedRide screen
+                Intent inte = new Intent(HomeActivity.this,NeedRide.class);
+                startActivity(inte);
                 break;
             case R.id.btn_car_location:
                 SharedPreferences locationSharedPref = getSharedPreferences("car_location", Context.MODE_PRIVATE);

@@ -45,6 +45,18 @@
     <string name="radio_some">Some Spots</string>
     <string name="radio_full">Full</string>
 
+    <!-- Settings Strings -->
+    <string name="tv_set_name">Name: </string>
+    <string name="tv_set_lotpref">Lot Preference: </string>
+    <string name="et_set_displayname"> </string>
+    <string name="et_set_displaylicnum"> </string>
+    <string name="et_set_displaycarmod"> </string>
+    <string name="et_set_displayplate"> </string>
+    <string name="btn_edit_settings">Edit Settings</string>
+    <string name="btn_submit_settings">Submit Changes</string>
+    <string name="radio_a">Availability</string>
+    <string name="radio_d">Distance</string>
+
     <!-- CARLOCATION STRINGS -->
     <string name="set_car_location">Set Car Location</string>
     <string name="car_location_saved">Car Location Saved</string>
@@ -98,5 +110,52 @@
     <string name="feedback_successfully_submitted_toast">Feedback successfully submitted. Thanks!</string>
     <string name="missing_info_toast_r2p">Missing information.Please try again.</string>
     <string name="success_registration_toast_r2p">Registration was successful</string>
-    <!--GOOGLE MAPS API KEY-->
+    <string name="header_need_ride">Need A Ride</string>
+    <string name="r_btn_leaving_now">Now</string>
+    <string name="r_btn_leaving_in">Leaving at</string>
+    <string name="tv_leaving_nr">Leaving:</string>
+    <string name="choose_time">et_leaving_in_nr_hint</string>
+    <string name="tv_parking_lot_nr">Parking Lot:</string>
+    <string name="tv_parked_in_nr">Parked in-</string>
+    <string name="et_choose_lot_nr">Choose Lot</string>
+    <string name="tv_pickup_location_nr">Pick-up location:</string>
+    <string name="tv_choose_location_nr">Choose location</string>
+    <string name="tv_pick_up_from_nr">Pick-up from</string>
+    <string name="tv_num_passengers_nr">Number of Passengers:</string>
+    <string name="r_btn_three_nr">Three</string>
+    <string name="r_btn_one_nr">One</string>
+    <string name="r_btn_two_nr">Two</string>
+    <string name="btn_submit_nr">Submit</string>
+    <string name="tv_click_to_connect_nr">Click to Connect</string>
+    <string name="incomplete_info">Incomplete information. Please retry.</string>
+    <!--NEED A RIDE-->
+    <string name="lot_name_prompt">Select Parked Spot</string>
+    <string-array name="lot_names">
+        <item>CarParc Diem</item>
+        <item>Lot 24</item>
+        <item>Lot 60</item>
+    </string-array>
+    <string name="pickup_prompt">Select Pickup Spot</string>
+    <string name="error_saving_toast">Error saving. Please try again.</string>
+    <string name="success_nr_toast">Request successfully submitted.</string>
+    <string name="header_need_parking">Need to Park</string>
+    <string name="tv_num_seats_np">No. of Seats:</string>
+    <string name="tv_arriving_np">Arriving at:</string>
+    <string name="tv_preference_np">Lot Preference:</string>
+    <string name="tv_pref01_np">Preference 1</string>
+    <string name="tv_pref02_np">Preference 2</string>
+    <string name="tv_connect_header">HawkPark Connect</string>
+    <string name="tv_connect_detail_header">You have connected with:</string>
+    <string name="btn_cancel_connect">Cancel Connect</string>
+    <string name="connected_with_dialog_np_nr">You connected with:</string>
+    <string name="btn_confirm_dialog_np_nr">Confirm Connect</string>
+    <string name="btn_other_dialog_np_nr">Choose Other</string>
+    <string-array name="pickup_location">
+        <item>Rec. Center</item>
+        <item>Opposite CarParc</item>
+    </string-array>
+
+    <!--ADMOB STRING - TEST AD-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

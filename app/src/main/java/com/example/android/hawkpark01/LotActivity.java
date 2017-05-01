@@ -1,10 +1,13 @@
 package com.example.android.hawkpark01;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,14 +25,25 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import static com.example.android.hawkpark01.utils.Utils.ID_KEY;
@@ -48,7 +62,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
     String fback = "0" ;
     private String lotname, feedback , time;
     private FirebaseDatabase mdatabase;
-    private DatabaseReference feedbackDatabaseReference;
+    private DatabaseReference feedbackDatabaseReference,mlot24DBRef;
     private DatabaseReference mlotSummaryDBRef;
     private FeedBackDB feedBack;
     private HomeLotDB mhomeLotDB;
@@ -65,7 +79,7 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         feedbackDatabaseReference = mdatabase.getReference("feedbackDB");
         mlotSummaryDBRef = mdatabase.getReference("lot-summary");
 
-            //checks to make sure googleServices is available
+        //checks to make sure googleServices is available
         if(googleServicesAvailable()) {
             setContentView(R.layout.activity_lot);
             initMap();
@@ -151,29 +165,80 @@ public class LotActivity extends AppCompatActivity implements OnMapReadyCallback
         String lot60 = "Lot 60";
 
 
+
+
+        //Taken from Google Maps API (shapes section)
+        CircleOptions circleOptionscpd = new CircleOptions()
+                .center(new LatLng(40.865314, -74.197107))
+                .radius(50); // In meters
+
+        CircleOptions circleOptionslot24 = new CircleOptions()
+                .center(new LatLng(40.866385, -74.196641))
+                .radius(50); // In meters
+
+        CircleOptions circleOptionslot60 = new CircleOptions()
+                .center(new LatLng(40.872985, -74.198942))
+                .radius(50); // In meters
+
+
+
+        //adds markers
+       // mlot24DBRef = mdatabase.getReference("lot-summary").child(lot24).child("status");
+        MarkerOptions optionscpd = new MarkerOptions()
+                .title(getString(R.string.lot_name_carparc))
+                .position(GeofenceConstants.carparcDiem);
+        mgoogleMap.addMarker(optionscpd).showInfoWindow();
+
+        MarkerOptions optionslot24 = new MarkerOptions()
+                .title(getString(R.string.lot_name_24))
+                .position(GeofenceConstants.lot24);
+        mgoogleMap.addMarker(optionslot24).showInfoWindow();
+
+        MarkerOptions optionslot60 = new MarkerOptions()
+                .title(getString(R.string.lot_name_60))
+                .position(GeofenceConstants.lot60);
+        mgoogleMap.addMarker(optionslot60).showInfoWindow();
+
+
+
+        //Dashed circle pattern
+        List<PatternItem> pattern = Arrays.<PatternItem>asList(
+                 new Dash(30), new Gap(30) );
+
+
+        //automatically displays infoWindow depending on which lot selected from home
+        if(currentLot.equals(cpd)){
+            mgoogleMap.addMarker(optionscpd).showInfoWindow();
+            Circle circle1 = mgoogleMap.addCircle(circleOptionscpd);
+            circle1.setStrokePattern(pattern);
+        }else if (currentLot.equals(lot24)){
+            mgoogleMap.addMarker(optionslot24).showInfoWindow();
+            Circle circle2 = mgoogleMap.addCircle(circleOptionslot24);
+            circle2.setStrokePattern(pattern);
+        }else if (currentLot.equals(lot60)){
+            mgoogleMap.addMarker(optionslot60).showInfoWindow();
+            Circle circle3 = mgoogleMap.addCircle(circleOptionslot60);
+            circle3.setStrokePattern(pattern);
+        }
+
+
+        //zooms in on lot selected in home screen
         if(currentLot.equals(cpd) ) {
 
             goToLocationZoom(GeofenceConstants.carparcDiem, 16);
-            MarkerOptions options = new MarkerOptions()
-                    .title(getString(R.string.lot_name_carparc))
-                    .position(GeofenceConstants.carparcDiem);
-            mgoogleMap.addMarker(options).showInfoWindow();
+
         }else if (currentLot.equals(lot24)){
             goToLocationZoom(GeofenceConstants.lot24, 17);
-            MarkerOptions options = new MarkerOptions()
-                    .title(getString(R.string.lot_name_24))
-                    .position(GeofenceConstants.lot24);
-            mgoogleMap.addMarker(options).showInfoWindow();
+
         }else if (currentLot.equals(lot60)){
             goToLocationZoom(GeofenceConstants.lot60, 17);
-            MarkerOptions options = new MarkerOptions()
-                    .title(getString(R.string.lot_name_60))
-                    .position(GeofenceConstants.lot60);
-            mgoogleMap.addMarker(options).showInfoWindow();
+
         }else {
             Toast.makeText(this, getString(R.string.x_find_location_toast), Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     private void goToLocationZoom( LatLng latlng, int zoom) {
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latlng, zoom);
