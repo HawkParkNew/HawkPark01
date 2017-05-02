@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logo_bar_ht_login">120dp</dimen>
+    <dimen name="logo_bar_line_ht">10dp</dimen>
+    <dimen name="ha_padding">10dp</dimen>
+    <dimen name="home_list_item_padding">1dp</dimen>
+    <dimen name="home_list_item_radius">10dp</dimen>
+    <dimen name="home_list_btn_margin">30dp</dimen>
+    <dimen name="home_list_btn_margin_top">10dp</dimen>
+    <dimen name="home_list_btn_padding">10dp</dimen>
+    <dimen name="ha_radio_btn_margin_bottom">15dp</dimen>
+    <dimen name="home_list_item_stroke">5dp</dimen>
+    <dimen name="et_leaving_in_width_nr">100dp</dimen>
+    <dimen name="tv_margin_top_nr">15dp</dimen>
+    <dimen name="tv_margin_bottom_nr">10dp</dimen>
+    <dimen name="margin_side_nr">20dp</dimen>
+    <dimen name="margin_side_connect">15dp</dimen>
+    <dimen name="margin_bottom_connect">10dp</dimen>
+</resources>

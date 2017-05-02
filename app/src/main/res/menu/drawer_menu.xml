@@ -37,6 +37,13 @@
             android:title="Ride2Park Registration"
             android:icon="@mipmap/applyr2pbtn">
         </item>
+        <item
+            android:id="@+id/help_id"
+            android:title="Ride2Park Registration"
+            android:icon="@mipmap/help_icon">
+        </item>
+
+
     </group>
 
 </menu>

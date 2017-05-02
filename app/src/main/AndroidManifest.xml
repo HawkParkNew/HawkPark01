@@ -33,18 +33,21 @@
         <activity android:name=".CarLocation" />
         <activity android:name=".NeedRide" />
         <activity android:name=".NeedParking" />
-        <activity android:name=".Connect"/>
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <activity android:name=".Connect" />
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
         <service android:name="utils.GeofenceTransitionsIntentService" />
-     
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-kDhPK0cZF-qb6-bVonH7h9pgsKfXzns" />
+
+        <activity android:name=".HelpActivity2"></activity>
     </application>
 
 </manifest>
